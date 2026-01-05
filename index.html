@@ -2,10 +2,311 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <title>Money Labs AZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Royal Vegas | Premium Slots</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- LUXURY CASINO CSS STYLE --- */
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #1a1a1a;
+            --panel-bg: #2c2c2c;
+            --win-glow: 0 0 20px #d4af37, 0 0 40px #d4af37;
+        }
+
+        * { box-sizing: border-box; user-select: none; }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at center, #333 0%, #000 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .casino-container {
+            background: var(--panel-bg);
+            width: 100%;
+            max-width: 450px;
+            border-radius: 30px;
+            padding: 30px;
+            border: 3px solid var(--gold);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 22px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Slot Maşını Ekranı */
+        .slot-machine {
+            display: flex;
+            justify-content: space-between;
+            background: #000;
+            padding: 15px;
+            border-radius: 20px;
+            border: 2px solid #444;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .reel {
+            width: 30%;
+            height: 100px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            border: 3px solid #ccc;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        /* Fırlanma Animasiyası üçün */
+        .reel.spinning span {
+            animation: blurScroll 0.1s infinite linear;
+        }
+
+        @keyframes blurScroll {
+            0% { filter: blur(0); transform: translateY(-10px); opacity: 0.5;}
+            50% { filter: blur(5px); transform: translateY(0); opacity: 1;}
+            100% { filter: blur(0); transform: translateY(10px); opacity: 0.5;}
+        }
+
+        .win-animation {
+            animation: winPulse 1s infinite alternate;
+            border-color: var(--gold) !important;
+        }
+
+        @keyframes winPulse {
+            from { box-shadow: 0 0 10px var(--gold); }
+            to { box-shadow: var(--win-glow); }
+        }
+
+        /* İnfo Paneli */
+        .info-panel {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background: #3a3a3a;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #555;
+        }
+
+        .info-box { font-size: 14px; color: #aaa; }
+        .info-value { font-size: 20px; font-weight: bold; color: var(--gold); display: block; margin-top: 5px; }
+
+        .message {
+            min-height: 25px;
+            color: var(--gold);
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        /* SPIN Düyməsi */
+        .spin-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(180deg, var(--gold) 0%, #a88b2c 100%);
+            border: none;
+            border-radius: 50px;
+            color: #000;
+            font-size: 24px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .spin-btn:active { transform: translateY(5px); box-shadow: 0 5px 10px rgba(212, 175, 55, 0.3); }
+        .spin-btn:disabled { filter: grayscale(0.8); cursor: not-allowed; }
+
+        /* Depozit Düymələri */
+        .actions { margin-top: 30px; display: flex; gap: 15px; }
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .action-btn:hover { background: var(--gold); color: #000; }
+
+    </style>
 </head>
 <body>
-    <h1>Salam, xoş gəldiniz 👋</h1>
-    <p>Bu GitHub Pages vasitəsilə yaradılmış ilk test səhifəsidir.</p>
+
+    <div class="casino-container">
+        <div class="header">Royal Vegas Slots</div>
+
+        <div class="slot-machine">
+            <div class="reel" id="reel1"><span>7️⃣</span></div>
+            <div class="reel" id="reel2"><span>7️⃣</span></div>
+            <div class="reel" id="reel3"><span>7️⃣</span></div>
+        </div>
+
+        <div class="message" id="status">Xoş gəlmisiniz!</div>
+
+        <div class="info-panel">
+            <div class="info-box">BALANS<span class="info-value"><span id="balance">0</span> AZN</span></div>
+            <div class="info-box">MƏRC<span class="info-value" style="color:#fff">20 AZN</span></div>
+            <div class="info-box">UDUŞ<span class="info-value">60 AZN</span></div>
+        </div>
+
+        <button class="spin-btn" id="spinBtn" onclick="spinSlots()">SPIN ⟳</button>
+
+        <div class="actions">
+            <button class="action-btn" onclick="whatsappAction('depozit')">💰 Balans Artır</button>
+            <button class="action-btn" onclick="whatsappAction('cekim')">🏦 Pulu Çək</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Slot Maşınının Beyni (GitHub-da işləyən versiya) ---
+
+        // 1. DƏYİŞƏNLƏR
+        let balance = 0;       // Başlanğıc balans
+        const betCost = 20;    // Mərc haqqı
+        const winPrize = 60;   // Uduş (3 qat)
+
+        // WHATSAPP NÖMRƏNİ BURA YAZ (Vacib!)
+        const adminPhone = "994500000000"; 
+
+        // 2. TƏNZİMLƏMƏLƏR (Sənin xeyrinə)
+        const WIN_RATE = 0.25; // 25% Şans (Hər 4 dən 1-i udur)
+        const SYMBOLS = ['🍒', '🍋', '🍇', '💎', '🔔', '7️⃣']; // Simvollar
+
+        // Elementləri seçirik
+        const reel1 = document.getElementById('reel1');
+        const reel2 = document.getElementById('reel2');
+        const reel3 = document.getElementById('reel3');
+        const balanceEl = document.getElementById('balance');
+        const statusEl = document.getElementById('status');
+        const spinBtn = document.getElementById('spinBtn');
+        const reels = [reel1, reel2, reel3];
+
+        function updateUI() {
+            balanceEl.innerText = balance;
+        }
+
+        // Köməkçi funksiya: Təsadüfi simvol seç
+        function getRandomSymbol() {
+            return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+        }
+
+        // --- Fırlatma Prosesi ---
+        function spinSlots() {
+            if (balance < betCost) {
+                statusEl.innerText = "Balans kifayət etmir!";
+                statusEl.style.color = "red";
+                setTimeout(() => { statusEl.style.color = "var(--gold)"; }, 1000);
+                return;
+            }
+
+            // Pulu çıxırıq
+            balance -= betCost;
+            updateUI();
+
+            // Düyməni dondururuq
+            spinBtn.disabled = true;
+            statusEl.innerText = "Uğurlar...";
+            reels.forEach(r => {
+                r.classList.remove('win-animation');
+                r.classList.add('spinning'); // Fırlanma effekti
+            });
+
+            // NƏTİCƏNİ ƏVVƏLCƏDƏN TƏYİN EDİRİK (Hiylə buradadır)
+            const isWin = Math.random() < WIN_RATE;
+            let finalResult = [];
+
+            if (isWin) {
+                // Qalib: Eyni 3 simvolu seçirik (Məsələn üç dənə 💎)
+                const winSym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+                finalResult = [winSym, winSym, winSym];
+            } else {
+                // Məğlub: "Near Miss" (Yaxın keçdi) effekti yaradırıq
+                // İki dənə '7', bir dənə 'Limon' qoyuruq ki, yansın.
+                const topSym = '7️⃣';
+                const junkSym = '🍋';
+                // Simvolları qarışdırırıq ki, hər dəfə eyni yerdə çıxmasın
+                finalResult = [topSym, topSym, junkSym].sort(() => Math.random() - 0.5);
+            }
+
+            // Animasiyalı Dayanma (Reellər bir-bir dayanır)
+            let stopDelay = 1000; // İlk reel 1 saniyə sonra dayanır
+
+            reels.forEach((reel, index) => {
+                // Hər reel üçün dayanma vaxtını artırırıq (1s, 1.5s, 2s)
+                setTimeout(() => {
+                    reel.classList.remove('spinning');
+                    reel.innerHTML = `<span>${finalResult[index]}</span>`;
+
+                    // Sonuncu reel dayandıqdan sonra nəticəni yoxla
+                    if (index === 2) {
+                        checkResult(isWin);
+                    }
+                }, stopDelay + (index * 600)); 
+            });
+        }
+
+        function checkResult(isWin) {
+            spinBtn.disabled = false;
+
+            if (isWin) {
+                // Uddusa
+                balance += winPrize;
+                statusEl.innerText = "TƏBRİKLƏR! BÖYÜK UDUŞ! 🎉";
+                reels.forEach(r => r.classList.add('win-animation')); // Qızılı işıq saçsın
+            } else {
+                // Uduzdusa
+                // Əgər iki dənə 7 varsa, xüsusi mesaj yaz
+                const sevenCount = [reel1.innerText, reel2.innerText, reel3.innerText].filter(s => s.includes('7️⃣')).length;
+                if(sevenCount === 2) {
+                     statusEl.innerText = "Uyy! Çox yaxın idi! 🔥";
+                } else {
+                     statusEl.innerText = "Təəssüf. Yenidən yoxlayın.";
+                }
+            }
+            updateUI();
+        }
+
+        // WhatsApp Düymələri
+        function whatsappAction(type) {
+            let text = "";
+            if(type === 'depozit') {
+                text = "Salam, Royal Vegas saytında balans artırmaq istəyirəm. Hesab göndərin.";
+            } else {
+                if(balance <= 0) return alert("Çıxarış üçün balans yoxdur.");
+                text = `Salam, balansımda ${balance} AZN var. Çıxarış etmək istəyirəm. ID: User_${Math.floor(Math.random()*999)}`;
+            }
+            window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+        
+        // Test üçün (Bunu silə bilərsən)
+        // balance = 100; updateUI();
+
+    </script>
 </body>
 </html>
