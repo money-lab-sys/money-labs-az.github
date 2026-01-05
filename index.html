@@ -3,269 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>JETWIN | LIFE CHANGER</title>
+    <title>JETWIN | ELITE CLUB</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- PSYCHOLOGY & LUXURY THEME --- */
+        /* --- GLOBAL STYLES --- */
         :root {
-            --bg: #000000;
             --gold: #FFD700;
-            --neon-blue: #00f2ff;
-            --success: #00ff66;
-            --danger: #ff0033;
-            --panel: #111111;
+            --blue: #00f2ff;
+            --green: #00ff66;
+            --red: #ff0033;
+            --dark: #050505;
+            --panel: #111;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
         
         body {
-            margin: 0; padding: 0; background: var(--bg); color: white;
+            margin: 0; padding: 0; background: var(--dark); color: white;
             font-family: 'Montserrat', sans-serif; height: 100vh; overflow: hidden;
             display: flex; flex-direction: column;
         }
 
-        /* --- 1. INTRO & REGISTRATION (The Hook) --- */
+        /* --- 1. INTRO LAYER (REGISTRATION) --- */
         #introLayer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1565514020176-db8416ce59c3?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover; z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 30px; text-align: center;
+            background: linear-gradient(135deg, #000 0%, #111 100%);
+            z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 20px;
         }
 
-        .hook-title {
-            font-family: 'Oswald', sans-serif; font-size: 36px; color: var(--gold);
-            text-transform: uppercase; margin-bottom: 10px; line-height: 1.2;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        /* Background Animation */
+        .bg-anim {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px; opacity: 0.3; z-index: -1;
         }
 
-        .hook-sub { font-size: 14px; color: #ccc; margin-bottom: 30px; line-height: 1.6; }
-
-        .reg-form { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 15px; }
-        
-        .inp-field {
-            padding: 18px; border-radius: 10px; border: 1px solid #333;
-            background: rgba(255,255,255,0.1); color: white; font-size: 16px;
-            font-family: 'Montserrat', sans-serif; outline: none; transition: 0.3s;
+        /* Intro Ticker (Motivation) */
+        .intro-ticker-box {
+            position: absolute; top: 40px; width: 100%; overflow: hidden;
+            background: rgba(255, 215, 0, 0.1); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+            padding: 10px 0; transform: rotate(-2deg);
         }
-        .inp-field:focus { border-color: var(--gold); background: rgba(255,255,255,0.2); }
-
-        .btn-gold {
-            background: linear-gradient(45deg, #FFD700, #DAA520);
-            border: none; padding: 20px; border-radius: 10px;
-            color: black; font-weight: 900; font-size: 18px; text-transform: uppercase;
-            cursor: pointer; box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-            animation: pulse 2s infinite;
+        .intro-ticker {
+            white-space: nowrap; animation: scroll 15s linear infinite;
+            font-family: 'Rajdhani', sans-serif; font-size: 18px; color: var(--gold); font-weight: bold;
         }
-        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.02);} 100% {transform: scale(1);} }
 
-        /* --- 2. MAIN INTERFACE --- */
-        .app-container { display: none; flex-direction: column; height: 100%; width: 100%; }
+        /* Login Card */
+        .login-card {
+            background: rgba(20, 20, 20, 0.9); border: 1px solid #333;
+            padding: 30px; border-radius: 20px; width: 100%; max-width: 400px;
+            text-align: center; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px); z-index: 10;
+        }
 
-        /* HEADER */
+        .login-logo { font-size: 30px; font-weight: 900; color: white; margin-bottom: 10px; letter-spacing: 2px; }
+        .login-sub { font-size: 12px; color: #888; margin-bottom: 25px; line-height: 1.5; }
+
+        .inp-group { text-align: left; margin-bottom: 15px; }
+        .inp-label { font-size: 10px; color: var(--blue); margin-bottom: 5px; display: block; font-weight: bold; text-transform: uppercase; }
+        .inp {
+            width: 100%; padding: 15px; background: #000; border: 1px solid #333;
+            color: white; border-radius: 10px; font-family: 'Montserrat'; font-size: 14px;
+            transition: 0.3s;
+        }
+        .inp:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); outline: none; }
+
+        .btn-join {
+            width: 100%; padding: 18px; background: linear-gradient(45deg, var(--blue), #0066ff);
+            border: none; border-radius: 12px; color: black; font-weight: 900; font-size: 16px;
+            text-transform: uppercase; cursor: pointer; margin-top: 10px;
+            box-shadow: 0 5px 20px rgba(0, 242, 255, 0.3); transition: transform 0.2s;
+        }
+        .btn-join:active { transform: scale(0.98); }
+
+        /* --- 2. MAIN APP UI --- */
+        #appLayer { display: none; flex-direction: column; height: 100%; width: 100%; }
+
+        /* Header */
         .header {
-            height: 60px; background: #0a0a0a; border-bottom: 1px solid #222;
+            height: 65px; background: #080808; border-bottom: 1px solid #222;
             display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
         }
-        .user-greet { font-size: 12px; color: #888; text-align: right; }
+        .user-info { text-align: right; line-height: 1.2; }
         .user-name { color: var(--gold); font-weight: bold; font-size: 14px; }
-        
-        /* NEWS TICKER */
-        .ticker-wrap { background: #000; height: 25px; overflow: hidden; border-bottom: 1px solid #222; }
-        .ticker { white-space: nowrap; animation: tick 20s linear infinite; font-size: 11px; padding-top: 4px; color: #aaa; }
-        .t-win { color: var(--success); font-weight: bold; }
-        @keyframes tick { 0% {transform: translateX(100%);} 100% {transform: translateX(-100%);} }
+        .user-id { color: #555; font-size: 10px; }
 
-        /* GAME STAGE */
-        .stage { flex: 1; position: relative; overflow: hidden; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); }
+        /* Online Counter */
+        .live-count {
+            position: absolute; top: 75px; left: 20px; z-index: 20;
+            background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 15px;
+            font-size: 10px; color: #00ff66; border: 1px solid #00ff66;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .live-dot { width: 6px; height: 6px; background: #00ff66; border-radius: 50%; animation: blink 2s infinite; }
+        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
+
+        /* Game Stage */
+        .stage { flex: 1; position: relative; overflow: hidden; background: radial-gradient(circle at bottom, #1a233a 0%, #000 100%); }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        
+
         .multiplier {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             font-size: 70px; font-weight: 900; color: white;
-            text-shadow: 0 0 20px var(--neon-blue); font-family: 'Oswald', sans-serif;
+            text-shadow: 0 0 30px var(--blue); font-family: 'Rajdhani', sans-serif;
         }
 
-        /* HALL OF FAME BUTTON */
-        .hof-btn {
-            position: absolute; top: 10px; left: 10px;
-            background: rgba(255, 215, 0, 0.1); border: 1px solid var(--gold);
-            padding: 8px 15px; border-radius: 20px; color: var(--gold); font-size: 11px; font-weight: bold;
-            cursor: pointer; z-index: 20; display: flex; align-items: center; gap: 5px;
-        }
-
-        /* CONTROLS */
-        .controls { background: var(--panel); padding: 20px; border-top: 1px solid #222; }
-        .bet-input { width: 100%; padding: 15px; background: #000; border: 1px solid #333; color: white; text-align: center; font-size: 24px; font-weight: bold; border-radius: 10px; margin-bottom: 15px; }
+        /* Controls */
+        .controls { background: var(--panel); padding: 20px; border-top: 1px solid #222; box-shadow: 0 -10px 30px #000; }
         
-        .play-btn { width: 100%; height: 60px; border-radius: 12px; font-size: 22px; font-weight: 900; border: none; cursor: pointer; text-transform: uppercase; }
-        .green { background: linear-gradient(45deg, #00c853, #009624); color: white; }
-        .orange { background: linear-gradient(45deg, #ffab00, #ff6f00); color: black; display: none; }
+        .bet-input-wrap { position: relative; margin-bottom: 15px; }
+        .bet-input {
+            width: 100%; padding: 15px; background: #050505; border: 1px solid #333;
+            color: white; text-align: center; font-size: 24px; font-weight: bold; border-radius: 12px;
+        }
+        .currency-icon { position: absolute; left: 20px; top: 18px; color: #555; }
 
-        /* FOOTER MENU */
-        .footer { height: 70px; background: #050505; display: flex; border-top: 1px solid #222; }
-        .f-item { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #555; font-size: 10px; cursor: pointer; }
-        .f-item i { font-size: 20px; margin-bottom: 5px; }
-        .f-active { color: var(--gold); }
+        .main-btn {
+            width: 100%; height: 60px; border-radius: 14px; border: none;
+            font-size: 20px; font-weight: 900; text-transform: uppercase; cursor: pointer;
+        }
+        .btn-bet { background: linear-gradient(135deg, var(--blue), #2962ff); color: white; }
+        .btn-cash { background: linear-gradient(135deg, var(--gold), #ff6f00); color: black; display: none; }
 
-        /* MODALS */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 1000; display: none; justify-content: center; align-items: center; }
-        .modal-box { background: #111; padding: 20px; border-radius: 15px; border: 1px solid var(--gold); width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; text-align: center; }
-        .list-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #222; font-size: 13px; }
-        .rank { color: var(--gold); font-weight: bold; margin-right: 10px; }
+        /* Sticky Nav */
+        .nav {
+            height: 70px; background: #050505; display: flex; border-top: 1px solid #222;
+        }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #666; font-size: 10px; gap: 5px; cursor: pointer; transition: 0.2s; }
+        .nav-item i { font-size: 18px; }
+        .nav-item.active { color: var(--blue); }
+        .nav-item:active { transform: scale(0.9); }
+
+        /* Animation Classes */
+        .crashed { color: var(--red) !important; text-shadow: 0 0 30px var(--red) !important; animation: shake 0.4s; }
+        .won { color: var(--green) !important; text-shadow: 0 0 30px var(--green) !important; }
+        @keyframes shake { 0%, 100% {transform: translate(0,0);} 25% {transform: translate(-5px, 5px);} 75% {transform: translate(5px, -5px);} }
+        @keyframes scroll { 0% {transform: translateX(100%);} 100% {transform: translateX(-100%);} }
 
     </style>
 </head>
 <body>
 
     <div id="introLayer">
-        <h1 class="hook-title">UNLOCK YOUR<br>DREAM LIFE</h1>
-        <p class="hook-sub">
-            Maliyyə azadlığı bir addım uzaqdadır. <br>
-            Qapalı kluba daxil ol və qazanmağa başla.
-        </p>
+        <div class="bg-anim"></div>
         
-        <div class="reg-form">
-            <input type="text" id="regName" class="inp-field" placeholder="Adınız və Soyadınız" required>
-            <input type="email" id="regEmail" class="inp-field" placeholder="Email Ünvanınız" required>
-            <button class="btn-gold" onclick="registerUser()">🚀 İNDİ QAZANMAĞA BAŞLA</button>
+        <div class="intro-ticker-box">
+            <div class="intro-ticker">
+                🚀 ELVIN QAZANDI $500 • 💰 LEYLA M. QAZANDI $1,200 • 🔥 RƏŞAD K. QAZANDI $340 • 💎 BU GÜN SƏNİN GÜNÜNDÜR • 🚀
+            </div>
         </div>
-        <p style="font-size:10px; color:#555; margin-top:15px;">🔒 256-bit Secure Connection. 11,402 istifadəçi bu gün qazandı.</p>
+
+        <div class="login-card">
+            <div class="login-logo">JETWIN <span style="color:var(--blue)">TITANIUM</span></div>
+            <p class="login-sub">
+                Dünyanın ən sürətli qazanc platformasına xoş gəldiniz.<br>
+                Davam etmək üçün özəl giriş məlumatlarınızı doldurun.
+            </p>
+
+            <div class="inp-group">
+                <label class="inp-label">Adınız</label>
+                <input type="text" id="regName" class="inp" placeholder="Məs: Elvin">
+            </div>
+            
+            <div class="inp-group">
+                <label class="inp-label">Soyadınız</label>
+                <input type="text" id="regSurname" class="inp" placeholder="Məs: Məmmədov">
+            </div>
+
+            <div class="inp-group">
+                <label class="inp-label">Gmail</label>
+                <input type="email" id="regEmail" class="inp" placeholder="email@gmail.com">
+            </div>
+
+            <button class="btn-join" onclick="registerUser()">QAZANMAĞA BAŞLA ➔</button>
+            <p style="font-size:10px; color:#444; margin-top:15px;">By clicking, you agree to become a millionaire.</p>
+        </div>
     </div>
 
-    <div class="app-container" id="app">
-        
-        <div class="ticker-wrap">
-            <div class="ticker" id="tickerContent">
-                </div>
-        </div>
-
+    <div id="appLayer">
         <div class="header">
-            <div style="font-weight:900; color:white; font-size:20px;">JETWIN <span style="color:var(--gold)">VIP</span></div>
-            <div class="user-greet">
-                Xoş gəldin,<br>
-                <span class="user-name" id="displayUser">User</span>
+            <div style="font-size:20px; font-weight:900;">JETWIN</div>
+            <div class="user-info">
+                <div class="user-id">ID: <span id="uid">8392</span></div>
+                <div class="user-name" id="displayName">Guest</div>
             </div>
         </div>
 
         <div class="stage" id="stage">
+            <div class="live-count"><div class="live-dot"></div> 1,420 Online</div>
             <canvas id="stars"></canvas>
             <canvas id="game"></canvas>
+            
             <div class="multiplier" id="multi">1.00x</div>
             
-            <div class="hof-btn" onclick="openHallOfFame()">
-                <i class="fa-solid fa-trophy"></i> TOP WINNERS
+            <div style="position:absolute; bottom:20px; width:100%; text-align:center; color:#555; font-size:10px; letter-spacing:1px;">
+                PROVABLY FAIR SYSTEM
             </div>
         </div>
 
         <div class="controls">
-            <div style="display:flex; justify-content:space-between; margin-bottom:5px; color:#888; font-size:12px;">
-                <span>Balance: <b style="color:white;">$<span id="bal">0.00</span></b></span>
-                <span>Min Withdraw: $21</span>
+            <div style="display:flex; justify-content:space-between; color:#888; font-size:12px; margin-bottom:5px;">
+                <span>Balans: <b style="color:white;">$<span id="bal">0.00</span></b></span>
+                <span>Limit: <b>$21</b></span>
             </div>
             
-            <input type="number" id="betVal" class="bet-input" value="10">
-            
-            <button class="play-btn green" id="btnBet" onclick="play()">BET NOW</button>
-            <button class="play-btn orange" id="btnCash" onclick="cashOut()">CASHOUT</button>
+            <div class="bet-input-wrap">
+                <span class="currency-icon">$</span>
+                <input type="number" id="betVal" class="bet-input" value="10">
+            </div>
+
+            <button class="main-btn btn-bet" id="btnBet" onclick="play()">MƏRC ET</button>
+            <button class="main-btn btn-cash" id="btnCash" onclick="cashOut()">PULU GÖTÜR</button>
         </div>
 
-        <div class="footer">
-            <div class="f-item" onclick="openPromo()"><i class="fa-solid fa-ticket"></i>Promo</div>
-            <div class="f-item f-active" onclick="wa('deposit')"><i class="fa-solid fa-wallet"></i>Deposit</div>
-            <div class="f-item" onclick="checkWithdraw()"><i class="fa-solid fa-money-bill-transfer"></i>Withdraw</div>
-            <div class="f-item" onclick="wa('support')"><i class="fa-solid fa-headset"></i>Support</div>
-        </div>
-    </div>
-
-    <div class="modal" id="hofModal" onclick="this.style.display='none'">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h2 style="color:var(--gold); margin-top:0;">🏆 ALL TIME LEGENDS</h2>
-            <p style="font-size:12px; color:#666;">Onlar risk etdi və həyatlarını dəyişdi.</p>
-            <div id="hofList">
-                </div>
-            <button class="btn-gold" style="margin-top:20px; padding:10px; width:100%; font-size:14px;" onclick="document.getElementById('hofModal').style.display='none'">MƏN DƏ QAZANACAĞAM</button>
+        <div class="nav">
+            <div class="nav-item active"><i class="fa-solid fa-gamepad"></i>Oyun</div>
+            <div class="nav-item" onclick="openPromo()"><i class="fa-solid fa-ticket"></i>Promo</div>
+            <div class="nav-item" onclick="wa('deposit')"><i class="fa-solid fa-wallet"></i>Depozit</div>
+            <div class="nav-item" onclick="checkWithdraw()"><i class="fa-solid fa-money-bill-transfer"></i>Çıxarış</div>
+            <div class="nav-item" onclick="wa('support')"><i class="fa-solid fa-headset"></i>Dəstək</div>
         </div>
     </div>
 
     <script>
-        // --- SETTINGS ---
-        const API_URL = "https://script.google.com/macros/s/AKfycbwVB3R1y84yzEvyFWww3frQ4ze2HHz6fh_RKTGYcR9uBT7ApL2uHRZNtRq4wUO-0j23Tg/exec"; 
+        // --- CONFIG ---
+        const API_URL = "https://script.google.com/macros/s/AKfycbzjCXZJ5XL2jVGH9keYxdySa78yTxaSOtTL9sKVxU-UzKKPGyHLi363eR_i-OHuinHMNg/exec"; 
         const WA_NUMBER = "994507516137";
         const MIN_WITHDRAW = 21;
 
-        // --- GLOBAL VARS ---
+        // --- GLOBAL VARIABLES ---
         let balance = 0.00;
         let totalDep = 0.00;
         let isPlaying = false;
-        let currentBet = 0;
         let multi = 1.00;
         let crashPoint = 0;
         let startTime, animFrame;
-        
-        // --- 1. REGISTRATION LOGIC ---
-        // Check if already registered
-        if(localStorage.getItem('jw_user_name')) {
-            document.getElementById('introLayer').style.display = 'none';
-            document.getElementById('app').style.display = 'flex';
-            document.getElementById('displayUser').innerText = localStorage.getItem('jw_user_name');
-            initGame();
+
+        // --- 1. REGISTRATION SYSTEM ---
+        // Avtomatik giriş yoxlanışı
+        if(localStorage.getItem('jw_user_fullname')) {
+            showApp(localStorage.getItem('jw_user_fullname'));
         }
 
         function registerUser() {
-            let name = document.getElementById('regName').value;
-            let email = document.getElementById('regEmail').value;
-            
-            if(name.length < 2 || !email.includes('@')) {
-                alert("Zəhmət olmasa düzgün məlumat daxil edin.");
+            let name = document.getElementById('regName').value.trim();
+            let surname = document.getElementById('regSurname').value.trim();
+            let email = document.getElementById('regEmail').value.trim();
+
+            if(!name || !surname || !email.includes('@')) {
+                alert("Zəhmət olmasa bütün xanaları düzgün doldurun.");
                 return;
             }
 
-            // Save & Enter
-            localStorage.setItem('jw_user_name', name);
-            document.getElementById('displayUser').innerText = name;
+            let fullName = `${name} ${surname}`;
             
-            // Effect
-            document.querySelector('.hook-title').innerText = "SUCCESS!";
-            document.querySelector('.hook-sub').innerText = "Hesabınız yaradıldı. İndi başlayın.";
+            // Save Data Locally (Simulate Database)
+            localStorage.setItem('jw_user_fullname', fullName);
+            localStorage.setItem('jw_user_email', email);
+
+            // Button Loading Effect
+            let btn = document.querySelector('.btn-join');
+            btn.innerText = "HESAB YARADILIR...";
+            btn.style.opacity = "0.7";
+
             setTimeout(() => {
-                document.getElementById('introLayer').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('introLayer').style.display = 'none';
-                    document.getElementById('app').style.display = 'flex';
-                    initGame();
-                    alert(`Xoş gəldin, ${name}! \nSənin üçün xüsusi şanslar aktivləşdirildi.`);
-                }, 500);
-            }, 1000);
+                showApp(fullName);
+            }, 1500);
         }
 
-        // --- 2. GAME LOGIC ---
+        function showApp(name) {
+            document.getElementById('introLayer').style.display = 'none';
+            document.getElementById('appLayer').style.display = 'flex';
+            document.getElementById('displayName').innerText = name;
+            document.getElementById('uid').innerText = Math.floor(Math.random() * 90000) + 10000;
+            initGame();
+        }
+
+        // --- 2. GAME ENGINE ---
         const cvs = document.getElementById('game');
         const ctx = cvs.getContext('2d');
         let w, h;
-        
+
         function initGame() {
             resize();
             drawStars();
-            runGhost(); // Auto play for visuals
+            runGhost(); // Idle animation
         }
-
+        
         function resize() {
             w = cvs.width = document.getElementById('stage').offsetWidth;
             h = cvs.height = document.getElementById('stage').offsetHeight;
         }
+        window.addEventListener('resize', resize);
 
-        // Ghost Mode (Visual Simulation)
+        // Ghost Mode (Idle)
         function runGhost() {
             if(isPlaying) return;
             multi = 1.00;
-            // Ghost always shows BIG wins to lure user
             let r = Math.random();
-            crashPoint = r < 0.3 ? 2.50 : (r < 0.7 ? 8.00 : 40.00); 
+            crashPoint = r < 0.3 ? 2.50 : (r < 0.7 ? 8.00 : 30.00); 
             startTime = Date.now();
             ghostLoop();
         }
@@ -275,45 +318,34 @@
             let t = (Date.now() - startTime) / 1000;
             multi = 1.00 + (t*t*0.1);
             if(multi >= crashPoint) {
-                document.getElementById('multi').style.color = "#ff0033";
-                setTimeout(() => { 
-                    document.getElementById('multi').style.color = "white"; 
-                    runGhost(); 
-                }, 2000);
-                return;
+                setTimeout(runGhost, 2000); return;
             }
             document.getElementById('multi').innerText = multi.toFixed(2) + "x";
-            draw(t, true); // True = Gray color
+            drawRocket(t, true);
             requestAnimationFrame(ghostLoop);
         }
 
         function play() {
             let val = parseInt(document.getElementById('betVal').value);
-            if(balance < val) return alert("Balans kifayət etmir. Depozit edin!");
+            if(balance < val) return alert("Balans kifayət etmir!");
             
-            balance -= val; currentBet = val; updateUI();
+            balance -= val; updateUI();
             
-            isPlaying = true; // Stops Ghost
+            isPlaying = true;
             multi = 1.00;
             document.getElementById('btnBet').style.display = 'none';
             document.getElementById('btnCash').style.display = 'block';
-            
-            // --- RIGGED ALGORITHM (Sniper) ---
-            crashPoint = getRiggedPoint(val);
-            
+            document.getElementById('multi').style.color = "white";
+            document.getElementById('multi').classList.remove('crashed', 'won');
+
+            // --- SNIPER ALGORITHM ---
+            let r = Math.random();
+            if(val >= 50) crashPoint = 1.00 + Math.random() * 0.15; // Instant Loss
+            else if(val >= 20) crashPoint = 1.10 + Math.random() * 0.60; // High Risk
+            else crashPoint = r < 0.5 ? 2.00 + Math.random()*3 : 1.20 + Math.random()*0.5; // Tease
+
             startTime = Date.now();
             loop();
-        }
-
-        function getRiggedPoint(bet) {
-            let r = Math.random();
-            // High Bet (>50) -> Instant Kill
-            if(bet >= 50) return 1.00 + Math.random() * 0.10;
-            // Mid Bet -> Risky
-            if(bet >= 20) return 1.10 + Math.random() * 0.60;
-            // Low Bet -> Let them taste honey
-            if(r < 0.5) return 2.00 + Math.random() * 3.00;
-            return 1.20 + Math.random() * 0.50; 
         }
 
         function loop() {
@@ -321,92 +353,60 @@
             let t = (Date.now() - startTime) / 1000;
             multi = 1.00 + (t*t*0.08);
 
-            if(multi >= crashPoint) {
-                crash(); return;
-            }
+            if(multi >= crashPoint) { crash(); return; }
+
             document.getElementById('multi').innerText = multi.toFixed(2) + "x";
-            draw(t, false);
+            drawRocket(t, false);
             animFrame = requestAnimationFrame(loop);
         }
 
-        function draw(t, isGhost) {
+        function drawRocket(t, isGhost) {
             ctx.clearRect(0,0,w,h);
             let color = isGhost ? "#555" : "#00f2ff";
-            let x = Math.min(w-30, t*80);
-            let y = h - Math.min(h-50, (multi-1)*130);
+            let x = Math.min(w-40, t*90);
+            let y = h - Math.min(h-60, (multi-1)*130);
             
-            ctx.beginPath(); ctx.lineWidth=4; ctx.strokeStyle=color;
+            ctx.beginPath(); ctx.lineWidth=5; ctx.strokeStyle=color;
             ctx.moveTo(0, h); ctx.quadraticCurveTo(x/2, h, x, y); ctx.stroke();
             
-            if(!isGhost) {
-                ctx.shadowBlur=15; ctx.shadowColor=color; ctx.stroke(); ctx.shadowBlur=0;
-            }
-            ctx.font="24px Arial"; ctx.fillText("🚀", x-10, y-10);
+            if(!isGhost) { ctx.shadowBlur=20; ctx.shadowColor=color; ctx.stroke(); ctx.shadowBlur=0; }
+            ctx.font="30px Arial"; ctx.fillText("🚀", x-15, y-10);
         }
 
         function cashOut() {
             if(!isPlaying) return;
             isPlaying = false; cancelAnimationFrame(animFrame);
-            let win = currentBet * multi;
+            let win = parseInt(document.getElementById('betVal').value) * multi;
             balance += win; updateUI();
             
-            document.getElementById('multi').innerText = "WIN!";
-            document.getElementById('multi').style.color = "#00ff66";
-            reset();
+            document.getElementById('multi').classList.add('won');
+            document.getElementById('multi').innerText = `+$${win.toFixed(2)}`;
+            setTimeout(reset, 2000);
         }
 
         function crash() {
             isPlaying = false; cancelAnimationFrame(animFrame);
             document.getElementById('multi').innerText = "CRASH";
-            document.getElementById('multi').style.color = "#ff0033";
-            reset();
+            document.getElementById('multi').classList.add('crashed');
+            
+            // Shake Effect
+            ctx.fillStyle = "rgba(255, 0, 51, 0.2)"; ctx.fillRect(0,0,w,h);
+            setTimeout(reset, 2000);
         }
 
         function reset() {
-            setTimeout(() => {
-                document.getElementById('btnBet').style.display = 'block';
-                document.getElementById('btnCash').style.display = 'none';
-                document.getElementById('multi').style.color = "white";
-                runGhost();
-            }, 2000);
+            document.getElementById('btnBet').style.display = 'block';
+            document.getElementById('btnCash').style.display = 'none';
+            document.getElementById('multi').style.color = "white";
+            document.getElementById('multi').classList.remove('crashed', 'won');
+            runGhost();
         }
 
         function updateUI() { document.getElementById('bal').innerText = balance.toFixed(2); }
 
-        // --- 3. SOCIAL PROOF (Ticker & Hall of Fame) ---
-        const winners = [
-            {n:"🇺🇸 Mike T.", a:"$154,200"}, {n:"🇩🇪 Hans G.", a:"$98,500"},
-            {n:"🇬🇧 Sarah J.", a:"$210,000"}, {n:"🇦🇪 Ahmed K.", a:"$540,000"},
-            {n:"🇫🇷 Pierre L.", a:"$88,200"}, {n:"🇹🇷 Burak Y.", a:"$112,000"}
-        ];
-
-        // Ticker
-        let tHtml = "";
-        for(let i=0; i<15; i++) {
-            let w = winners[Math.floor(Math.random()*winners.length)];
-            let amount = (Math.random()*500).toFixed(0);
-            tHtml += `<span style="margin-right:20px;">${w.n.substring(0,4)}... <span class="t-win">+$${amount}</span></span>`;
-        }
-        document.getElementById('tickerContent').innerHTML = tHtml;
-
-        // Hall of Fame
-        function openHallOfFame() {
-            let list = document.getElementById('hofList');
-            list.innerHTML = "";
-            winners.forEach((w, i) => {
-                list.innerHTML += `
-                    <div class="list-item">
-                        <span><span class="rank">#${i+1}</span> ${w.n}</span>
-                        <span style="color:#00ff66; font-weight:bold;">${w.a}</span>
-                    </div>
-                `;
-            });
-            document.getElementById('hofModal').style.display = 'flex';
-        }
-
-        // --- 4. BUTTONS & API ---
+        // --- BUTTON ACTIONS ---
         async function openPromo() {
-            let code = prompt("Promo Kodu Daxil Edin:");
+            let code = prompt("Promo Kodu:");
             if(!code) return;
             try {
                 let res = await fetch(`${API_URL}?code=${encodeURIComponent(code)}`);
@@ -415,10 +415,9 @@
                     let amt = parseFloat(data.amount);
                     balance += amt; 
                     if(code.startsWith("DEP") || code.startsWith("VIP")) totalDep += amt;
-                    updateUI();
-                    alert(`✅ Uğurlu! Balansa $${amt} əlavə olundu.`);
-                } else alert("Yanlış kod!");
-            } catch(e) { alert("Xəta baş verdi"); }
+                    updateUI(); alert(`✅ Təbriklər! +$${amt}`);
+                } else alert(`❌ ${data.msg}`);
+            } catch(e) { alert("Xəta!"); }
         }
 
         function checkWithdraw() {
@@ -428,19 +427,19 @@
         }
 
         function wa(type) {
-            let txt = type === 'deposit' ? "Salam, Depozit etmək istəyirəm." : "Salam, Pulu çəkmək istəyirəm ID: " + localStorage.getItem('jw_user_name');
+            let name = localStorage.getItem('jw_user_fullname') || "User";
+            let txt = type === 'deposit' ? `Salam, mən ${name}. Depozit etmək istəyirəm.` : `Salam, mən ${name}. Pul çəkmək istəyirəm.`;
             window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(txt)}`, '_blank');
         }
 
-        // Star Background
-        const starsCvs = document.getElementById('stars');
-        const sCtx = starsCvs.getContext('2d');
+        // Stars
+        const sCtx = document.getElementById('stars').getContext('2d');
         function drawStars() {
             sCtx.clearRect(0,0,w,h); sCtx.fillStyle = "rgba(255,255,255,0.3)";
-            for(let i=0;i<50;i++) {
+            for(let i=0;i<60;i++) {
                 sCtx.beginPath(); sCtx.arc(Math.random()*w, Math.random()*h, Math.random()*2, 0, 6.28); sCtx.fill();
             }
         }
     </script>
 </body>
-</html>   
+</html>
