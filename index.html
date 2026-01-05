@@ -3,309 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Royal Vegas | Premium Slots</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>JETWIN | Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        /* --- LUXURY CASINO CSS STYLE --- */
+        /* --- JETWIN PREMIUM DARK THEME --- */
         :root {
+            --bg-color: #0a0a0a;
+            --panel-color: #141414;
             --gold: #d4af37;
-            --dark-bg: #1a1a1a;
-            --panel-bg: #2c2c2c;
-            --win-glow: 0 0 20px #d4af37, 0 0 40px #d4af37;
+            --gold-dim: #8a701e;
+            --text-color: #ffffff;
+            --red-crash: #ff3b30;
+            --green-win: #34c759;
         }
 
-        * { box-sizing: border-box; user-select: none; }
+        * { box-sizing: border-box; touch-action: manipulation; }
 
         body {
             margin: 0;
-            padding: 20px;
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--dark-bg);
-            background-image: radial-gradient(circle at center, #333 0%, #000 100%);
-            color: #fff;
+            padding: 0;
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow: hidden;
         }
 
-        .casino-container {
-            background: var(--panel-bg);
+        .game-container {
             width: 100%;
-            max-width: 450px;
-            border-radius: 30px;
-            padding: 30px;
-            border: 3px solid var(--gold);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.5);
-            text-align: center;
+            max-width: 480px;
+            background: var(--panel-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
 
+        /* HEADER */
         .header {
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--gold);
-            font-weight: 700;
-            font-size: 22px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-
-        /* Slot Maşını Ekranı */
-        .slot-machine {
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
-            background: #000;
-            padding: 15px;
-            border-radius: 20px;
-            border: 2px solid #444;
-            margin-bottom: 25px;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            align-items: center;
+            border-bottom: 1px solid #333;
+            background: rgba(20, 20, 20, 0.9);
         }
 
-        .reel {
-            width: 30%;
-            height: 100px;
-            background: #fff;
-            border-radius: 10px;
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--gold);
+        }
+
+        .balance-box {
+            background: #222;
+            padding: 5px 15px;
+            border-radius: 50px;
+            border: 1px solid var(--gold-dim);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* OYUN SAHƏSİ (CANVAS) */
+        .stage {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(circle at bottom left, #1a1a1a, #000);
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 50px;
-            border: 3px solid #ccc;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
         }
 
-        /* Fırlanma Animasiyası üçün */
-        .reel.spinning span {
-            animation: blurScroll 0.1s infinite linear;
+        canvas {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
-        @keyframes blurScroll {
-            0% { filter: blur(0); transform: translateY(-10px); opacity: 0.5;}
-            50% { filter: blur(5px); transform: translateY(0); opacity: 1;}
-            100% { filter: blur(0); transform: translateY(10px); opacity: 0.5;}
+        .multiplier-display {
+            position: absolute;
+            font-size: 60px;
+            font-weight: 700;
+            color: #fff;
+            z-index: 10;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
-        .win-animation {
-            animation: winPulse 1s infinite alternate;
-            border-color: var(--gold) !important;
+        .crashed-text { color: var(--red-crash); text-shadow: 0 0 20px rgba(255, 59, 48, 0.5); }
+        
+        /* Loading raketi */
+        .rocket-icon {
+            font-size: 40px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            transition: transform 0.1s;
         }
 
-        @keyframes winPulse {
-            from { box-shadow: 0 0 10px var(--gold); }
-            to { box-shadow: var(--win-glow); }
+        /* İDARƏETMƏ PANELİ */
+        .controls {
+            padding: 20px;
+            background: #111;
+            border-top: 1px solid var(--gold-dim);
         }
 
-        /* İnfo Paneli */
-        .info-panel {
+        .bet-input-group {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            background: #3a3a3a;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .bet-input {
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
             padding: 15px;
-            border-radius: 15px;
-            border: 1px solid #555;
-        }
-
-        .info-box { font-size: 14px; color: #aaa; }
-        .info-value { font-size: 20px; font-weight: bold; color: var(--gold); display: block; margin-top: 5px; }
-
-        .message {
-            min-height: 25px;
-            color: var(--gold);
+            border-radius: 10px;
+            width: 100%;
+            font-size: 18px;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
             font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 16px;
         }
 
-        /* SPIN Düyməsi */
-        .spin-btn {
+        .action-btn {
             width: 100%;
             padding: 20px;
-            background: linear-gradient(180deg, var(--gold) 0%, #a88b2c 100%);
+            border-radius: 12px;
+            font-size: 22px;
+            font-weight: 700;
             border: none;
-            border-radius: 50px;
-            color: #000;
-            font-size: 24px;
-            font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
-            transition: all 0.2s;
             text-transform: uppercase;
+            transition: 0.2s;
         }
 
-        .spin-btn:active { transform: translateY(5px); box-shadow: 0 5px 10px rgba(212, 175, 55, 0.3); }
-        .spin-btn:disabled { filter: grayscale(0.8); cursor: not-allowed; }
+        .btn-bet {
+            background: linear-gradient(180deg, var(--gold) 0%, #947a27 100%);
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
 
-        /* Depozit Düymələri */
-        .actions { margin-top: 30px; display: flex; gap: 15px; }
-        .action-btn {
-            flex: 1;
+        .btn-cashout {
+            background: linear-gradient(180deg, #ff9f0a 0%, #d48806 100%);
+            color: #000;
+            display: none; /* Gizli başlayır */
+        }
+
+        .btn-bet:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* AŞAĞI MENYU (Depozit/Promo) */
+        .footer-menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .footer-btn {
             padding: 12px;
-            background: transparent;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            border-radius: 15px;
-            font-weight: bold;
+            background: #222;
+            color: #888;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 14px;
             cursor: pointer;
-            transition: 0.3s;
         }
-        .action-btn:hover { background: var(--gold); color: #000; }
+        .footer-btn:hover { color: #fff; border-color: #555; }
+
+        /* Mesaj */
+        .status-msg {
+            text-align: center;
+            height: 20px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
 
     </style>
 </head>
 <body>
 
-    <div class="casino-container">
-        <div class="header">Royal Vegas Slots</div>
-
-        <div class="slot-machine">
-            <div class="reel" id="reel1"><span>7️⃣</span></div>
-            <div class="reel" id="reel2"><span>7️⃣</span></div>
-            <div class="reel" id="reel3"><span>7️⃣</span></div>
+    <div class="game-container">
+        <div class="header">
+            <div class="logo">JETWIN</div>
+            <div class="balance-box"><span id="balance">0.00</span> ₼</div>
         </div>
 
-        <div class="message" id="status">Xoş gəlmisiniz!</div>
-
-        <div class="info-panel">
-            <div class="info-box">BALANS<span class="info-value"><span id="balance">0</span> AZN</span></div>
-            <div class="info-box">MƏRC<span class="info-value" style="color:#fff">20 AZN</span></div>
-            <div class="info-box">UDUŞ<span class="info-value">60 AZN</span></div>
+        <div class="stage" id="stage">
+            <canvas id="gameCanvas"></canvas>
+            <div class="multiplier-display" id="multiplier">1.00x</div>
+            <div class="status-msg" id="msg">Mərc edin və başlayın</div>
         </div>
 
-        <button class="spin-btn" id="spinBtn" onclick="spinSlots()">SPIN ⟳</button>
+        <div class="controls">
+            
+            <div class="bet-input-group">
+                <button class="footer-btn" onclick="adjustBet(-5)">-5</button>
+                <input type="number" id="betAmount" class="bet-input" value="10" readonly>
+                <button class="footer-btn" onclick="adjustBet(5)">+5</button>
+            </div>
 
-        <div class="actions">
-            <button class="action-btn" onclick="whatsappAction('depozit')">💰 Balans Artır</button>
-            <button class="action-btn" onclick="whatsappAction('cekim')">🏦 Pulu Çək</button>
+            <button class="action-btn btn-bet" id="betBtn" onclick="placeBet()">MƏRC ET</button>
+            <button class="action-btn btn-cashout" id="cashoutBtn" onclick="cashOut()">PULU GÖTÜR</button>
+
+            <div class="footer-menu">
+                <button class="footer-btn" onclick="openPromo()">🔑 Promo Kod</button>
+                <button class="footer-btn" onclick="whatsappDeposit()">💰 Balans Artır</button>
+            </div>
+            <button class="footer-btn" style="width:100%; margin-top:10px;" onclick="whatsappWithdraw()">🏦 Pulu Çək</button>
         </div>
     </div>
 
     <script>
-        // --- Slot Maşınının Beyni (GitHub-da işləyən versiya) ---
+        // --- JETWIN CORE ENGINE ---
 
         // 1. DƏYİŞƏNLƏR
-        let balance = 0;       // Başlanğıc balans
-        const betCost = 20;    // Mərc haqqı
-        const winPrize = 60;   // Uduş (3 qat)
+        let balance = 0.00;
+        let currentBet = 0;
+        let isPlaying = false;
+        let multiplier = 1.00;
+        let crashPoint = 0;
+        let animationId;
+        
+        // ADMIN VƏ PROMO KODLAR
+        const PROMO_CODES = {
+            "START20": 20,
+            "JETADMIN": 1000 // Admin Kodu (Gizli)
+        };
+        let usedCodes = [];
 
-        // WHATSAPP NÖMRƏNİ BURA YAZ (Vacib!)
-        const adminPhone = "994500000000"; 
+        // WHATSAPP
+        const ADMIN_PHONE = "994507516137"; 
 
-        // 2. TƏNZİMLƏMƏLƏR (Sənin xeyrinə)
-        const WIN_RATE = 0.25; // 25% Şans (Hər 4 dən 1-i udur)
-        const SYMBOLS = ['🍒', '🍋', '🍇', '💎', '🔔', '7️⃣']; // Simvollar
-
-        // Elementləri seçirik
-        const reel1 = document.getElementById('reel1');
-        const reel2 = document.getElementById('reel2');
-        const reel3 = document.getElementById('reel3');
+        // DOM Elementləri
         const balanceEl = document.getElementById('balance');
-        const statusEl = document.getElementById('status');
-        const spinBtn = document.getElementById('spinBtn');
-        const reels = [reel1, reel2, reel3];
+        const multiplierEl = document.getElementById('multiplier');
+        const betBtn = document.getElementById('betBtn');
+        const cashoutBtn = document.getElementById('cashoutBtn');
+        const betInput = document.getElementById('betAmount');
+        const msgEl = document.getElementById('msg');
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
 
-        function updateUI() {
-            balanceEl.innerText = balance;
+        // Canvas ölçüləri
+        function resizeCanvas() {
+            canvas.width = document.querySelector('.stage').offsetWidth;
+            canvas.height = document.querySelector('.stage').offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // UI Yeniləmə
+        function updateBalance() {
+            balanceEl.innerText = balance.toFixed(2);
         }
 
-        // Köməkçi funksiya: Təsadüfi simvol seç
-        function getRandomSymbol() {
-            return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+        function adjustBet(amount) {
+            if(isPlaying) return;
+            let val = parseInt(betInput.value) + amount;
+            if (val < 1) val = 1;
+            betInput.value = val;
         }
 
-        // --- Fırlatma Prosesi ---
-        function spinSlots() {
-            if (balance < betCost) {
-                statusEl.innerText = "Balans kifayət etmir!";
-                statusEl.style.color = "red";
-                setTimeout(() => { statusEl.style.color = "var(--gold)"; }, 1000);
+        // --- OYUN ALQORİTMİ (SƏVİYYƏ 1: Asılılıq Yaradan) ---
+        function generateCrashPoint() {
+            // Şans məntiqi:
+            // 30% ehtimal: 1.00x - 1.20x (Tez partlayış - Uduzdurma)
+            // 40% ehtimal: 1.20x - 2.00x (Kiçik qazanc - Yemi atma)
+            // 25% ehtimal: 2.00x - 5.00x (Yaxşı qazanc)
+            // 5% ehtimal:  5.00x+ (Böyük qazanc - Reklam üçün)
+            
+            const r = Math.random();
+            if (r < 0.30) return (1 + Math.random() * 0.20); 
+            if (r < 0.70) return (1.20 + Math.random() * 0.80);
+            if (r < 0.95) return (2.00 + Math.random() * 3.00);
+            return (5.00 + Math.random() * 10.00);
+        }
+
+        // --- OYUN LOOPU ---
+        function placeBet() {
+            const betVal = parseInt(betInput.value);
+            
+            if (balance < betVal) {
+                alert("Balansınız kifayət etmir!");
                 return;
             }
 
-            // Pulu çıxırıq
-            balance -= betCost;
-            updateUI();
+            // Başlayırıq
+            balance -= betVal;
+            currentBet = betVal;
+            updateBalance();
+            
+            isPlaying = true;
+            multiplier = 1.00;
+            crashPoint = generateCrashPoint();
+            
+            // UI Dəyişimi
+            betBtn.style.display = 'none';
+            cashoutBtn.style.display = 'block';
+            multiplierEl.classList.remove('crashed-text');
+            multiplierEl.style.color = '#fff';
+            msgEl.innerText = "Uçuş başladı...";
 
-            // Düyməni dondururuq
-            spinBtn.disabled = true;
-            statusEl.innerText = "Uğurlar...";
-            reels.forEach(r => {
-                r.classList.remove('win-animation');
-                r.classList.add('spinning'); // Fırlanma effekti
-            });
-
-            // NƏTİCƏNİ ƏVVƏLCƏDƏN TƏYİN EDİRİK (Hiylə buradadır)
-            const isWin = Math.random() < WIN_RATE;
-            let finalResult = [];
-
-            if (isWin) {
-                // Qalib: Eyni 3 simvolu seçirik (Məsələn üç dənə 💎)
-                const winSym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-                finalResult = [winSym, winSym, winSym];
-            } else {
-                // Məğlub: "Near Miss" (Yaxın keçdi) effekti yaradırıq
-                // İki dənə '7', bir dənə 'Limon' qoyuruq ki, yansın.
-                const topSym = '7️⃣';
-                const junkSym = '🍋';
-                // Simvolları qarışdırırıq ki, hər dəfə eyni yerdə çıxmasın
-                finalResult = [topSym, topSym, junkSym].sort(() => Math.random() - 0.5);
-            }
-
-            // Animasiyalı Dayanma (Reellər bir-bir dayanır)
-            let stopDelay = 1000; // İlk reel 1 saniyə sonra dayanır
-
-            reels.forEach((reel, index) => {
-                // Hər reel üçün dayanma vaxtını artırırıq (1s, 1.5s, 2s)
-                setTimeout(() => {
-                    reel.classList.remove('spinning');
-                    reel.innerHTML = `<span>${finalResult[index]}</span>`;
-
-                    // Sonuncu reel dayandıqdan sonra nəticəni yoxla
-                    if (index === 2) {
-                        checkResult(isWin);
-                    }
-                }, stopDelay + (index * 600)); 
-            });
+            // Qrafika başlanğıcı
+            startTime = Date.now();
+            drawGame();
         }
 
-        function checkResult(isWin) {
-            spinBtn.disabled = false;
-
-            if (isWin) {
-                // Uddusa
-                balance += winPrize;
-                statusEl.innerText = "TƏBRİKLƏR! BÖYÜK UDUŞ! 🎉";
-                reels.forEach(r => r.classList.add('win-animation')); // Qızılı işıq saçsın
-            } else {
-                // Uduzdusa
-                // Əgər iki dənə 7 varsa, xüsusi mesaj yaz
-                const sevenCount = [reel1.innerText, reel2.innerText, reel3.innerText].filter(s => s.includes('7️⃣')).length;
-                if(sevenCount === 2) {
-                     statusEl.innerText = "Uyy! Çox yaxın idi! 🔥";
-                } else {
-                     statusEl.innerText = "Təəssüf. Yenidən yoxlayın.";
-                }
-            }
-            updateUI();
-        }
-
-        // WhatsApp Düymələri
-        function whatsappAction(type) {
-            let text = "";
-            if(type === 'depozit') {
-                text = "Salam, Royal Vegas saytında balans artırmaq istəyirəm. Hesab göndərin.";
-            } else {
-                if(balance <= 0) return alert("Çıxarış üçün balans yoxdur.");
-                text = `Salam, balansımda ${balance} AZN var. Çıxarış etmək istəyirəm. ID: User_${Math.floor(Math.random()*999)}`;
-            }
-            window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(text)}`, '_blank');
-        }
+        let startTime;
         
-        // Test üçün (Bunu silə bilərsən)
-        // balance = 100; updateUI();
+        function drawGame() {
+            if (!isPlaying) return;
+
+            // Zamanı hesabla
+            let elapsedTime = (Date.now() - startTime) / 1000;
+            
+            // Əmsal artımı (Eksponential)
+            multiplier = 1 + (elapsedTime * elapsedTime * 0.1) + (elapsedTime * 0.05);
+
+            // PARTLAYIŞ ANI
+            if (multiplier >= crashPoint) {
+                crash();
+                return;
+            }
+
+            // Rəqəmi göstər
+            multiplierEl.innerText = multiplier.toFixed(2) + 'x';
+
+            // Qrafiki çək (Raket izi)
+            ctx.fillStyle = 'rgba(0,0,0,0.1)'; // İzi silmək üçün azca qaralt
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Xətt çəkmək (Simulyasiya)
+            // Bu sadə versiyada sadəcə rəqəm artır, canvas qaralır
+            
+            animationId = requestAnimationFrame(drawGame);
+        }
+
+        function cashOut() {
+            if (!isPlaying) return;
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+
+            const winAmount = currentBet * multiplier;
+            balance += winAmount;
+            updateBalance();
+
+            multiplierEl.style.color = 'var(--green-win)';
+            msgEl.innerText = `QAZANDINIZ: ${winAmount.toFixed(2)} ₼`;
+            msgEl.style.color = 'var(--green-win)';
+
+            resetGameUI();
+        }
+
+        function crash() {
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+            
+            multiplierEl.innerText = crashPoint.toFixed(2) + 'x';
+            multiplierEl.classList.add('crashed-text');
+            msgEl.innerText = "PARTLADI! UDUZDUNUZ.";
+            msgEl.style.color = 'var(--red-crash)';
+
+            resetGameUI();
+        }
+
+        function resetGameUI() {
+            betBtn.style.display = 'block';
+            cashoutBtn.style.display = 'none';
+        }
+
+        // --- SISTEM ---
+        function openPromo() {
+            let code = prompt("Promo kodu daxil edin:");
+            if (!code) return;
+            code = code.toUpperCase().trim();
+
+            if (usedCodes.includes(code) && code !== "JETADMIN") {
+                alert("Bu kod artıq istifadə edilib.");
+                return;
+            }
+
+            if (PROMO_CODES[code]) {
+                balance += PROMO_CODES[code];
+                if(code !== "JETADMIN") usedCodes.push(code); // Admin kodunu təkrar işlətmək olar
+                updateBalance();
+                alert(`Kod qəbul edildi! Balans: +${PROMO_CODES[code]} AZN`);
+            } else {
+                alert("Yanlış kod.");
+            }
+        }
+
+        function whatsappDeposit() {
+            const text = "Salam, JETWIN. Balans artırmaq istəyirəm.";
+            window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function whatsappWithdraw() {
+            if(balance <= 0) { alert("Çıxarış üçün balans yoxdur."); return; }
+            const text = `Salam, balansımda ${balance.toFixed(2)} AZN var. Çıxarış etmək istəyirəm.`;
+            window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(text)}`, '_blank');
+        }
 
     </script>
 </body>
