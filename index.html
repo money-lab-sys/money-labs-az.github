@@ -37,14 +37,12 @@
             justify-content: center; align-items: center; padding: 20px;
         }
 
-        /* Background Animation */
         .bg-anim {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
             background-size: 30px 30px; opacity: 0.3; z-index: -1;
         }
 
-        /* Intro Ticker (Motivation) */
         .intro-ticker-box {
             position: absolute; top: 40px; width: 100%; overflow: hidden;
             background: rgba(255, 215, 0, 0.1); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
@@ -55,7 +53,6 @@
             font-family: 'Rajdhani', sans-serif; font-size: 18px; color: var(--gold); font-weight: bold;
         }
 
-        /* Login Card */
         .login-card {
             background: rgba(20, 20, 20, 0.9); border: 1px solid #333;
             padding: 30px; border-radius: 20px; width: 100%; max-width: 400px;
@@ -86,7 +83,6 @@
         /* --- 2. MAIN APP UI --- */
         #appLayer { display: none; flex-direction: column; height: 100%; width: 100%; }
 
-        /* Header */
         .header {
             height: 65px; background: #080808; border-bottom: 1px solid #222;
             display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
@@ -95,7 +91,6 @@
         .user-name { color: var(--gold); font-weight: bold; font-size: 14px; }
         .user-id { color: #555; font-size: 10px; }
 
-        /* Online Counter */
         .live-count {
             position: absolute; top: 75px; left: 20px; z-index: 20;
             background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 15px;
@@ -105,7 +100,6 @@
         .live-dot { width: 6px; height: 6px; background: #00ff66; border-radius: 50%; animation: blink 2s infinite; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
 
-        /* Game Stage */
         .stage { flex: 1; position: relative; overflow: hidden; background: radial-gradient(circle at bottom, #1a233a 0%, #000 100%); }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
@@ -115,7 +109,6 @@
             text-shadow: 0 0 30px var(--blue); font-family: 'Rajdhani', sans-serif;
         }
 
-        /* Controls */
         .controls { background: var(--panel); padding: 20px; border-top: 1px solid #222; box-shadow: 0 -10px 30px #000; }
         
         .bet-input-wrap { position: relative; margin-bottom: 15px; }
@@ -132,7 +125,6 @@
         .btn-bet { background: linear-gradient(135deg, var(--blue), #2962ff); color: white; }
         .btn-cash { background: linear-gradient(135deg, var(--gold), #ff6f00); color: black; display: none; }
 
-        /* Sticky Nav */
         .nav {
             height: 70px; background: #050505; display: flex; border-top: 1px solid #222;
         }
@@ -141,7 +133,6 @@
         .nav-item.active { color: var(--blue); }
         .nav-item:active { transform: scale(0.9); }
 
-        /* Animation Classes */
         .crashed { color: var(--red) !important; text-shadow: 0 0 30px var(--red) !important; animation: shake 0.4s; }
         .won { color: var(--green) !important; text-shadow: 0 0 30px var(--green) !important; }
         @keyframes shake { 0%, 100% {transform: translate(0,0);} 25% {transform: translate(-5px, 5px);} 75% {transform: translate(5px, -5px);} }
@@ -153,37 +144,18 @@
 
     <div id="introLayer">
         <div class="bg-anim"></div>
-        
         <div class="intro-ticker-box">
             <div class="intro-ticker">
                 🚀 ELVIN QAZANDI $500 • 💰 LEYLA M. QAZANDI $1,200 • 🔥 RƏŞAD K. QAZANDI $340 • 💎 BU GÜN SƏNİN GÜNÜNDÜR • 🚀
             </div>
         </div>
-
         <div class="login-card">
             <div class="login-logo">JETWIN <span style="color:var(--blue)">TITANIUM</span></div>
-            <p class="login-sub">
-                Dünyanın ən sürətli qazanc platformasına xoş gəldiniz.<br>
-                Davam etmək üçün özəl giriş məlumatlarınızı doldurun.
-            </p>
-
-            <div class="inp-group">
-                <label class="inp-label">Adınız</label>
-                <input type="text" id="regName" class="inp" placeholder="Məs: Elvin">
-            </div>
-            
-            <div class="inp-group">
-                <label class="inp-label">Soyadınız</label>
-                <input type="text" id="regSurname" class="inp" placeholder="Məs: Məmmədov">
-            </div>
-
-            <div class="inp-group">
-                <label class="inp-label">Gmail</label>
-                <input type="email" id="regEmail" class="inp" placeholder="email@gmail.com">
-            </div>
-
+            <p class="login-sub">Dünyanın ən sürətli qazanc platformasına xoş gəldiniz.<br>Giriş üçün məlumatları doldurun.</p>
+            <div class="inp-group"><label class="inp-label">Adınız</label><input type="text" id="regName" class="inp" placeholder="Məs: Elvin"></div>
+            <div class="inp-group"><label class="inp-label">Soyadınız</label><input type="text" id="regSurname" class="inp" placeholder="Məs: Məmmədov"></div>
+            <div class="inp-group"><label class="inp-label">Gmail</label><input type="email" id="regEmail" class="inp" placeholder="email@gmail.com"></div>
             <button class="btn-join" onclick="registerUser()">QAZANMAĞA BAŞLA ➔</button>
-            <p style="font-size:10px; color:#444; margin-top:15px;">By clicking, you agree to become a millionaire.</p>
         </div>
     </div>
 
@@ -195,34 +167,25 @@
                 <div class="user-name" id="displayName">Guest</div>
             </div>
         </div>
-
         <div class="stage" id="stage">
             <div class="live-count"><div class="live-dot"></div> 1,420 Online</div>
             <canvas id="stars"></canvas>
             <canvas id="game"></canvas>
-            
             <div class="multiplier" id="multi">1.00x</div>
-            
-            <div style="position:absolute; bottom:20px; width:100%; text-align:center; color:#555; font-size:10px; letter-spacing:1px;">
-                PROVABLY FAIR SYSTEM
-            </div>
+            <div style="position:absolute; bottom:20px; width:100%; text-align:center; color:#555; font-size:10px; letter-spacing:1px;">PROVABLY FAIR SYSTEM</div>
         </div>
-
         <div class="controls">
             <div style="display:flex; justify-content:space-between; color:#888; font-size:12px; margin-bottom:5px;">
                 <span>Balans: <b style="color:white;">$<span id="bal">0.00</span></b></span>
                 <span>Limit: <b>$21</b></span>
             </div>
-            
             <div class="bet-input-wrap">
                 <span class="currency-icon">$</span>
                 <input type="number" id="betVal" class="bet-input" value="10">
             </div>
-
             <button class="main-btn btn-bet" id="btnBet" onclick="play()">MƏRC ET</button>
             <button class="main-btn btn-cash" id="btnCash" onclick="cashOut()">PULU GÖTÜR</button>
         </div>
-
         <div class="nav">
             <div class="nav-item active"><i class="fa-solid fa-gamepad"></i>Oyun</div>
             <div class="nav-item" onclick="openPromo()"><i class="fa-solid fa-ticket"></i>Promo</div>
@@ -233,8 +196,9 @@
     </div>
 
     <script>
-        // --- CONFIG ---
-        const API_URL = "https://script.google.com/macros/s/AKfycbzjCXZJ5XL2jVGH9keYxdySa78yTxaSOtTL9sKVxU-UzKKPGyHLi363eR_i-OHuinHMNg/exec"; 
+        // --- CONFIG (SƏNİN YENİ LİNKİN) ---
+        const API_URL = "https://script.google.com/macros/s/AKfycbxKhaec1LhNpVEddiDzAq7Pf0j7tLWF8MJcY9Yzn0HIyjOr0XxgmRc_GzcyqQD4dX-QVQ/exec"; 
+        
         const WA_NUMBER = "994507516137";
         const MIN_WITHDRAW = 21;
 
@@ -246,8 +210,7 @@
         let crashPoint = 0;
         let startTime, animFrame;
 
-        // --- 1. REGISTRATION SYSTEM ---
-        // Avtomatik giriş yoxlanışı
+        // --- 1. REGISTRATION ---
         if(localStorage.getItem('jw_user_fullname')) {
             showApp(localStorage.getItem('jw_user_fullname'));
         }
@@ -263,19 +226,12 @@
             }
 
             let fullName = `${name} ${surname}`;
-            
-            // Save Data Locally (Simulate Database)
             localStorage.setItem('jw_user_fullname', fullName);
-            localStorage.setItem('jw_user_email', email);
-
-            // Button Loading Effect
+            
             let btn = document.querySelector('.btn-join');
             btn.innerText = "HESAB YARADILIR...";
             btn.style.opacity = "0.7";
-
-            setTimeout(() => {
-                showApp(fullName);
-            }, 1500);
+            setTimeout(() => { showApp(fullName); }, 1500);
         }
 
         function showApp(name) {
@@ -294,16 +250,14 @@
         function initGame() {
             resize();
             drawStars();
-            runGhost(); // Idle animation
+            runGhost(); 
         }
-        
         function resize() {
             w = cvs.width = document.getElementById('stage').offsetWidth;
             h = cvs.height = document.getElementById('stage').offsetHeight;
         }
         window.addEventListener('resize', resize);
 
-        // Ghost Mode (Idle)
         function runGhost() {
             if(isPlaying) return;
             multi = 1.00;
@@ -338,11 +292,10 @@
             document.getElementById('multi').style.color = "white";
             document.getElementById('multi').classList.remove('crashed', 'won');
 
-            // --- SNIPER ALGORITHM ---
             let r = Math.random();
-            if(val >= 50) crashPoint = 1.00 + Math.random() * 0.15; // Instant Loss
-            else if(val >= 20) crashPoint = 1.10 + Math.random() * 0.60; // High Risk
-            else crashPoint = r < 0.5 ? 2.00 + Math.random()*3 : 1.20 + Math.random()*0.5; // Tease
+            if(val >= 50) crashPoint = 1.00 + Math.random() * 0.15; 
+            else if(val >= 20) crashPoint = 1.10 + Math.random() * 0.60; 
+            else crashPoint = r < 0.5 ? 2.00 + Math.random()*3 : 1.20 + Math.random()*0.5;
 
             startTime = Date.now();
             loop();
@@ -388,8 +341,6 @@
             isPlaying = false; cancelAnimationFrame(animFrame);
             document.getElementById('multi').innerText = "CRASH";
             document.getElementById('multi').classList.add('crashed');
-            
-            // Shake Effect
             ctx.fillStyle = "rgba(255, 0, 51, 0.2)"; ctx.fillRect(0,0,w,h);
             setTimeout(reset, 2000);
         }
@@ -404,7 +355,7 @@
 
         function updateUI() { document.getElementById('bal').innerText = balance.toFixed(2); }
 
-        // --- BUTTON ACTIONS ---
+        // --- PROMO CODE SYSTEM ---
         async function openPromo() {
             let code = prompt("Promo Kodu:");
             if(!code) return;
@@ -417,7 +368,7 @@
                     if(code.startsWith("DEP") || code.startsWith("VIP")) totalDep += amt;
                     updateUI(); alert(`✅ Təbriklər! +$${amt}`);
                 } else alert(`❌ ${data.msg}`);
-            } catch(e) { alert("Xəta!"); }
+            } catch(e) { alert("Server Xətası! İnternetinizi yoxlayın."); }
         }
 
         function checkWithdraw() {
@@ -432,7 +383,6 @@
             window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(txt)}`, '_blank');
         }
 
-        // Stars
         const sCtx = document.getElementById('stars').getContext('2d');
         function drawStars() {
             sCtx.clearRect(0,0,w,h); sCtx.fillStyle = "rgba(255,255,255,0.3)";
