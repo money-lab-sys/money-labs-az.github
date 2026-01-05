@@ -2,417 +2,556 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JETWIN | Official</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0f1923">
+    <title>JETWIN | VIP</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- JETWIN PREMIUM DARK THEME --- */
+        /* --- JETWIN VIP STYLE --- */
         :root {
-            --bg-color: #0a0a0a;
-            --panel-color: #141414;
-            --gold: #d4af37;
-            --gold-dim: #8a701e;
-            --text-color: #ffffff;
-            --red-crash: #ff3b30;
-            --green-win: #34c759;
+            --bg-dark: #0f1923; 
+            --panel-bg: #151f2b;
+            --neon-blue: #00f2ff;
+            --neon-purple: #bc13fe;
+            --crash-red: #ff4655;
+            --win-green: #09ff00;
+            --gold: #ffd700;
         }
 
-        * { box-sizing: border-box; touch-action: manipulation; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Rajdhani', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-
-        .game-container {
-            width: 100%;
-            max-width: 480px;
-            background: var(--panel-color);
-            height: 100vh;
+            background-color: var(--bg-dark);
+            font-family: 'Montserrat', sans-serif;
+            color: white;
             display: flex;
             flex-direction: column;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            width: 100%;
         }
 
-        /* HEADER */
+        /* --- CANLI LENT (TICKER) --- */
+        .news-ticker {
+            background: linear-gradient(90deg, #1a1a1a, #000);
+            color: #ccc;
+            font-size: 11px;
+            padding: 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            border-bottom: 1px solid #333;
+            position: relative;
+            z-index: 60;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: scroll-left 20s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .winner-span { color: var(--gold); font-weight: bold; margin-right: 20px; }
+
+        /* --- HEADER --- */
         .header {
-            padding: 15px 20px;
+            height: 55px;
+            background: rgba(15, 25, 35, 0.98);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 15px;
             border-bottom: 1px solid #333;
-            background: rgba(20, 20, 20, 0.9);
+            z-index: 50;
         }
 
         .logo {
-            font-size: 24px;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .balance-pill {
+            background: #253341;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-family: 'Roboto Mono', monospace;
             font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 14px;
             color: var(--gold);
-        }
-
-        .balance-box {
-            background: #222;
-            padding: 5px 15px;
-            border-radius: 50px;
-            border: 1px solid var(--gold-dim);
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        /* OYUN SAHƏSİ (CANVAS) */
-        .stage {
-            flex: 1;
-            position: relative;
-            background: radial-gradient(circle at bottom left, #1a1a1a, #000);
-            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.2);
             display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* --- INTRO / WELCOME SCREEN (NEW!) --- */
+        .welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-
-        canvas {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .multiplier-display {
-            position: absolute;
-            font-size: 60px;
-            font-weight: 700;
-            color: #fff;
-            z-index: 10;
-            text-shadow: 0 0 20px rgba(255,255,255,0.2);
-        }
-
-        .crashed-text { color: var(--red-crash); text-shadow: 0 0 20px rgba(255, 59, 48, 0.5); }
-        
-        /* Loading raketi */
-        .rocket-icon {
-            font-size: 40px;
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            transition: transform 0.1s;
-        }
-
-        /* İDARƏETMƏ PANELİ */
-        .controls {
-            padding: 20px;
-            background: #111;
-            border-top: 1px solid var(--gold-dim);
-        }
-
-        .bet-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .bet-input {
-            background: #222;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            width: 100%;
-            font-size: 18px;
             text-align: center;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: bold;
+            padding: 30px;
+            transition: opacity 0.5s;
         }
 
-        .action-btn {
+        .welcome-box {
+            background: #1a2733;
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+            max-width: 400px;
             width: 100%;
-            padding: 20px;
-            border-radius: 12px;
-            font-size: 22px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
+        }
+
+        .welcome-title {
+            font-size: 26px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 10px;
             text-transform: uppercase;
-            transition: 0.2s;
         }
 
-        .btn-bet {
-            background: linear-gradient(180deg, var(--gold) 0%, #947a27 100%);
-            color: #000;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-        }
-
-        .btn-cashout {
-            background: linear-gradient(180deg, #ff9f0a 0%, #d48806 100%);
-            color: #000;
-            display: none; /* Gizli başlayır */
-        }
-
-        .btn-bet:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* AŞAĞI MENYU (Depozit/Promo) */
-        .footer-menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .footer-btn {
-            padding: 12px;
-            background: #222;
-            color: #888;
-            border: 1px solid #333;
-            border-radius: 8px;
+        .welcome-text {
             font-size: 14px;
+            color: #aaa;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            text-align: left;
+            margin-bottom: 25px;
+            color: #ddd;
+            font-size: 14px;
+        }
+        .feature-item { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+        .start-btn {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 900;
+            border-radius: 50px;
             cursor: pointer;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(188, 19, 254, 0.4);
+            animation: pulse 2s infinite;
         }
-        .footer-btn:hover { color: #fff; border-color: #555; }
 
-        /* Mesaj */
-        .status-msg {
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- OYUN SAHƏSİ --- */
+        .game-stage {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(circle at center, #1a2733 0%, #0f1923 100%);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        canvas { display: block; width: 100%; height: 100%; }
+
+        .multiplier-overlay {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
-            height: 20px;
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 5px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .multiplier-big {
+            font-size: 60px;
+            font-weight: 900;
+            font-family: 'Roboto Mono', monospace;
+            color: white;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        .status-text { font-size: 14px; color: #888; margin-top: 5px; font-weight: 500; }
+
+        .crashed-style {
+            color: var(--crash-red) !important;
+            text-shadow: 0 0 25px rgba(255, 70, 85, 0.6) !important;
+            animation: shake 0.4s both;
+        }
+
+        /* --- CONTROL PANEL --- */
+        .controls-area {
+            background: var(--panel-bg);
+            padding: 15px;
+            padding-bottom: 25px;
+            border-top: 2px solid #2a3b4c;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 50;
+        }
+
+        .bet-row { display: flex; gap: 8px; height: 45px; }
+        .quick-btn { background: #2c3e50; border: none; color: #ccc; border-radius: 8px; font-weight: bold; width: 50px; }
+        .bet-input-container { flex: 1; position: relative; }
+        
+        .bet-input {
+            width: 100%; height: 100%; background: #0f1923;
+            border: 1px solid #444; border-radius: 8px; color: white;
+            font-size: 18px; font-weight: bold; text-align: center;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .main-btn {
+            width: 100%; height: 60px; border-radius: 12px;
+            font-size: 22px; font-weight: 900; text-transform: uppercase;
+            cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .btn-green { background: linear-gradient(92deg, #00b09b 0%, #96c93d 100%); color: #052b00; }
+        .btn-orange { background: linear-gradient(92deg, #ff9966 0%, #ff5e62 100%); color: white; display: none; }
+
+        .footer-actions { display: flex; justify-content: space-between; gap: 8px; }
+        .link-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #999; padding: 10px 0; border-radius: 8px; font-size: 11px;
+            font-weight: 600; flex: 1; cursor: pointer;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="game-container">
-        <div class="header">
-            <div class="logo">JETWIN</div>
-            <div class="balance-box"><span id="balance">0.00</span> ₼</div>
-        </div>
-
-        <div class="stage" id="stage">
-            <canvas id="gameCanvas"></canvas>
-            <div class="multiplier-display" id="multiplier">1.00x</div>
-            <div class="status-msg" id="msg">Mərc edin və başlayın</div>
-        </div>
-
-        <div class="controls">
+    <div class="welcome-overlay" id="welcomeScreen">
+        <div class="welcome-box">
+            <div class="welcome-title">JETWIN <span style="color:var(--neon-blue)">VIP</span></div>
+            <p class="welcome-text">Azərbaycanın ən sürətli və etibarlı Crash oyunu.</p>
             
-            <div class="bet-input-group">
-                <button class="footer-btn" onclick="adjustBet(-5)">-5</button>
-                <input type="number" id="betAmount" class="bet-input" value="10" readonly>
-                <button class="footer-btn" onclick="adjustBet(5)">+5</button>
+            <div class="feature-list">
+                <div class="feature-item">⚡ <b>Sürətli Ödənişlər</b> (Anında kartda)</div>
+                <div class="feature-item">🔥 <b>Yüksək Əmsallar</b> (50x-ə qədər)</div>
+                <div class="feature-item">🔒 <b>100% Təhlükəsiz</b> və Şəffaf</div>
             </div>
 
-            <button class="action-btn btn-bet" id="betBtn" onclick="placeBet()">MƏRC ET</button>
-            <button class="action-btn btn-cashout" id="cashoutBtn" onclick="cashOut()">PULU GÖTÜR</button>
+            <button class="start-btn" onclick="closeWelcome()">OYUNA BAŞLA 🚀</button>
+        </div>
+    </div>
 
-            <div class="footer-menu">
-                <button class="footer-btn" onclick="openPromo()">🔑 Promo Kod</button>
-                <button class="footer-btn" onclick="whatsappDeposit()">💰 Balans Artır</button>
+    <div class="news-ticker">
+        <div class="ticker-content" id="tickerText">
             </div>
-            <button class="footer-btn" style="width:100%; margin-top:10px;" onclick="whatsappWithdraw()">🏦 Pulu Çək</button>
+    </div>
+
+    <div class="header">
+        <div class="logo">JETWIN</div>
+        <div class="balance-pill">
+            <span id="balance">0.00</span> ₼
+        </div>
+    </div>
+
+    <div class="game-stage" id="stage">
+        <canvas id="starsCanvas"></canvas>
+        <canvas id="graphCanvas"></canvas>
+        
+        <div class="multiplier-overlay">
+            <div class="multiplier-big" id="multiplierDisplay">1.00x</div>
+            <div class="status-text" id="statusText">Mərcinizi edin</div>
+        </div>
+    </div>
+
+    <div class="controls-area">
+        <div class="bet-row">
+            <button class="quick-btn" onclick="changeBet(-5)">-5</button>
+            <div class="bet-input-container">
+                <input type="number" id="betInput" class="bet-input" value="10" readonly>
+            </div>
+            <button class="quick-btn" onclick="changeBet(5)">+5</button>
+            <button class="quick-btn" onclick="changeBet(20)">+20</button>
+        </div>
+
+        <button class="main-btn btn-green" id="betBtn" onclick="startGame()">MƏRC ET</button>
+        <button class="main-btn btn-orange" id="cashoutBtn" onclick="cashOut()">PULU GÖTÜR</button>
+
+        <div class="footer-actions">
+            <button class="link-btn" onclick="openPromo()">🔑 PROMO</button>
+            <button class="link-btn" onclick="contactAdmin('depozit')">💰 DEPOZİT</button>
+            <button class="link-btn" onclick="contactAdmin('cekim')">🏦 ÇIXARIŞ</button>
         </div>
     </div>
 
     <script>
-        // --- JETWIN CORE ENGINE ---
+        // --- JETWIN SYSTEM V5.0 ---
 
         // 1. DƏYİŞƏNLƏR
         let balance = 0.00;
-        let currentBet = 0;
+        const ADMIN_PHONE = "994507516137"; 
+        
+        const CODES = {
+            "START20": 20,
+            "JETADMIN": 1000 
+        };
+        let usedCodes = JSON.parse(localStorage.getItem('JETWIN_USED_CODES')) || [];
+
+        // OYUN LOGİKASI
         let isPlaying = false;
+        let currentBet = 0;
         let multiplier = 1.00;
         let crashPoint = 0;
-        let animationId;
-        
-        // ADMIN VƏ PROMO KODLAR
-        const PROMO_CODES = {
-            "START20": 20,
-            "JETADMIN": 1000 // Admin Kodu (Gizli)
-        };
-        let usedCodes = [];
+        let startTime;
+        let animationFrame;
 
-        // WHATSAPP
-        const ADMIN_PHONE = "994507516137"; 
-
-        // DOM Elementləri
+        // UI ELEMENTLƏRİ
         const balanceEl = document.getElementById('balance');
-        const multiplierEl = document.getElementById('multiplier');
+        const multiEl = document.getElementById('multiplierDisplay');
+        const statusText = document.getElementById('statusText');
         const betBtn = document.getElementById('betBtn');
         const cashoutBtn = document.getElementById('cashoutBtn');
-        const betInput = document.getElementById('betAmount');
-        const msgEl = document.getElementById('msg');
-        const canvas = document.getElementById('gameCanvas');
+        const betInput = document.getElementById('betInput');
+
+        // CANVAS
+        const canvas = document.getElementById('graphCanvas');
         const ctx = canvas.getContext('2d');
+        const starsCanvas = document.getElementById('starsCanvas');
+        const sCtx = starsCanvas.getContext('2d');
+        let width, height;
 
-        // Canvas ölçüləri
-        function resizeCanvas() {
-            canvas.width = document.querySelector('.stage').offsetWidth;
-            canvas.height = document.querySelector('.stage').offsetHeight;
+        // --- TICKER SİSTEMİ (MOTİVASİYA) ---
+        const fakeWinners = [
+            "Elvin_99 qazandı 45 AZN", "Murad.K qazandı 120 AZN", "Aysel_Baku qazandı 80 AZN",
+            "User777 qazandı 200 AZN", "Kamran_Az qazandı 35 AZN", "Samir.M qazandı 500 AZN"
+        ];
+        
+        function startTicker() {
+            const container = document.getElementById('tickerText');
+            let textHTML = "";
+            // Təsadüfi olaraq qalibləri düzürük
+            for(let i=0; i<10; i++) {
+                let randomWin = fakeWinners[Math.floor(Math.random() * fakeWinners.length)];
+                textHTML += `<span class="winner-span">🎉 ${randomWin}</span>`;
+            }
+            container.innerHTML = textHTML;
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        startTicker();
 
-        // UI Yeniləmə
-        function updateBalance() {
-            balanceEl.innerText = balance.toFixed(2);
+        // --- WELCOME SCREEN ---
+        function closeWelcome() {
+            const screen = document.getElementById('welcomeScreen');
+            screen.style.opacity = '0';
+            setTimeout(() => { screen.style.display = 'none'; }, 500);
         }
 
-        function adjustBet(amount) {
+        // --- OYUN ENGINE ---
+        function resize() {
+            width = canvas.width = starsCanvas.width = document.getElementById('stage').offsetWidth;
+            height = canvas.height = starsCanvas.height = document.getElementById('stage').offsetHeight;
+            initStars();
+        }
+        window.addEventListener('resize', resize);
+        
+        let stars = [];
+        function initStars() {
+            stars = [];
+            for(let i=0; i<80; i++) {
+                stars.push({
+                    x: Math.random() * width, y: Math.random() * height,
+                    size: Math.random() * 1.5, speed: Math.random() * 0.5 + 0.1
+                });
+            }
+        }
+        function drawStars() {
+            sCtx.clearRect(0, 0, width, height);
+            sCtx.fillStyle = "rgba(255, 255, 255, 0.6)";
+            stars.forEach(s => {
+                s.y += s.speed;
+                if(s.y > height) s.y = 0;
+                sCtx.beginPath(); sCtx.arc(s.x, s.y, s.size, 0, Math.PI*2); sCtx.fill();
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        function changeBet(val) {
             if(isPlaying) return;
-            let val = parseInt(betInput.value) + amount;
-            if (val < 1) val = 1;
-            betInput.value = val;
+            let v = parseInt(betInput.value) + val;
+            if(v < 1) v = 1;
+            betInput.value = v;
         }
 
-        // --- OYUN ALQORİTMİ (SƏVİYYƏ 1: Asılılıq Yaradan) ---
-        function generateCrashPoint() {
-            // Şans məntiqi:
-            // 30% ehtimal: 1.00x - 1.20x (Tez partlayış - Uduzdurma)
-            // 40% ehtimal: 1.20x - 2.00x (Kiçik qazanc - Yemi atma)
-            // 25% ehtimal: 2.00x - 5.00x (Yaxşı qazanc)
-            // 5% ehtimal:  5.00x+ (Böyük qazanc - Reklam üçün)
-            
-            const r = Math.random();
-            if (r < 0.30) return (1 + Math.random() * 0.20); 
-            if (r < 0.70) return (1.20 + Math.random() * 0.80);
-            if (r < 0.95) return (2.00 + Math.random() * 3.00);
-            return (5.00 + Math.random() * 10.00);
-        }
-
-        // --- OYUN LOOPU ---
-        function placeBet() {
-            const betVal = parseInt(betInput.value);
-            
-            if (balance < betVal) {
-                alert("Balansınız kifayət etmir!");
+        function startGame() {
+            let bet = parseInt(betInput.value);
+            if(balance < bet) {
+                statusText.innerText = "Balans kifayət etmir!";
+                statusText.style.color = "#ff4655";
+                setTimeout(() => { statusText.innerText = "Mərcinizi edin"; statusText.style.color = "#888"; }, 2000);
                 return;
             }
 
-            // Başlayırıq
-            balance -= betVal;
-            currentBet = betVal;
-            updateBalance();
-            
+            balance -= bet;
+            currentBet = bet;
+            updateUI();
+
             isPlaying = true;
             multiplier = 1.00;
-            crashPoint = generateCrashPoint();
+            multiEl.innerText = "1.00x";
+            multiEl.classList.remove('crashed-style');
+            multiEl.style.color = "white";
+            statusText.innerText = "🚀 Uçuşda...";
+            statusText.style.color = "#00f2ff";
             
-            // UI Dəyişimi
             betBtn.style.display = 'none';
             cashoutBtn.style.display = 'block';
-            multiplierEl.classList.remove('crashed-text');
-            multiplierEl.style.color = '#fff';
-            msgEl.innerText = "Uçuş başladı...";
 
-            // Qrafika başlanğıcı
+            crashPoint = getCrashPoint();
             startTime = Date.now();
-            drawGame();
+            loop();
         }
 
-        let startTime;
-        
-        function drawGame() {
-            if (!isPlaying) return;
+        function getCrashPoint() {
+            const r = Math.random();
+            if(r < 0.35) return 1.05 + Math.random() * 0.45; 
+            if(r < 0.70) return 1.50 + Math.random() * 1.50; 
+            if(r < 0.90) return 3.00 + Math.random() * 4.00; 
+            return 10.00 + Math.random() * 20.00;            
+        }
 
-            // Zamanı hesabla
-            let elapsedTime = (Date.now() - startTime) / 1000;
-            
-            // Əmsal artımı (Eksponential)
-            multiplier = 1 + (elapsedTime * elapsedTime * 0.1) + (elapsedTime * 0.05);
+        function loop() {
+            if(!isPlaying) return;
+            let elapsed = (Date.now() - startTime) / 1000;
+            multiplier = 1.00 + (elapsed * elapsed * 0.08); 
 
-            // PARTLAYIŞ ANI
-            if (multiplier >= crashPoint) {
+            if(multiplier >= crashPoint) {
                 crash();
                 return;
             }
 
-            // Rəqəmi göstər
-            multiplierEl.innerText = multiplier.toFixed(2) + 'x';
+            multiEl.innerText = multiplier.toFixed(2) + "x";
+            drawGraph(elapsed);
+            animationFrame = requestAnimationFrame(loop);
+        }
 
-            // Qrafiki çək (Raket izi)
-            ctx.fillStyle = 'rgba(0,0,0,0.1)'; // İzi silmək üçün azca qaralt
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Xətt çəkmək (Simulyasiya)
-            // Bu sadə versiyada sadəcə rəqəm artır, canvas qaralır
+        function drawGraph(t) {
+            ctx.clearRect(0, 0, width, height);
+            ctx.beginPath(); ctx.lineWidth = 4; ctx.strokeStyle = "#00f2ff"; ctx.lineCap = "round";
             
-            animationId = requestAnimationFrame(drawGame);
+            let startX = 0; let startY = height;
+            let endX = Math.min(width - 20, t * 60); 
+            let endY = height - Math.min(height - 50, (multiplier - 1) * 120);
+
+            ctx.moveTo(startX, startY);
+            ctx.quadraticCurveTo(endX / 2, height, endX, endY);
+            ctx.stroke();
+
+            // Glow Effect
+            ctx.shadowBlur = 15; ctx.shadowColor = "#00f2ff"; ctx.stroke(); ctx.shadowBlur = 0;
+
+            ctx.font = "30px Arial"; ctx.fillText("🚀", endX - 15, endY - 10);
         }
 
         function cashOut() {
-            if (!isPlaying) return;
+            if(!isPlaying) return;
             isPlaying = false;
-            cancelAnimationFrame(animationId);
+            cancelAnimationFrame(animationFrame);
 
-            const winAmount = currentBet * multiplier;
+            let winAmount = currentBet * multiplier;
             balance += winAmount;
-            updateBalance();
+            updateUI();
 
-            multiplierEl.style.color = 'var(--green-win)';
-            msgEl.innerText = `QAZANDINIZ: ${winAmount.toFixed(2)} ₼`;
-            msgEl.style.color = 'var(--green-win)';
-
-            resetGameUI();
+            multiEl.style.color = "#09ff00";
+            statusText.innerText = `QAZANDINIZ: ${winAmount.toFixed(2)} ₼`;
+            statusText.style.color = "#09ff00";
+            resetGame();
         }
 
         function crash() {
             isPlaying = false;
-            cancelAnimationFrame(animationId);
+            cancelAnimationFrame(animationFrame);
+
+            multiEl.innerText = crashPoint.toFixed(2) + "x";
+            multiEl.classList.add('crashed-style');
+            statusText.innerText = "PARTLADI! 💥";
+            statusText.style.color = "#ff4655";
             
-            multiplierEl.innerText = crashPoint.toFixed(2) + 'x';
-            multiplierEl.classList.add('crashed-text');
-            msgEl.innerText = "PARTLADI! UDUZDUNUZ.";
-            msgEl.style.color = 'var(--red-crash)';
-
-            resetGameUI();
+            ctx.fillStyle = "rgba(255, 70, 85, 0.2)";
+            ctx.fillRect(0, 0, width, height);
+            resetGame();
         }
 
-        function resetGameUI() {
-            betBtn.style.display = 'block';
-            cashoutBtn.style.display = 'none';
+        function resetGame() {
+            setTimeout(() => {
+                betBtn.style.display = 'block';
+                cashoutBtn.style.display = 'none';
+                ctx.clearRect(0,0, width, height);
+                multiEl.classList.remove('crashed-style');
+                multiEl.style.color = "white";
+                multiEl.innerText = "1.00x";
+                statusText.innerText = "Mərcinizi edin";
+                statusText.style.color = "#888";
+            }, 2500);
         }
 
-        // --- SISTEM ---
+        function updateUI() { balanceEl.innerText = balance.toFixed(2); }
+
         function openPromo() {
-            let code = prompt("Promo kodu daxil edin:");
-            if (!code) return;
+            let code = prompt("Promo Kodu daxil edin:");
+            if(!code) return;
             code = code.toUpperCase().trim();
 
-            if (usedCodes.includes(code) && code !== "JETADMIN") {
-                alert("Bu kod artıq istifadə edilib.");
+            if(usedCodes.includes(code) && code !== "JETADMIN") {
+                alert("❌ XƏTA: Bu kod artıq istifadə olunub!");
                 return;
             }
 
-            if (PROMO_CODES[code]) {
-                balance += PROMO_CODES[code];
-                if(code !== "JETADMIN") usedCodes.push(code); // Admin kodunu təkrar işlətmək olar
-                updateBalance();
-                alert(`Kod qəbul edildi! Balans: +${PROMO_CODES[code]} AZN`);
+            if(CODES[code]) {
+                balance += CODES[code];
+                if(code !== "JETADMIN") {
+                    usedCodes.push(code);
+                    localStorage.setItem('JETWIN_USED_CODES', JSON.stringify(usedCodes));
+                }
+                updateUI();
+                alert(`✅ Uğurlu! Balans: +${CODES[code]} AZN`);
             } else {
-                alert("Yanlış kod.");
+                alert("❌ Yanlış kod.");
             }
         }
 
-        function whatsappDeposit() {
-            const text = "Salam, JETWIN. Balans artırmaq istəyirəm.";
+        function contactAdmin(type) {
+            let text = "";
+            if(type === 'depozit') text = "Salam, JETWIN VIP. Balans artırmaq istəyirəm.";
+            else {
+                if(balance <= 0) return alert("Balansınız yoxdur!");
+                text = `Salam, balansımda ${balance.toFixed(2)} AZN var. Çıxarış etmək istəyirəm.`;
+            }
             window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        function whatsappWithdraw() {
-            if(balance <= 0) { alert("Çıxarış üçün balans yoxdur."); return; }
-            const text = `Salam, balansımda ${balance.toFixed(2)} AZN var. Çıxarış etmək istəyirəm.`;
-            window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(text)}`, '_blank');
-        }
+        // Başlanğıc
+        resize(); drawStars(); updateUI();
 
     </script>
 </body>
