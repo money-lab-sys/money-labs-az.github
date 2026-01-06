@@ -6,179 +6,145 @@
     <meta name="theme-color" content="#0b0f19">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>JETWIN | ROYAL CASINO</title>
+    <title>JETWIN | PRO</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CORE MOBILE STYLES --- */
+        /* --- CORE STYLES --- */
         :root {
-            --bg: #0b0f19;
-            --panel: #151a25;
-            --primary: #007aff; /* iOS Blue */
-            --accent: #00d4ff;  /* Cyan */
-            --gold: #ffcc00;
-            --green: #34c759;
-            --red: #ff3b30;
-            --text: #ffffff;
-            --text-mute: #8e8e93;
+            --bg: #0b0f19; --panel: #151a25; --primary: #007aff; --accent: #00d4ff; 
+            --gold: #ffcc00; --green: #34c759; --red: #ff3b30; --text: #ffffff; --text-mute: #8e8e93;
         }
-
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; outline: none; }
-        
         body {
             margin: 0; padding: 0; background-color: var(--bg); color: var(--text);
-            font-family: 'Inter', sans-serif;
-            height: 100vh; height: 100dvh; /* Dynamic viewport for mobile */
+            font-family: 'Inter', sans-serif; height: 100vh; height: 100dvh;
             overflow: hidden; display: flex; flex-direction: column;
         }
 
-        /* --- 1. LOGIN / REGISTRATION SCREEN --- */
+        /* --- 1. AUTH --- */
         #authScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000;
             background: radial-gradient(circle at top right, #1a2133 0%, #000 100%);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 30px; text-align: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center;
         }
-
         .auth-logo { font-family: 'Rajdhani'; font-size: 42px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
         .auth-logo span { color: var(--primary); }
-        .auth-desc { color: var(--text-mute); font-size: 14px; margin-bottom: 40px; line-height: 1.5; }
-
         .auth-form { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 15px; }
-        .input-group { position: relative; }
-        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-mute); }
-        
         .custom-inp {
-            width: 100%; padding: 16px 16px 16px 45px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            color: white; font-size: 16px; transition: 0.3s;
+            width: 100%; padding: 16px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 16px;
         }
-        .custom-inp:focus { border-color: var(--primary); background: rgba(255,255,255,0.1); }
-
         .btn-main {
             width: 100%; padding: 18px; background: linear-gradient(135deg, var(--primary), #0055ff);
-            border: none; border-radius: 12px; font-size: 16px; font-weight: 800; color: white;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
-            text-transform: uppercase; letter-spacing: 1px; transition: transform 0.1s;
+            border: none; border-radius: 12px; font-size: 16px; font-weight: 800; color: white; cursor: pointer;
         }
-        .btn-main:active { transform: scale(0.98); }
 
-        /* --- 2. MAIN APP INTERFACE --- */
+        /* --- 2. MAIN APP --- */
         #appScreen { display: none; flex-direction: column; height: 100%; width: 100%; }
 
-        /* HEADER */
         .app-header {
             height: 60px; display: flex; justify-content: space-between; align-items: center;
             padding: 0 15px; background: rgba(21, 26, 37, 0.95); border-bottom: 1px solid rgba(255,255,255,0.05);
-            z-index: 100;
         }
         .user-block { display: flex; align-items: center; gap: 10px; }
-        .avatar { width: 32px; height: 32px; background: #2c3e50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--accent); }
+        .avatar { width: 32px; height: 32px; background: #2c3e50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-weight: bold; }
         .u-info { display: flex; flex-direction: column; }
-        .u-name { font-size: 13px; font-weight: 700; color: white; }
         .u-bal { font-size: 11px; color: var(--green); font-weight: 600; }
-
-        .online-pill {
-            background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 20px;
-            font-size: 10px; color: var(--text-mute); display: flex; align-items: center; gap: 6px;
+        
+        /* NEW HISTORY BAR */
+        .history-bar {
+            display: flex; gap: 6px; padding: 6px 10px; background: #0f121b;
+            overflow-x: auto; height: 40px; align-items: center; border-bottom: 1px solid #222;
         }
-        .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
-
-        /* TICKER (News Feed) */
-        .ticker-bar {
-            background: #000; height: 24px; overflow: hidden; white-space: nowrap;
-            display: flex; align-items: center; border-bottom: 1px solid #222;
+        .history-bar::-webkit-scrollbar { display: none; }
+        .hist-item {
+            padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; font-family: 'Rajdhani';
+            min-width: 45px; text-align: center; flex-shrink: 0;
         }
-        .ticker-content { animation: scroll 20s linear infinite; font-size: 10px; color: #aaa; display: inline-block; padding-left: 100%; }
-        .win-span { color: var(--gold); font-weight: bold; margin-right: 15px; }
+        .h-win { background: rgba(52, 199, 89, 0.15); color: #34c759; border: 1px solid rgba(52, 199, 89, 0.3); }
+        .h-lose { background: rgba(255, 59, 48, 0.15); color: #ff3b30; border: 1px solid rgba(255, 59, 48, 0.3); }
+        .h-big { background: rgba(255, 204, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); box-shadow: 0 0 5px rgba(255,204,0,0.2); }
 
         /* GAME STAGE */
-        .stage {
-            flex: 1; position: relative; overflow: hidden;
-            background: radial-gradient(circle at 50% 100%, #1a2133 0%, #0b0f19 70%);
-        }
+        .stage { flex: 1; position: relative; overflow: hidden; background: radial-gradient(circle at 50% 100%, #1a2133 0%, #0b0f19 70%); }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
+        
         .center-hud {
-            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
             text-align: center; z-index: 10; pointer-events: none;
         }
-        .multiplier {
-            font-family: 'Rajdhani'; font-size: 64px; font-weight: 800; color: white;
-            text-shadow: 0 0 20px rgba(0, 122, 255, 0.5);
-        }
+        .multiplier { font-family: 'Rajdhani'; font-size: 72px; font-weight: 800; color: white; text-shadow: 0 0 30px rgba(0, 122, 255, 0.6); transition: 0.1s; }
         .status-txt { font-size: 12px; color: var(--text-mute); letter-spacing: 2px; font-weight: 600; margin-top: 5px; }
 
-        /* CONTROLS (Floating Bottom Panel) */
+        /* CONTROLS */
         .controls {
-            background: var(--panel); padding: 20px; 
-            border-top: 1px solid rgba(255,255,255,0.05); z-index: 50;
-            border-radius: 20px 20px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+            background: var(--panel); padding: 15px; border-radius: 20px 20px 0 0;
+            border-top: 1px solid rgba(255,255,255,0.05); z-index: 50; box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
         }
-
-        .bet-control { display: flex; gap: 10px; margin-bottom: 15px; }
-        .bet-mod-btn { width: 50px; background: rgba(255,255,255,0.05); border: none; border-radius: 8px; color: white; font-size: 18px; }
-        .bet-display {
-            flex: 1; background: #0b0f19; border: 1px solid #333; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; position: relative;
+        
+        .input-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        
+        /* Bet Input Section */
+        .bet-section { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+        .label-sm { font-size: 10px; color: #666; text-transform: uppercase; font-weight: bold; margin-left: 2px; }
+        
+        .bet-input-wrap {
+            display: flex; background: #0b0f19; border: 1px solid #333; border-radius: 10px; padding: 2px;
         }
-        .bet-val { background: transparent; border: none; color: white; font-size: 20px; font-weight: bold; text-align: center; width: 100%; }
-        .curr { position: absolute; left: 15px; color: #555; }
+        .bet-mod-btn {
+            width: 40px; background: transparent; border: none; color: #666; font-size: 18px; font-weight: bold;
+        }
+        .bet-val {
+            flex: 1; background: transparent; border: none; color: white; font-size: 18px; font-weight: bold; text-align: center; padding: 10px 0;
+        }
+        
+        /* Auto Cashout Section */
+        .auto-section { width: 100px; display: flex; flex-direction: column; gap: 5px; }
+        .auto-input-wrap {
+            display: flex; align-items: center; background: #0b0f19; border: 1px solid #333; border-radius: 10px; padding: 0 10px; height: 100%;
+        }
+        .auto-lbl { color: #555; font-size: 12px; margin-right: 5px; }
+        .sw-toggle { position: relative; width: 30px; height: 16px; background: #333; border-radius: 20px; transition: 0.3s; }
+        .sw-toggle.active { background: var(--green); }
+        .sw-circle { position: absolute; left: 2px; top: 2px; width: 12px; height: 12px; background: white; border-radius: 50%; transition: 0.3s; }
+        .sw-toggle.active .sw-circle { left: 16px; }
 
         .action-btn {
             width: 100%; height: 56px; border-radius: 12px; border: none;
-            font-size: 18px; font-weight: 800; text-transform: uppercase; cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: 0.1s;
+            font-size: 18px; font-weight: 800; text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: 0.1s; cursor: pointer;
         }
         .btn-bet { background: linear-gradient(135deg, var(--primary), #0066ff); color: white; }
-        .btn-cash { background: linear-gradient(135deg, var(--gold), #ff9500); color: black; display: none; }
+        .btn-cash { background: linear-gradient(135deg, var(--gold), #ff9500); color: black; display: none; box-shadow: 0 0 20px rgba(255, 204, 0, 0.4); }
 
-        /* MOBILE BOTTOM NAV */
+        /* BOTTOM NAV */
         .bottom-nav {
             height: 70px; background: #0b0f19; border-top: 1px solid #222;
             display: flex; justify-content: space-around; align-items: center; padding-bottom: 10px;
         }
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 4px; color: #555; font-size: 10px; width: 60px; cursor: pointer;
-        }
-        .nav-item i { font-size: 20px; margin-bottom: 2px; }
+        .nav-item { color: #555; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .nav-item i { font-size: 20px; }
         .nav-item.active { color: var(--primary); }
 
-        /* ANIMATIONS & STATES */
-        .crashed { color: var(--red) !important; text-shadow: 0 0 30px var(--red) !important; animation: shake 0.4s; }
-        .won { color: var(--green) !important; text-shadow: 0 0 30px var(--green) !important; }
-        
-        @keyframes scroll { 0% {transform: translateX(0);} 100% {transform: translateX(-100%);} }
-        @keyframes pulse { 0% {opacity:1;} 50% {opacity:0.4;} 100% {opacity:1;} }
+        /* ANIMATIONS */
+        .crashed { color: var(--red) !important; animation: shake 0.4s; text-shadow: 0 0 30px var(--red) !important; }
+        .won { color: var(--green) !important; text-shadow: 0 0 40px var(--green) !important; transform: scale(1.1); }
         @keyframes shake { 0%, 100% {transform: translate(-50%,-50%);} 25% {transform: translate(-52%, -48%);} 75% {transform: translate(-48%, -52%);} }
-
     </style>
 </head>
 <body>
 
     <div id="authScreen">
-        <div class="auth-logo">JETWIN <span>APP</span></div>
-        <p class="auth-desc">Secure Mobile Gaming Platform<br>Join 15,000+ Winners Today.</p>
-        
+        <div class="auth-logo">JETWIN <span>PRO</span></div>
+        <p style="color:#888; margin-bottom:30px; font-size:14px;">Next Gen Mobile Gaming</p>
         <div class="auth-form">
-            <div class="input-group">
-                <i class="fa-regular fa-user"></i>
-                <input type="text" id="regName" class="custom-inp" placeholder="Adınız">
-            </div>
-            <div class="input-group">
-                <i class="fa-solid fa-user-tag"></i>
-                <input type="text" id="regSurname" class="custom-inp" placeholder="Soyadınız">
-            </div>
-            <div class="input-group">
-                <i class="fa-regular fa-envelope"></i>
-                <input type="email" id="regEmail" class="custom-inp" placeholder="Email (Gmail)">
-            </div>
-            <button class="btn-main" onclick="registerUser()">QEYDİYYAT & GİRİŞ</button>
+            <input type="text" id="regName" class="custom-inp" placeholder="Adınız">
+            <input type="text" id="regSurname" class="custom-inp" placeholder="Soyadınız">
+            <button class="btn-main" onclick="registerUser()">DAXİL OL</button>
         </div>
-        <p style="margin-top:20px; font-size:11px; color:#444;">By entering, you accept T&C.</p>
     </div>
 
     <div id="appScreen">
@@ -186,37 +152,45 @@
             <div class="user-block">
                 <div class="avatar" id="uInitials">U</div>
                 <div class="u-info">
-                    <span class="u-name" id="uName">User</span>
+                    <span style="font-size:13px; font-weight:700;" id="uName">User</span>
                     <span class="u-bal">$<span id="bal">0.00</span></span>
                 </div>
             </div>
-            <div class="online-pill"><div class="dot"></div> <span id="onlineCount">1204</span> Online</div>
+            <div style="font-size:10px; color:#666;"><span style="color:var(--green)">●</span> Online</div>
         </div>
 
-        <div class="ticker-bar">
-            <div class="ticker-content" id="tickerBox">
-                </div>
+        <div class="history-bar" id="historyBar">
+            <div class="hist-item" style="color:#555; font-weight:normal;">History loading...</div>
         </div>
 
         <div class="stage" id="stage">
             <canvas id="stars"></canvas>
             <canvas id="game"></canvas>
-            
-            <div class="center-hud">
+            <canvas id="fx"></canvas> <div class="center-hud">
                 <div class="multiplier" id="multi">1.00x</div>
                 <div class="status-txt" id="status">TAP TO BET</div>
             </div>
         </div>
 
         <div class="controls">
-            <div class="bet-control">
-                <button class="bet-mod-btn" onclick="adjBet(-5)">-</button>
-                <div class="bet-display">
-                    <span class="curr">$</span>
-                    <input type="number" id="betVal" class="bet-val" value="10">
+            <div class="input-row">
+                <div class="bet-section">
+                    <div class="label-sm">Məbləğ</div>
+                    <div class="bet-input-wrap">
+                        <button class="bet-mod-btn" onclick="adjBet(-5)">-</button>
+                        <input type="number" id="betVal" class="bet-val" value="10">
+                        <button class="bet-mod-btn" onclick="adjBet(5)">+</button>
+                    </div>
                 </div>
-                <button class="bet-mod-btn" onclick="adjBet(5)">+</button>
-                <button class="bet-mod-btn" style="width:auto; padding:0 10px; font-size:12px; font-weight:bold;" onclick="adjBet(50)">+50</button>
+
+                <div class="auto-section">
+                    <div class="label-sm">Avto-Satış</div>
+                    <div class="auto-input-wrap" onclick="toggleAuto()">
+                        <span class="auto-lbl">x</span>
+                        <input type="number" id="autoVal" class="bet-val" value="2.00" style="text-align:left; padding-left:0;" onclick="event.stopPropagation()">
+                        <div class="sw-toggle" id="autoSw"><div class="sw-circle"></div></div>
+                    </div>
+                </div>
             </div>
             
             <button class="action-btn btn-bet" id="btnBet" onclick="play()">MƏRC ET</button>
@@ -227,18 +201,15 @@
             <div class="nav-item active"><i class="fa-solid fa-gamepad"></i>Oyun</div>
             <div class="nav-item" onclick="openPromo()"><i class="fa-solid fa-gift"></i>Promo</div>
             <div class="nav-item" onclick="wa('deposit')"><i class="fa-solid fa-wallet"></i>Depozit</div>
-            <div class="nav-item" onclick="checkWithdraw()"><i class="fa-solid fa-money-bill-transfer"></i>Çıxarış</div>
-            <div class="nav-item" onclick="wa('support')"><i class="fa-brands fa-whatsapp"></i>Dəstək</div>
+            <div class="nav-item" onclick="wa('withdraw')"><i class="fa-solid fa-money-bill-transfer"></i>Çıxarış</div>
         </div>
     </div>
 
     <script>
-        // --- JETWIN CORE CONFIG ---
+        // --- CONFIG & STATE ---
         const API_URL = "https://script.google.com/macros/s/AKfycbzK7CLi85c5GD8juIME-2RdQULXFCvS2zO3So7aaYV9apcTahXkJYWe0qcyJe3YQHDKhA/exec";
         const ADMIN_WA = "994507516137";
-        const MIN_WITHDRAW = 21;
-
-        // --- STATE VARIABLES ---
+        
         let balance = 0.00;
         let totalDeposited = 0.00;
         let isPlaying = false;
@@ -246,86 +217,110 @@
         let crashPoint = 0;
         let startTime, animFrame;
         
-        // --- 1. INITIALIZATION & REGISTRATION ---
-        // Auto-login check
+        // Auto Cashout State
+        let autoEnabled = false;
+
+        // History
+        let history = [1.20, 5.43, 1.05, 2.30, 1.88, 11.50]; // Fake start history
+
+        // --- AUDIO ENGINE (SINTEZATOR) ---
+        // Bu sistem brauzerin öz səs mühərrikini işlədir, fayl lazım deyil.
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctxAudio = new AudioContext();
+        
+        function playTone(type) {
+            if(ctxAudio.state === 'suspended') ctxAudio.resume();
+            const osc = ctxAudio.createOscillator();
+            const gain = ctxAudio.createGain();
+            osc.connect(gain);
+            gain.connect(ctxAudio.destination);
+
+            const now = ctxAudio.currentTime;
+
+            if (type === 'click') {
+                osc.frequency.setValueAtTime(800, now);
+                gain.gain.setValueAtTime(0.1, now);
+                osc.type = 'sine';
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+            else if (type === 'win') {
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.type = 'triangle';
+                osc.start(now);
+                osc.stop(now + 0.4);
+            }
+            else if (type === 'crash') {
+                osc.frequency.setValueAtTime(100, now);
+                osc.frequency.exponentialRampToValueAtTime(30, now + 0.3);
+                gain.gain.setValueAtTime(0.5, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.type = 'sawtooth';
+                osc.start(now);
+                osc.stop(now + 0.3);
+            }
+        }
+
+        // --- INIT ---
         if(localStorage.getItem('jw_user_data')) {
             const user = JSON.parse(localStorage.getItem('jw_user_data'));
             loadApp(user.name, user.surname);
         }
 
-        async function registerUser() {
+        function registerUser() {
+            playTone('click');
             let name = document.getElementById('regName').value.trim();
             let surname = document.getElementById('regSurname').value.trim();
-            let email = document.getElementById('regEmail').value.trim();
+            if(!name || !surname) return alert("Ad və Soyad daxil edin");
 
-            if(name.length < 2 || surname.length < 2 || !email.includes('@')) {
-                return alert("Zəhmət olmasa məlumatları tam doldurun.");
-            }
-
-            let btn = document.querySelector('.btn-main');
-            btn.innerText = "HESAB YARADILIR...";
-            btn.style.opacity = "0.7";
-
-            // Send to Google Sheet
-            try {
-                await fetch(`${API_URL}?action=register&name=${encodeURIComponent(name + ' ' + surname)}&email=${encodeURIComponent(email)}`);
-            } catch(e) { console.log("Offline mode or Network Error"); }
-
-            // Save Local
-            const userData = { name: name, surname: surname, email: email };
-            localStorage.setItem('jw_user_data', JSON.stringify(userData));
-
-            setTimeout(() => { loadApp(name, surname); }, 1500);
+            localStorage.setItem('jw_user_data', JSON.stringify({name, surname}));
+            loadApp(name, surname);
         }
 
         function loadApp(name, surname) {
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appScreen').style.display = 'flex';
+            document.getElementById('uName').innerText = name;
+            document.getElementById('uInitials').innerText = name[0] + surname[0];
             
-            document.getElementById('uName').innerText = `${name} ${surname.charAt(0)}.`;
-            document.getElementById('uInitials').innerText = name.charAt(0) + surname.charAt(0);
-            
+            renderHistory();
             initGraphics();
-            runGhostMode(); // Start visual demo
-            updateTicker();
+            runGhostMode();
         }
 
-        // --- 2. THE GAME ENGINE (DEMO vs REAL) ---
+        // --- GAME LOGIC ---
+        function toggleAuto() {
+            autoEnabled = !autoEnabled;
+            document.getElementById('autoSw').classList.toggle('active', autoEnabled);
+            playTone('click');
+        }
+
         function play() {
+            playTone('click');
             let bet = parseInt(document.getElementById('betVal').value);
-            if(balance < bet) return alert("Balansınızda kifayət qədər vəsait yoxdur. Zəhmət olmasa Depozit edin.");
+            if(balance < bet) return alert("Balans yoxdur!");
 
             balance -= bet; updateUI();
-            isPlaying = true; multi = 1.00;
-
-            // UI Changes
+            isPlaying = true;
+            multi = 1.00;
+            
+            // UI Reset
             document.getElementById('btnBet').style.display = 'none';
             document.getElementById('btnCash').style.display = 'block';
-            document.getElementById('multi').style.color = "white";
             document.getElementById('multi').classList.remove('crashed', 'won');
-            document.getElementById('status').innerText = "ROCKET FLYING...";
+            document.getElementById('multi').style.color = 'white';
+            document.getElementById('status').innerText = "FLYING...";
 
-            // --- ALGORITHM LOGIC (SƏNİN QAYDALARIN) ---
+            // ALGORITHM
             let r = Math.random();
-
-            // SCENARIO 1: REAL PLAY (With Deposited Money)
             if(totalDeposited > 0) {
-                // High Bet (>20) -> Kill Zone
-                if(bet >= 20) {
-                    crashPoint = 1.00 + Math.random() * 0.15; // 1.00x - 1.15x (Immediate Crash)
-                } 
-                // Low Bet -> Random Chaos but House Edge
-                else {
-                    if(r < 0.4) crashPoint = 1.00 + Math.random() * 0.20; // 40% chance early crash
-                    else if(r < 0.7) crashPoint = 1.20 + Math.random() * 0.80; // 30% chance mid
-                    else crashPoint = 2.00 + Math.random() * 5.00; // Rare win
-                }
-            } 
-            // SCENARIO 2: DEMO PLAY (Zero or Bonus Money - Make them happy)
-            else {
-                // Let them win to hook them!
-                if(r < 0.1) crashPoint = 1.10; // Rare loss to look real
-                else crashPoint = 1.50 + Math.random() * 4.00; // Mostly 2x - 5x wins
+                 if(bet > 20) crashPoint = 1.00 + Math.random()*0.2; 
+                 else crashPoint = r < 0.4 ? 1.00 + Math.random()*0.3 : 2.0 + Math.random()*5;
+            } else {
+                 crashPoint = r < 0.1 ? 1.10 : 1.50 + Math.random() * 4.00; 
             }
 
             startTime = Date.now();
@@ -337,6 +332,15 @@
             let t = (Date.now() - startTime) / 1000;
             multi = 1.00 + (t * t * 0.08);
 
+            // AUTO CASHOUT CHECK
+            if(autoEnabled) {
+                let target = parseFloat(document.getElementById('autoVal').value);
+                if(multi >= target) {
+                    cashOut();
+                    return;
+                }
+            }
+
             if(multi >= crashPoint) { crash(); return; }
 
             document.getElementById('multi').innerText = multi.toFixed(2) + "x";
@@ -346,153 +350,176 @@
 
         function cashOut() {
             if(!isPlaying) return;
-            isPlaying = false; cancelAnimationFrame(animFrame);
+            isPlaying = false; 
+            cancelAnimationFrame(animFrame);
+            playTone('win');
 
             let bet = parseInt(document.getElementById('betVal').value);
             let win = bet * multi;
             balance += win; updateUI();
 
             document.getElementById('multi').classList.add('won');
-            document.getElementById('status').innerText = `YOU WON $${win.toFixed(0)}`;
-            reset();
+            document.getElementById('status').innerText = `WON $${win.toFixed(0)}`;
+            
+            // Show particle confetti
+            spawnParticles(cvs.width/2, cvs.height/2, 'gold');
+            
+            setTimeout(reset, 2500);
         }
 
         function crash() {
-            isPlaying = false; cancelAnimationFrame(animFrame);
-            document.getElementById('multi').innerText = "CRASH";
-            document.getElementById('multi').classList.add('crashed');
-            document.getElementById('status').innerText = "ROUND OVER";
+            isPlaying = false; 
+            cancelAnimationFrame(animFrame);
+            playTone('crash');
             
-            // Screen Shake
+            // Add to History Only on Crash
+            addToHistory(multi);
+
+            document.getElementById('multi').innerText = multi.toFixed(2) + "x"; // Show exact crash point
+            document.getElementById('multi').classList.add('crashed');
+            document.getElementById('status').innerText = "CRASHED";
+            
             if(navigator.vibrate) navigator.vibrate(200);
             
-            reset();
+            // Explosion Effect
+            spawnParticles(lastX, lastY, 'red');
+
+            setTimeout(reset, 2500);
         }
 
         function reset() {
-            setTimeout(() => {
-                document.getElementById('btnBet').style.display = 'block';
-                document.getElementById('btnCash').style.display = 'none';
-                document.getElementById('multi').innerText = "1.00x";
-                document.getElementById('multi').style.color = "white";
-                document.getElementById('multi').classList.remove('crashed', 'won');
-                document.getElementById('status').innerText = "TAP TO BET";
-                runGhostMode();
-            }, 2500);
+            document.getElementById('btnBet').style.display = 'block';
+            document.getElementById('btnCash').style.display = 'none';
+            document.getElementById('multi').innerText = "1.00x";
+            document.getElementById('multi').style.color = "white";
+            document.getElementById('multi').classList.remove('crashed', 'won');
+            document.getElementById('status').innerText = "TAP TO BET";
+            runGhostMode();
         }
 
-        // --- 3. GRAPHICS & VISUALS ---
+        // --- HISTORY ---
+        function addToHistory(val) {
+            history.unshift(val);
+            if(history.length > 20) history.pop();
+            renderHistory();
+        }
+        function renderHistory() {
+            let html = "";
+            history.forEach(h => {
+                let cls = h < 1.2 ? 'h-lose' : (h > 10 ? 'h-big' : 'h-win');
+                html += `<div class="hist-item ${cls}">${h.toFixed(2)}x</div>`;
+            });
+            document.getElementById('historyBar').innerHTML = html;
+        }
+
+        // --- GRAPHICS & PARTICLES ---
         const cvs = document.getElementById('game');
         const ctx = cvs.getContext('2d');
+        const cvsFx = document.getElementById('fx');
+        const ctxFx = cvsFx.getContext('2d');
         let w, h;
+        let lastX = 0, lastY = 0;
+        let particles = [];
 
         function initGraphics() {
-            w = cvs.width = document.getElementById('stage').offsetWidth;
-            h = cvs.height = document.getElementById('stage').offsetHeight;
+            w = cvs.width = cvsFx.width = document.getElementById('stage').offsetWidth;
+            h = cvs.height = cvsFx.height = document.getElementById('stage').offsetHeight;
             drawStars();
         }
         window.addEventListener('resize', initGraphics);
 
         function draw(t) {
             ctx.clearRect(0,0,w,h);
+            ctxFx.clearRect(0,0,w,h);
+            
             let x = Math.min(w - 50, t * 100);
             let y = h - Math.min(h - 50, (multi - 1) * 150);
+            lastX = x; lastY = y;
 
-            ctx.beginPath(); ctx.lineWidth = 6; ctx.strokeStyle = "#007aff";
+            // Trail
+            ctx.beginPath(); ctx.lineWidth = 4; ctx.strokeStyle = "#007aff";
             ctx.moveTo(0, h); ctx.quadraticCurveTo(x/2, h, x, y); ctx.stroke();
             
-            // Glow
-            ctx.shadowBlur = 20; ctx.shadowColor = "#007aff"; ctx.stroke(); ctx.shadowBlur = 0;
-            
             // Rocket
-            ctx.font = "32px Arial"; ctx.fillText("🚀", x - 15, y - 10);
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(-45 * Math.PI / 180);
+            ctx.font = "30px Arial";
+            ctx.fillText("🚀", -15, 10);
+            ctx.restore();
+
+            updateParticles();
+        }
+
+        function spawnParticles(x, y, color) {
+            for(let i=0; i<30; i++) {
+                particles.push({
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
+                    life: 1.0,
+                    color: color === 'red' ? '#ff3b30' : '#ffcc00'
+                });
+            }
+            if(!isPlaying) requestAnimationFrame(postGameAnim);
+        }
+
+        function updateParticles() {
+            for(let i=particles.length-1; i>=0; i--) {
+                let p = particles[i];
+                p.x += p.vx; p.y += p.vy;
+                p.life -= 0.02;
+                ctxFx.fillStyle = p.color;
+                ctxFx.globalAlpha = p.life;
+                ctxFx.beginPath(); ctxFx.arc(p.x, p.y, 3, 0, Math.PI*2); ctxFx.fill();
+                if(p.life <= 0) particles.splice(i, 1);
+            }
+            ctxFx.globalAlpha = 1.0;
+        }
+
+        function postGameAnim() {
+            if(particles.length > 0) {
+                ctxFx.clearRect(0,0,w,h);
+                updateParticles();
+                requestAnimationFrame(postGameAnim);
+            }
         }
 
         function runGhostMode() {
-            // Visual simulation when idle
             if(isPlaying) return;
             multi = 1.00;
-            let target = 2.0 + Math.random() * 10;
+            let target = 1.5 + Math.random()*5;
             let start = Date.now();
-            
-            function gLoop() {
+            function g() {
                 if(isPlaying) return;
-                let t = (Date.now() - start) / 1000;
+                let t = (Date.now() - start)/1000;
                 multi = 1.00 + (t*t*0.08);
-                if(multi >= target) {
-                     setTimeout(runGhostMode, 1000); return; 
-                }
+                if(multi>=target) { setTimeout(runGhostMode,1000); return; }
                 document.getElementById('multi').innerText = multi.toFixed(2) + "x";
                 draw(t);
-                requestAnimationFrame(gLoop);
+                requestAnimationFrame(g);
             }
-            gLoop();
+            g();
         }
 
-        // --- 4. UTILITIES (Promo, Withdraw, Support) ---
-        async function openPromo() {
-            let code = prompt("Promo Kodu Daxil Edin:");
-            if(!code) return;
-            
-            try {
-                let res = await fetch(`${API_URL}?action=promo&code=${encodeURIComponent(code)}`);
-                let data = await res.json();
-                
-                if(data.result === 'success') {
-                    let amt = parseFloat(data.amount);
-                    balance += amt; 
-                    totalDeposited += amt; // Track Real Money
-                    updateUI(); 
-                    alert(`✅ Təbriklər! Balansınıza $${amt} yükləndi.`);
-                } else {
-                    alert(`❌ Xəta: ${data.msg}`);
-                }
-            } catch(e) { alert("İnternet bağlantısını yoxlayın."); }
-        }
-
-        function checkWithdraw() {
-            if(balance < MIN_WITHDRAW) return alert(`Minimum çıxarış məbləği: $${MIN_WITHDRAW}`);
-            if(balance <= totalDeposited) return alert("Siz yalnız udduğunuz məbləği çəkə bilərsiniz!");
-            wa('withdraw');
-        }
-
-        function wa(type) {
-            let n = document.getElementById('uName').innerText;
-            let msg = type === 'deposit' 
-                ? `Salam, mən ${n}. Hesabıma depozit etmək istəyirəm.` 
-                : `Salam, mən ${n}. Uduşumu çəkmək istəyirəm.`;
-            window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
+        // --- UTILS ---
         function adjBet(v) { 
             let el = document.getElementById('betVal'); 
             let val = parseInt(el.value) + v;
-            if(val < 1) val = 1;
-            el.value = val;
+            if(val < 1) val = 1; el.value = val;
+            playTone('click');
         }
         function updateUI() { document.getElementById('bal').innerText = balance.toFixed(2); }
-
-        // Stars Background
         function drawStars() {
             const sCtx = document.getElementById('stars').getContext('2d');
             sCtx.clearRect(0,0,w,h); sCtx.fillStyle = "rgba(255,255,255,0.3)";
-            for(let i=0; i<60; i++) {
-                sCtx.beginPath(); sCtx.arc(Math.random()*w, Math.random()*h, Math.random()*2, 0, 6.28); sCtx.fill();
-            }
+            for(let i=0; i<60; i++) sCtx.beginPath(), sCtx.arc(Math.random()*w, Math.random()*h, Math.random()*2, 0, 6.28), sCtx.fill();
         }
-
-        // Fake Ticker
-        function updateTicker() {
-            const wins = [
-                "🇺🇸 Mike T. won $450", "🇦🇿 Elvin K. won $1,200", "🇹🇷 Burak Y. won $300", 
-                "🇩🇪 Hans G. won $800", "🇬🇧 Sarah J. won $2,500", "🇫🇷 Pierre won $150"
-            ];
-            let html = "";
-            for(let i=0; i<20; i++) {
-                html += `<span class="win-span">${wins[Math.floor(Math.random()*wins.length)]}</span>`;
-            }
-            document.getElementById('tickerBox').innerHTML = html;
+        async function openPromo() {
+            let code = prompt("Promo Code:");
+            if(code === "JETWIN2024") { balance += 50; updateUI(); alert("Success +$50"); }
         }
+        function wa(type) { window.open(`https://wa.me/${ADMIN_WA}?text=${type}`, '_blank'); }
 
     </script>
 </body>
