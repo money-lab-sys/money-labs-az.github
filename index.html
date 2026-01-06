@@ -1,328 +1,414 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0b0f19">
+    <meta name="theme-color" content="#080a10">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>JETWIN | PRO</title>
+    <title>JETWIN | ELITE TRADING</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CORE STYLES --- */
+        /* --- 1. CORE & RESET --- */
         :root {
-            --bg: #0b0f19; --panel: #151a25; --primary: #007aff; --accent: #00d4ff; 
-            --gold: #ffcc00; --green: #34c759; --red: #ff3b30; --text: #ffffff; --text-mute: #8e8e93;
+            --bg: #080a10;
+            --panel: rgba(22, 27, 34, 0.95);
+            --primary: #3b82f6; /* Modern Blue */
+            --accent: #60a5fa;
+            --gold: #fbbf24;
+            --green: #10b981;
+            --red: #ef4444;
+            --text: #f3f4f6;
+            --text-mute: #9ca3af;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
         }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; outline: none; }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; user-select: none; }
+        
         body {
-            margin: 0; padding: 0; background-color: var(--bg); color: var(--text);
-            font-family: 'Inter', sans-serif; height: 100vh; height: 100dvh;
-            overflow: hidden; display: flex; flex-direction: column;
+            margin: 0; padding: 0;
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, var(--bg) 60%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            height: 100vh; height: 100dvh;
+            overflow: hidden;
+            display: flex; flex-direction: column;
         }
 
-        /* --- 1. AUTH --- */
+        /* --- 2. AUTH SCREEN (High-End Login) --- */
         #authScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000;
-            background: radial-gradient(circle at top right, #1a2133 0%, #000 100%);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center;
-        }
-        .auth-logo { font-family: 'Rajdhani'; font-size: 42px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
-        .auth-logo span { color: var(--primary); }
-        .auth-form { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 15px; }
-        .custom-inp {
-            width: 100%; padding: 16px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 16px;
-        }
-        .btn-main {
-            width: 100%; padding: 18px; background: linear-gradient(135deg, var(--primary), #0055ff);
-            border: none; border-radius: 12px; font-size: 16px; font-weight: 800; color: white; cursor: pointer;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
+            background: #080a10;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 30px; backdrop-filter: blur(10px);
         }
 
-        /* --- 2. MAIN APP --- */
+        .brand-logo {
+            font-family: 'Rajdhani'; font-size: 48px; font-weight: 900; letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 5px; text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .brand-sub { font-size: 13px; color: var(--primary); letter-spacing: 3px; margin-bottom: 40px; text-transform: uppercase; font-weight: 700; }
+
+        .auth-card {
+            width: 100%; max-width: 340px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .inp-group { position: relative; margin-bottom: 15px; }
+        .inp-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-mute); font-size: 14px; }
+        
+        .nice-inp {
+            width: 100%; padding: 16px 16px 16px 45px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: white; font-size: 15px; transition: 0.3s;
+        }
+        .nice-inp:focus { border-color: var(--primary); background: rgba(59, 130, 246, 0.05); }
+
+        .btn-glow {
+            width: 100%; padding: 18px; margin-top: 10px;
+            background: linear-gradient(135deg, var(--primary), #2563eb);
+            border: none; border-radius: 12px;
+            color: white; font-weight: 800; font-size: 16px; letter-spacing: 1px;
+            cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            transition: transform 0.1s;
+        }
+        .btn-glow:active { transform: scale(0.98); }
+
+        /* --- 3. MAIN APP LAYOUT --- */
         #appScreen { display: none; flex-direction: column; height: 100%; width: 100%; }
 
+        /* HEADER */
         .app-header {
             height: 60px; display: flex; justify-content: space-between; align-items: center;
-            padding: 0 15px; background: rgba(21, 26, 37, 0.95); border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 0 20px; background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
         }
-        .user-block { display: flex; align-items: center; gap: 10px; }
-        .avatar { width: 32px; height: 32px; background: #2c3e50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-weight: bold; }
-        .u-info { display: flex; flex-direction: column; }
-        .u-bal { font-size: 11px; color: var(--green); font-weight: 600; }
-        
-        /* NEW HISTORY BAR */
-        .history-bar {
-            display: flex; gap: 6px; padding: 6px 10px; background: #0f121b;
-            overflow-x: auto; height: 40px; align-items: center; border-bottom: 1px solid #222;
+        .user-pill {
+            display: flex; align-items: center; gap: 10px;
+            background: var(--glass); padding: 6px 12px; border-radius: 30px; border: 1px solid var(--border);
         }
-        .history-bar::-webkit-scrollbar { display: none; }
-        .hist-item {
-            padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; font-family: 'Rajdhani';
-            min-width: 45px; text-align: center; flex-shrink: 0;
-        }
-        .h-win { background: rgba(52, 199, 89, 0.15); color: #34c759; border: 1px solid rgba(52, 199, 89, 0.3); }
-        .h-lose { background: rgba(255, 59, 48, 0.15); color: #ff3b30; border: 1px solid rgba(255, 59, 48, 0.3); }
-        .h-big { background: rgba(255, 204, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); box-shadow: 0 0 5px rgba(255,204,0,0.2); }
+        .u-avatar { width: 28px; height: 28px; background: linear-gradient(45deg, #475569, #1e293b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
+        .u-bal { font-family: 'Rajdhani'; font-weight: 700; color: var(--green); letter-spacing: 0.5px; }
 
         /* GAME STAGE */
-        .stage { flex: 1; position: relative; overflow: hidden; background: radial-gradient(circle at 50% 100%, #1a2133 0%, #0b0f19 70%); }
+        .stage {
+            flex: 1; position: relative; overflow: hidden;
+            background: radial-gradient(circle at 50% 120%, #1e293b 0%, #080a10 70%);
+        }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
         .center-hud {
             position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; z-index: 10; pointer-events: none;
+            text-align: center; z-index: 10; pointer-events: none; width: 100%;
         }
-        .multiplier { font-family: 'Rajdhani'; font-size: 72px; font-weight: 800; color: white; text-shadow: 0 0 30px rgba(0, 122, 255, 0.6); transition: 0.1s; }
-        .status-txt { font-size: 12px; color: var(--text-mute); letter-spacing: 2px; font-weight: 600; margin-top: 5px; }
+        .multiplier {
+            font-family: 'Rajdhani'; font-size: 72px; font-weight: 800;
+            background: linear-gradient(180deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
+            transition: 0.1s;
+        }
+        
+        /* MOTIVATION TEXT STYLE */
+        .moti-box {
+            margin-top: 15px; min-height: 20px;
+        }
+        .moti-text {
+            font-size: 13px; font-weight: 500; letter-spacing: 0.5px;
+            color: var(--text-mute); text-transform: uppercase;
+            opacity: 0; animation: fadeInUp 0.5s forwards;
+        }
 
-        /* CONTROLS */
+        /* CONTROLS AREA */
         .controls {
-            background: var(--panel); padding: 15px; border-radius: 20px 20px 0 0;
-            border-top: 1px solid rgba(255,255,255,0.05); z-index: 50; box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+            background: var(--panel);
+            padding: 20px 20px 10px 20px;
+            border-radius: 24px 24px 0 0;
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+            z-index: 50; position: relative;
         }
         
-        .input-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        .bet-input-row { display: flex; gap: 10px; margin-bottom: 15px; }
         
-        /* Bet Input Section */
-        .bet-section { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-        .label-sm { font-size: 10px; color: #666; text-transform: uppercase; font-weight: bold; margin-left: 2px; }
-        
-        .bet-input-wrap {
-            display: flex; background: #0b0f19; border: 1px solid #333; border-radius: 10px; padding: 2px;
+        .bet-adjuster {
+            flex: 1; display: flex; align-items: center; justify-content: space-between;
+            background: #0f172a; border: 1px solid var(--border); border-radius: 12px; padding: 4px;
         }
-        .bet-mod-btn {
-            width: 40px; background: transparent; border: none; color: #666; font-size: 18px; font-weight: bold;
+        .ba-btn {
+            width: 40px; height: 40px; border-radius: 8px; border: none;
+            background: rgba(255,255,255,0.05); color: white; font-size: 18px; cursor: pointer;
         }
-        .bet-val {
-            flex: 1; background: transparent; border: none; color: white; font-size: 18px; font-weight: bold; text-align: center; padding: 10px 0;
+        .ba-val {
+            background: transparent; border: none; color: white;
+            font-family: 'Rajdhani'; font-size: 22px; font-weight: 700; width: 60px; text-align: center;
         }
-        
-        /* Auto Cashout Section */
-        .auto-section { width: 100px; display: flex; flex-direction: column; gap: 5px; }
-        .auto-input-wrap {
-            display: flex; align-items: center; background: #0b0f19; border: 1px solid #333; border-radius: 10px; padding: 0 10px; height: 100%;
-        }
-        .auto-lbl { color: #555; font-size: 12px; margin-right: 5px; }
-        .sw-toggle { position: relative; width: 30px; height: 16px; background: #333; border-radius: 20px; transition: 0.3s; }
-        .sw-toggle.active { background: var(--green); }
-        .sw-circle { position: absolute; left: 2px; top: 2px; width: 12px; height: 12px; background: white; border-radius: 50%; transition: 0.3s; }
-        .sw-toggle.active .sw-circle { left: 16px; }
 
-        .action-btn {
+        .act-btn {
             width: 100%; height: 56px; border-radius: 12px; border: none;
-            font-size: 18px; font-weight: 800; text-transform: uppercase;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: 0.1s; cursor: pointer;
+            font-size: 18px; font-weight: 800; letter-spacing: 1px;
+            text-transform: uppercase; cursor: pointer; color: white;
+            transition: 0.2s; position: relative; overflow: hidden;
         }
-        .btn-bet { background: linear-gradient(135deg, var(--primary), #0066ff); color: white; }
-        .btn-cash { background: linear-gradient(135deg, var(--gold), #ff9500); color: black; display: none; box-shadow: 0 0 20px rgba(255, 204, 0, 0.4); }
+        .btn-bet { background: linear-gradient(135deg, var(--primary), #2563eb); box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4); }
+        .btn-cash { background: linear-gradient(135deg, var(--gold), #d97706); color: #000; display: none; box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4); }
 
-        /* BOTTOM NAV */
-        .bottom-nav {
-            height: 70px; background: #0b0f19; border-top: 1px solid #222;
-            display: flex; justify-content: space-around; align-items: center; padding-bottom: 10px;
+        /* TABS & INFO PANEL */
+        .info-panel {
+            height: 180px; background: #020408;
+            display: flex; flex-direction: column;
+            border-top: 1px solid var(--border);
         }
-        .nav-item { color: #555; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .nav-item i { font-size: 20px; }
-        .nav-item.active { color: var(--primary); }
+        .tabs { display: flex; height: 40px; background: #0f172a; }
+        .tab {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; color: var(--text-mute);
+            cursor: pointer; border-bottom: 2px solid transparent; transition: 0.3s;
+        }
+        .tab.active { color: white; border-bottom: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); }
+
+        .tab-content { flex: 1; overflow-y: auto; padding: 10px; display: none; }
+        .tab-content.active { display: block; }
+        /* Scrollbar hide */
+        .tab-content::-webkit-scrollbar { width: 4px; }
+        .tab-content::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+
+        /* CHAT STYLES */
+        .msg { margin-bottom: 8px; font-size: 12px; line-height: 1.4; animation: slideIn 0.3s; }
+        .msg-name { font-weight: 700; color: var(--text-mute); margin-right: 6px; }
+        .msg-txt { color: #e2e8f0; }
+        .msg-sys { color: var(--gold); font-style: italic; opacity: 0.8; }
+
+        /* LIVE BETS STYLES */
+        .lb-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 11px; }
+        .lb-name { color: #94a3b8; }
+        .lb-bet { color: white; font-weight: 600; }
+        .lb-win { color: var(--green); font-weight: 700; }
 
         /* ANIMATIONS */
-        .crashed { color: var(--red) !important; animation: shake 0.4s; text-shadow: 0 0 30px var(--red) !important; }
+        .crashed { color: var(--red) !important; text-shadow: 0 0 40px var(--red) !important; animation: shake 0.4s; }
         .won { color: var(--green) !important; text-shadow: 0 0 40px var(--green) !important; transform: scale(1.1); }
+        
+        @keyframes fadeInUp { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+        @keyframes slideIn { from {opacity:0; transform:translateX(-10px);} to {opacity:1; transform:translateX(0);} }
         @keyframes shake { 0%, 100% {transform: translate(-50%,-50%);} 25% {transform: translate(-52%, -48%);} 75% {transform: translate(-48%, -52%);} }
     </style>
 </head>
 <body>
 
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbziqHnM6kV-b_ZPLzvGEsoRsO_Emfl0qu-ab5AoNJLIdwqGVuLdPgkilzyAnK60JqbGmg/exec";
+    </script>
+
     <div id="authScreen">
-        <div class="auth-logo">JETWIN <span>PRO</span></div>
-        <p style="color:#888; margin-bottom:30px; font-size:14px;">Next Gen Mobile Gaming</p>
-        <div class="auth-form">
-            <input type="text" id="regName" class="custom-inp" placeholder="Adınız">
-            <input type="text" id="regSurname" class="custom-inp" placeholder="Soyadınız">
-            <button class="btn-main" onclick="registerUser()">DAXİL OL</button>
+        <div class="brand-logo">JETWIN</div>
+        <div class="brand-sub">FUTURE OF TRADING</div>
+        
+        <div class="auth-card">
+            <div class="inp-group">
+                <i class="fa-regular fa-user inp-icon"></i>
+                <input type="text" id="regName" class="nice-inp" placeholder="İstifadəçi Adı" autocomplete="off">
+            </div>
+            <div class="inp-group">
+                <i class="fa-regular fa-envelope inp-icon"></i>
+                <input type="email" id="regEmail" class="nice-inp" placeholder="Email (Qazanc üçün)" autocomplete="off">
+            </div>
+            <button class="btn-glow" id="authBtn" onclick="handleAuth()">
+                <i class="fa-solid fa-rocket" style="margin-right:8px;"></i> SİSTEMƏ GİRİŞ
+            </button>
+            <p id="statusMsg" style="text-align:center; color:#64748b; font-size:11px; margin-top:15px; min-height:15px;"></p>
         </div>
     </div>
 
     <div id="appScreen">
         <div class="app-header">
-            <div class="user-block">
-                <div class="avatar" id="uInitials">U</div>
-                <div class="u-info">
-                    <span style="font-size:13px; font-weight:700;" id="uName">User</span>
-                    <span class="u-bal">$<span id="bal">0.00</span></span>
+            <div class="user-pill">
+                <div class="u-avatar" id="uAv">U</div>
+                <div style="display:flex; flex-direction:column; line-height:1;">
+                    <span style="font-size:10px; color:#94a3b8;" id="uNameDisp">User</span>
+                    <span class="u-bal">$<span id="balance">0.00</span></span>
                 </div>
             </div>
-            <div style="font-size:10px; color:#666;"><span style="color:var(--green)">●</span> Online</div>
-        </div>
-
-        <div class="history-bar" id="historyBar">
-            <div class="hist-item" style="color:#555; font-weight:normal;">History loading...</div>
+            <div onclick="openPromo()" style="width:32px; height:32px; background:rgba(251,191,36,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold); cursor:pointer;">
+                <i class="fa-solid fa-gift"></i>
+            </div>
         </div>
 
         <div class="stage" id="stage">
             <canvas id="stars"></canvas>
             <canvas id="game"></canvas>
-            <canvas id="fx"></canvas> <div class="center-hud">
+            
+            <div class="center-hud">
                 <div class="multiplier" id="multi">1.00x</div>
-                <div class="status-txt" id="status">TAP TO BET</div>
+                <div class="moti-box">
+                    <div class="moti-text" id="motiText">Professional Trading</div>
+                </div>
             </div>
         </div>
 
         <div class="controls">
-            <div class="input-row">
-                <div class="bet-section">
-                    <div class="label-sm">Məbləğ</div>
-                    <div class="bet-input-wrap">
-                        <button class="bet-mod-btn" onclick="adjBet(-5)">-</button>
-                        <input type="number" id="betVal" class="bet-val" value="10">
-                        <button class="bet-mod-btn" onclick="adjBet(5)">+</button>
-                    </div>
+            <div class="bet-input-row">
+                <div class="bet-adjuster">
+                    <button class="ba-btn" onclick="adjBet(-5)">-</button>
+                    <input type="number" id="betVal" class="ba-val" value="10" readonly>
+                    <button class="ba-btn" onclick="adjBet(5)">+</button>
                 </div>
-
-                <div class="auto-section">
-                    <div class="label-sm">Avto-Satış</div>
-                    <div class="auto-input-wrap" onclick="toggleAuto()">
-                        <span class="auto-lbl">x</span>
-                        <input type="number" id="autoVal" class="bet-val" value="2.00" style="text-align:left; padding-left:0;" onclick="event.stopPropagation()">
-                        <div class="sw-toggle" id="autoSw"><div class="sw-circle"></div></div>
-                    </div>
-                </div>
+                <button class="ba-btn" style="width:auto; padding:0 15px; font-size:12px; font-weight:bold; background:#1e293b;" onclick="adjBet(50)">+50</button>
             </div>
             
-            <button class="action-btn btn-bet" id="btnBet" onclick="play()">MƏRC ET</button>
-            <button class="action-btn btn-cash" id="btnCash" onclick="cashOut()">PULU GÖTÜR</button>
+            <button class="act-btn btn-bet" id="btnBet" onclick="playGame()">MƏRC ET</button>
+            <button class="act-btn btn-cash" id="btnCash" onclick="cashOut()">PULU GÖTÜR</button>
         </div>
 
-        <div class="bottom-nav">
-            <div class="nav-item active"><i class="fa-solid fa-gamepad"></i>Oyun</div>
-            <div class="nav-item" onclick="openPromo()"><i class="fa-solid fa-gift"></i>Promo</div>
-            <div class="nav-item" onclick="wa('deposit')"><i class="fa-solid fa-wallet"></i>Depozit</div>
-            <div class="nav-item" onclick="wa('withdraw')"><i class="fa-solid fa-money-bill-transfer"></i>Çıxarış</div>
+        <div class="info-panel">
+            <div class="tabs">
+                <div class="tab active" onclick="setTab('chat')"><i class="fa-regular fa-comments" style="margin-right:5px;"></i> CANLI ÇAT</div>
+                <div class="tab" onclick="setTab('bets')"><i class="fa-solid fa-list-ol" style="margin-right:5px;"></i> MƏRCLƏR</div>
+            </div>
+            
+            <div id="tab-chat" class="tab-content active">
+                <div class="msg"><span class="msg-sys">Sistem:</span> Xoş gəlmisiniz! Qazanmağa başlayın.</div>
+            </div>
+            
+            <div id="tab-bets" class="tab-content">
+                </div>
         </div>
     </div>
 
     <script>
         // --- CONFIG & STATE ---
-        const API_URL = "https://script.google.com/macros/s/AKfycbzK7CLi85c5GD8juIME-2RdQULXFCvS2zO3So7aaYV9apcTahXkJYWe0qcyJe3YQHDKhA/exec";
-        const ADMIN_WA = "994507516137";
-        
-        let balance = 0.00;
-        let totalDeposited = 0.00;
+        let user = { name: "Guest", email: "", balance: 0.00 };
         let isPlaying = false;
         let multi = 1.00;
         let crashPoint = 0;
         let startTime, animFrame;
         
-        // Auto Cashout State
-        let autoEnabled = false;
+        // Motivasiya Kitabxanası
+        const ph_Win = ["Möhtəşəm Nəticə!", "Professional Yanaşma!", "Sən Bu İşi Bilirsən!", "Milyonçu Zehniyyəti!", "Dayanma, Uçuşdasan!"];
+        const ph_Lose = ["Təcrübə Qazandın.", "Növbəti Raund Sənindir.", "Risk Yoxsa, Qazanc Yoxdur.", "Fokusunu İtirmə.", "Səbrli Ol."];
+        const ph_Idle = ["Fürsəti Gözlə...", "Strategiyanı Qur.", "Hazırsan?", "Böyük Oyna."];
 
-        // History
-        let history = [1.20, 5.43, 1.05, 2.30, 1.88, 11.50]; // Fake start history
-
-        // --- AUDIO ENGINE (SINTEZATOR) ---
-        // Bu sistem brauzerin öz səs mühərrikini işlədir, fayl lazım deyil.
+        // Səs Sintezi (Audio Engine) - Faylsız səs
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         const ctxAudio = new AudioContext();
         
-        function playTone(type) {
+        function sfx(type) {
             if(ctxAudio.state === 'suspended') ctxAudio.resume();
             const osc = ctxAudio.createOscillator();
             const gain = ctxAudio.createGain();
-            osc.connect(gain);
-            gain.connect(ctxAudio.destination);
-
+            osc.connect(gain); gain.connect(ctxAudio.destination);
             const now = ctxAudio.currentTime;
 
-            if (type === 'click') {
-                osc.frequency.setValueAtTime(800, now);
-                gain.gain.setValueAtTime(0.1, now);
-                osc.type = 'sine';
-                osc.start(now);
-                osc.stop(now + 0.05);
+            if(type==='click') {
+                osc.frequency.setValueAtTime(600, now); gain.gain.setValueAtTime(0.05, now);
+                osc.start(now); osc.stop(now+0.05);
             }
-            else if (type === 'win') {
-                osc.frequency.setValueAtTime(600, now);
-                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
-                gain.gain.setValueAtTime(0.3, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            if(type==='win') {
                 osc.type = 'triangle';
-                osc.start(now);
-                osc.stop(now + 0.4);
+                osc.frequency.setValueAtTime(400, now); osc.frequency.linearRampToValueAtTime(800, now+0.2);
+                gain.gain.setValueAtTime(0.1, now); gain.gain.linearRampToValueAtTime(0, now+0.3);
+                osc.start(now); osc.stop(now+0.3);
             }
-            else if (type === 'crash') {
-                osc.frequency.setValueAtTime(100, now);
-                osc.frequency.exponentialRampToValueAtTime(30, now + 0.3);
-                gain.gain.setValueAtTime(0.5, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+            if(type==='crash') {
                 osc.type = 'sawtooth';
-                osc.start(now);
-                osc.stop(now + 0.3);
+                osc.frequency.setValueAtTime(100, now); osc.frequency.linearRampToValueAtTime(20, now+0.3);
+                gain.gain.setValueAtTime(0.2, now); gain.gain.linearRampToValueAtTime(0, now+0.3);
+                osc.start(now); osc.stop(now+0.3);
             }
         }
 
-        // --- INIT ---
-        if(localStorage.getItem('jw_user_data')) {
-            const user = JSON.parse(localStorage.getItem('jw_user_data'));
-            loadApp(user.name, user.surname);
+        // --- AUTH & GOOGLE SYNC ---
+        // Avto-Giriş yoxlanışı
+        if(localStorage.getItem('jetwin_user')) {
+            const saved = JSON.parse(localStorage.getItem('jetwin_user'));
+            initApp(saved.name, saved.email, saved.balance);
         }
 
-        function registerUser() {
-            playTone('click');
-            let name = document.getElementById('regName').value.trim();
-            let surname = document.getElementById('regSurname').value.trim();
-            if(!name || !surname) return alert("Ad və Soyad daxil edin");
+        async function handleAuth() {
+            sfx('click');
+            const n = document.getElementById('regName').value.trim();
+            const e = document.getElementById('regEmail').value.trim();
+            const status = document.getElementById('statusMsg');
+            const btn = document.getElementById('authBtn');
 
-            localStorage.setItem('jw_user_data', JSON.stringify({name, surname}));
-            loadApp(name, surname);
+            if(n.length < 3 || !e.includes('@')) {
+                status.innerText = "⚠️ Məlumatları düzgün daxil edin"; return;
+            }
+
+            status.innerText = "Serverlə əlaqə qurulur...";
+            status.style.color = "#3b82f6";
+            btn.style.opacity = "0.7"; btn.innerText = "YÜKLƏNİR...";
+
+            try {
+                // Fetch to Google Script
+                const res = await fetch(`${API_URL}?action=register&name=${encodeURIComponent(n)}&email=${encodeURIComponent(e)}`);
+                const data = await res.json();
+
+                if(data.result === 'success') {
+                    initApp(n, e, data.balance);
+                } else {
+                    throw new Error("API Error");
+                }
+            } catch(err) {
+                // Fallback (Offline Mode or CORS issue protection)
+                console.log("Offline or CORS fallback used");
+                initApp(n, e, 50); // Bonus 50 for offline
+            }
         }
 
-        function loadApp(name, surname) {
+        function initApp(name, email, bal) {
+            user = { name: name, email: email, balance: parseFloat(bal) };
+            localStorage.setItem('jetwin_user', JSON.stringify(user));
+
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appScreen').style.display = 'flex';
-            document.getElementById('uName').innerText = name;
-            document.getElementById('uInitials').innerText = name[0] + surname[0];
             
-            renderHistory();
-            initGraphics();
-            runGhostMode();
+            document.getElementById('uNameDisp').innerText = name;
+            document.getElementById('uAv').innerText = name.charAt(0).toUpperCase();
+            updateUI();
+            
+            initCanvas();
+            animateBackground();
+            startSimulation(); // Chat & Bets bots
         }
 
-        // --- GAME LOGIC ---
-        function toggleAuto() {
-            autoEnabled = !autoEnabled;
-            document.getElementById('autoSw').classList.toggle('active', autoEnabled);
-            playTone('click');
-        }
-
-        function play() {
-            playTone('click');
+        // --- GAME ENGINE ---
+        function playGame() {
             let bet = parseInt(document.getElementById('betVal').value);
-            if(balance < bet) return alert("Balans yoxdur!");
+            if(user.balance < bet) return alert("Balansınız kifayət etmir!");
 
-            balance -= bet; updateUI();
-            isPlaying = true;
-            multi = 1.00;
+            sfx('click');
+            user.balance -= bet; updateUI();
             
-            // UI Reset
+            isPlaying = true; multi = 1.00;
+            
+            // UI Update
             document.getElementById('btnBet').style.display = 'none';
             document.getElementById('btnCash').style.display = 'block';
-            document.getElementById('multi').classList.remove('crashed', 'won');
-            document.getElementById('multi').style.color = 'white';
-            document.getElementById('status').innerText = "FLYING...";
-
-            // ALGORITHM
-            let r = Math.random();
-            if(totalDeposited > 0) {
-                 if(bet > 20) crashPoint = 1.00 + Math.random()*0.2; 
-                 else crashPoint = r < 0.4 ? 1.00 + Math.random()*0.3 : 2.0 + Math.random()*5;
-            } else {
-                 crashPoint = r < 0.1 ? 1.10 : 1.50 + Math.random() * 4.00; 
-            }
-
+            document.getElementById('multi').className = "multiplier";
+            document.getElementById('multi').style.color = "white";
+            setMoti("Raket Qalxır...", "#fff");
+            
+            // Algorithm
+            crashPoint = (Math.random() < 0.4) ? (1.0 + Math.random()*0.3) : (1.5 + Math.random()*5);
+            
             startTime = Date.now();
             loop();
         }
@@ -330,196 +416,201 @@
         function loop() {
             if(!isPlaying) return;
             let t = (Date.now() - startTime) / 1000;
-            multi = 1.00 + (t * t * 0.08);
-
-            // AUTO CASHOUT CHECK
-            if(autoEnabled) {
-                let target = parseFloat(document.getElementById('autoVal').value);
-                if(multi >= target) {
-                    cashOut();
-                    return;
-                }
-            }
+            multi = 1.00 + (t * t * 0.1); // Exponential curve
 
             if(multi >= crashPoint) { crash(); return; }
 
             document.getElementById('multi').innerText = multi.toFixed(2) + "x";
-            draw(t);
+            drawRocket(t);
             animFrame = requestAnimationFrame(loop);
         }
 
         function cashOut() {
             if(!isPlaying) return;
-            isPlaying = false; 
-            cancelAnimationFrame(animFrame);
-            playTone('win');
+            isPlaying = false; cancelAnimationFrame(animFrame);
+            sfx('win');
 
             let bet = parseInt(document.getElementById('betVal').value);
             let win = bet * multi;
-            balance += win; updateUI();
+            user.balance += win; updateUI();
+            saveLocal();
+
+            // SEND WIN TO GOOGLE SHEET (Background Sync)
+            fetch(`${API_URL}?action=win&name=${user.name}&email=${user.email}&amount=${win.toFixed(2)}`, {mode: 'no-cors'});
 
             document.getElementById('multi').classList.add('won');
-            document.getElementById('status').innerText = `WON $${win.toFixed(0)}`;
+            setMoti(ph_Win[Math.floor(Math.random()*ph_Win.length)], "#10b981");
             
-            // Show particle confetti
-            spawnParticles(cvs.width/2, cvs.height/2, 'gold');
-            
-            setTimeout(reset, 2500);
+            resetGame();
         }
 
         function crash() {
-            isPlaying = false; 
-            cancelAnimationFrame(animFrame);
-            playTone('crash');
-            
-            // Add to History Only on Crash
-            addToHistory(multi);
+            isPlaying = false; cancelAnimationFrame(animFrame);
+            sfx('crash');
 
-            document.getElementById('multi').innerText = multi.toFixed(2) + "x"; // Show exact crash point
+            document.getElementById('multi').innerText = multi.toFixed(2) + "x";
             document.getElementById('multi').classList.add('crashed');
-            document.getElementById('status').innerText = "CRASHED";
-            
-            if(navigator.vibrate) navigator.vibrate(200);
-            
-            // Explosion Effect
-            spawnParticles(lastX, lastY, 'red');
+            setMoti(ph_Lose[Math.floor(Math.random()*ph_Lose.length)], "#ef4444");
 
-            setTimeout(reset, 2500);
+            if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            resetGame();
         }
 
-        function reset() {
-            document.getElementById('btnBet').style.display = 'block';
-            document.getElementById('btnCash').style.display = 'none';
-            document.getElementById('multi').innerText = "1.00x";
-            document.getElementById('multi').style.color = "white";
-            document.getElementById('multi').classList.remove('crashed', 'won');
-            document.getElementById('status').innerText = "TAP TO BET";
-            runGhostMode();
+        function resetGame() {
+            setTimeout(() => {
+                document.getElementById('btnBet').style.display = 'block';
+                document.getElementById('btnCash').style.display = 'none';
+                document.getElementById('multi').className = "multiplier";
+                document.getElementById('multi').style.color = "white";
+                document.getElementById('multi').innerText = "1.00x";
+                setMoti(ph_Idle[Math.floor(Math.random()*ph_Idle.length)], "#9ca3af");
+                initCanvas(); // Clear graph
+            }, 3000);
         }
 
-        // --- HISTORY ---
-        function addToHistory(val) {
-            history.unshift(val);
-            if(history.length > 20) history.pop();
-            renderHistory();
-        }
-        function renderHistory() {
-            let html = "";
-            history.forEach(h => {
-                let cls = h < 1.2 ? 'h-lose' : (h > 10 ? 'h-big' : 'h-win');
-                html += `<div class="hist-item ${cls}">${h.toFixed(2)}x</div>`;
-            });
-            document.getElementById('historyBar').innerHTML = html;
-        }
-
-        // --- GRAPHICS & PARTICLES ---
+        // --- GRAPHICS & CANVAS ---
         const cvs = document.getElementById('game');
         const ctx = cvs.getContext('2d');
-        const cvsFx = document.getElementById('fx');
-        const ctxFx = cvsFx.getContext('2d');
+        const starCvs = document.getElementById('stars');
+        const starCtx = starCvs.getContext('2d');
         let w, h;
-        let lastX = 0, lastY = 0;
-        let particles = [];
 
-        function initGraphics() {
-            w = cvs.width = cvsFx.width = document.getElementById('stage').offsetWidth;
-            h = cvs.height = cvsFx.height = document.getElementById('stage').offsetHeight;
+        function initCanvas() {
+            w = cvs.width = starCvs.width = document.getElementById('stage').offsetWidth;
+            h = cvs.height = starCvs.height = document.getElementById('stage').offsetHeight;
+            ctx.clearRect(0,0,w,h);
             drawStars();
         }
-        window.addEventListener('resize', initGraphics);
+        window.addEventListener('resize', initCanvas);
 
-        function draw(t) {
+        function drawRocket(t) {
             ctx.clearRect(0,0,w,h);
-            ctxFx.clearRect(0,0,w,h);
-            
-            let x = Math.min(w - 50, t * 100);
-            let y = h - Math.min(h - 50, (multi - 1) * 150);
-            lastX = x; lastY = y;
+            let x = Math.min(w - 60, t * 80);
+            let y = h - Math.min(h - 60, (multi - 1) * 120);
 
-            // Trail
-            ctx.beginPath(); ctx.lineWidth = 4; ctx.strokeStyle = "#007aff";
-            ctx.moveTo(0, h); ctx.quadraticCurveTo(x/2, h, x, y); ctx.stroke();
-            
-            // Rocket
+            // Line with Glow
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "#3b82f6";
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = "#3b82f6";
+            ctx.moveTo(0, h);
+            ctx.quadraticCurveTo(x/2, h, x, y);
+            ctx.stroke();
+            ctx.shadowBlur = 0; // Reset
+
+            // Rocket Icon
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(-45 * Math.PI / 180);
-            ctx.font = "30px Arial";
-            ctx.fillText("🚀", -15, 10);
+            ctx.font = "32px Arial";
+            ctx.fillText("🚀", -15, 0);
             ctx.restore();
-
-            updateParticles();
         }
 
-        function spawnParticles(x, y, color) {
-            for(let i=0; i<30; i++) {
-                particles.push({
-                    x: x, y: y,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10,
-                    life: 1.0,
-                    color: color === 'red' ? '#ff3b30' : '#ffcc00'
-                });
-            }
-            if(!isPlaying) requestAnimationFrame(postGameAnim);
-        }
-
-        function updateParticles() {
-            for(let i=particles.length-1; i>=0; i--) {
-                let p = particles[i];
-                p.x += p.vx; p.y += p.vy;
-                p.life -= 0.02;
-                ctxFx.fillStyle = p.color;
-                ctxFx.globalAlpha = p.life;
-                ctxFx.beginPath(); ctxFx.arc(p.x, p.y, 3, 0, Math.PI*2); ctxFx.fill();
-                if(p.life <= 0) particles.splice(i, 1);
-            }
-            ctxFx.globalAlpha = 1.0;
-        }
-
-        function postGameAnim() {
-            if(particles.length > 0) {
-                ctxFx.clearRect(0,0,w,h);
-                updateParticles();
-                requestAnimationFrame(postGameAnim);
+        function drawStars() {
+            starCtx.fillStyle = "rgba(255,255,255,0.4)";
+            for(let i=0; i<40; i++) {
+                starCtx.beginPath();
+                starCtx.arc(Math.random()*w, Math.random()*h, Math.random()*2, 0, Math.PI*2);
+                starCtx.fill();
             }
         }
-
-        function runGhostMode() {
-            if(isPlaying) return;
-            multi = 1.00;
-            let target = 1.5 + Math.random()*5;
-            let start = Date.now();
-            function g() {
-                if(isPlaying) return;
-                let t = (Date.now() - start)/1000;
-                multi = 1.00 + (t*t*0.08);
-                if(multi>=target) { setTimeout(runGhostMode,1000); return; }
-                document.getElementById('multi').innerText = multi.toFixed(2) + "x";
-                draw(t);
-                requestAnimationFrame(g);
-            }
-            g();
+        
+        function animateBackground() {
+            // Subtle movement for stars can be added here
+            requestAnimationFrame(animateBackground);
         }
 
-        // --- UTILS ---
+        // --- SIMULATION (BOTS & CHAT) ---
+        const botNames = ["Ali_Trade", "Elvin99", "BakuShark", "Tural.M", "Leyla_W", "Cavid.Pro", "Samir.Boss"];
+        const botMsgs = ["Salam uşaqlar", "10x gəlir!", "Risk etdim", "Yes! Uddum!", "Gecikdim :(", "Admin salam", "Bu gün yaxşı gedir"];
+
+        function startSimulation() {
+            // Chat Loop
+            setInterval(() => {
+                if(Math.random() > 0.4) return;
+                let b = botNames[Math.floor(Math.random()*botNames.length)];
+                let m = botMsgs[Math.floor(Math.random()*botMsgs.length)];
+                addChat(b, m);
+            }, 3500);
+
+            // Bets Loop
+            setInterval(() => {
+                addFakeBet();
+            }, 2000);
+        }
+
+        function addChat(n, m) {
+            let div = document.createElement('div');
+            div.className = "msg";
+            div.innerHTML = `<span class="msg-name">${n}:</span><span class="msg-txt">${m}</span>`;
+            let c = document.getElementById('tab-chat');
+            c.appendChild(div);
+            c.scrollTop = c.scrollHeight;
+        }
+
+        function addFakeBet() {
+            let b = botNames[Math.floor(Math.random()*botNames.length)];
+            let val = (10 + Math.random()*200).toFixed(0);
+            let div = document.createElement('div');
+            div.className = "lb-row";
+            div.innerHTML = `<span class="lb-name">${b}</span><span class="lb-bet">$${val}</span><span class="lb-win">Pending</span>`;
+            
+            let list = document.getElementById('tab-bets');
+            list.insertBefore(div, list.firstChild);
+            if(list.children.length > 10) list.removeChild(list.lastChild);
+            
+            // Simulate win after delay
+            setTimeout(() => {
+                div.querySelector('.lb-win').innerText = "+$"+(val * (1+Math.random())).toFixed(0);
+            }, 1000 + Math.random()*3000);
+        }
+
+        // --- UTILITIES ---
+        function updateUI() { document.getElementById('balance').innerText = user.balance.toFixed(2); }
+        function saveLocal() { localStorage.setItem('jetwin_user', JSON.stringify(user)); }
         function adjBet(v) { 
+            sfx('click');
             let el = document.getElementById('betVal'); 
             let val = parseInt(el.value) + v;
             if(val < 1) val = 1; el.value = val;
-            playTone('click');
         }
-        function updateUI() { document.getElementById('bal').innerText = balance.toFixed(2); }
-        function drawStars() {
-            const sCtx = document.getElementById('stars').getContext('2d');
-            sCtx.clearRect(0,0,w,h); sCtx.fillStyle = "rgba(255,255,255,0.3)";
-            for(let i=0; i<60; i++) sCtx.beginPath(), sCtx.arc(Math.random()*w, Math.random()*h, Math.random()*2, 0, 6.28), sCtx.fill();
+        function setMoti(txt, color) {
+            let m = document.getElementById('motiText');
+            m.style.animation = 'none';
+            m.offsetHeight; /* trigger reflow */
+            m.style.animation = 'fadeInUp 0.5s forwards';
+            m.innerText = txt;
+            m.style.color = color;
         }
+        function setTab(id) {
+            sfx('click');
+            document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+            document.getElementById('tab-'+id).classList.add('active');
+            document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+        
         async function openPromo() {
-            let code = prompt("Promo Code:");
-            if(code === "JETWIN2024") { balance += 50; updateUI(); alert("Success +$50"); }
+            sfx('click');
+            let code = prompt("Promo Kodu Daxil Edin:");
+            if(!code) return;
+            try {
+                let res = await fetch(`${API_URL}?action=promo&code=${encodeURIComponent(code)}`);
+                let data = await res.json();
+                if(data.result === 'success') {
+                    sfx('win');
+                    let amt = parseFloat(data.amount);
+                    user.balance += amt; updateUI(); saveLocal();
+                    alert(`✅ Təbriklər! +$${amt} bonus qazandınız.`);
+                    // Sync win
+                    fetch(`${API_URL}?action=win&name=${user.name}&email=${user.email}&amount=${amt}`, {mode: 'no-cors'});
+                } else {
+                    alert("❌ Kod yanlışdır");
+                }
+            } catch(e) { alert("Xəta baş verdi"); }
         }
-        function wa(type) { window.open(`https://wa.me/${ADMIN_WA}?text=${type}`, '_blank'); }
 
     </script>
 </body>
