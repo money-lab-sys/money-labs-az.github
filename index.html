@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b0f19">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>JETWIN | TURBO APP</title>
+    <title>JETWIN | WORLD CLASS</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Rajdhani:wght@600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -39,11 +39,31 @@
             overflow: hidden;
         }
 
+        /* --- SPLASH SCREEN (INTRO) --- */
+        #splashScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000;
+            background: #0b0f19; display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s;
+        }
+        .splash-logo {
+            font-family: 'Rajdhani'; font-size: 48px; font-weight: 900; color: var(--primary);
+            animation: pulseLogo 1.5s infinite;
+        }
+        @keyframes pulseLogo { 0%, 100% {transform:scale(1);} 50% {transform:scale(1.1);} }
+
+        /* --- NOTIFICATION --- */
+        #notify {
+            position: fixed; top: -60px; left: 50%; transform: translateX(-50%);
+            background: rgba(16, 185, 129, 0.9); color: white; padding: 10px 20px;
+            border-radius: 20px; font-size: 12px; font-weight: bold; z-index: 9000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: top 0.5s; width: 90%; text-align: center;
+        }
+
         /* --- AUTH SCREEN --- */
         #authScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
             background: url('https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg') no-repeat center center/cover;
-            display: flex; flex-direction: column; justify-content: flex-end;
+            display: none; flex-direction: column; justify-content: flex-end;
         }
         #authScreen::before { content:''; position:absolute; inset:0; background: linear-gradient(to bottom, transparent, #0b0f19 90%); }
 
@@ -59,7 +79,6 @@
             background: var(--primary-g); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             margin-bottom: 5px; letter-spacing: -2px; text-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
         }
-        .brand-sub { color: white; font-size: 14px; letter-spacing: 4px; font-weight: 700; margin-bottom: 40px; opacity: 0.8; }
 
         .auth-inp {
             width: 100%; padding: 18px 20px; margin-bottom: 12px;
@@ -114,10 +133,23 @@
             -webkit-overflow-scrolling: touch;
         }
         .content-view.active { display: block; overflow-y: auto; }
-        /* JetX View must not scroll */
         #gameView.active { overflow: hidden; }
 
         /* --- 1. LOBBY VIEW --- */
+        .big-play-btn {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            margin: 20px 15px 0; padding: 25px; border-radius: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            color: white; box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+            cursor: pointer; position: relative; overflow: hidden;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float { 0% {transform: translateY(0px);} 50% {transform: translateY(-5px);} 100% {transform: translateY(0px);} }
+        
+        .bp-text h2 { margin: 0; font-size: 28px; font-weight: 900; font-family: 'Rajdhani'; }
+        .bp-text p { margin: 5px 0 0; font-size: 12px; opacity: 0.9; }
+        .bp-icon { font-size: 40px; background: rgba(255,255,255,0.2); width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+
         .vip-card {
             margin: 15px; padding: 15px; border-radius: 16px;
             background: linear-gradient(to right, #202020, #000);
@@ -129,38 +161,20 @@
         .vip-progress { width: 100px; height: 6px; background: #333; border-radius: 3px; margin-top: 5px; overflow: hidden; }
         .vip-bar { width: 30%; height: 100%; background: var(--primary); }
 
-        .banners { padding: 0 15px; display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; }
-        .banner-card {
-            min-width: 260px; height: 130px; border-radius: 16px; 
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            display: flex; flex-direction: column; justify-content: center; padding: 20px;
-            color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative; overflow: hidden;
-        }
-        .banner-card h2 { margin: 0; font-size: 22px; font-weight: 800; font-family: 'Rajdhani'; }
-        .banner-card p { margin: 5px 0 0; font-size: 12px; opacity: 0.8; }
-        .banner-card::after { content:'HOT'; position:absolute; top:10px; right:10px; font-size:10px; background:var(--primary); padding:3px 8px; border-radius:4px; color:black; font-weight:bold;}
-
         .games-grid { padding: 0 15px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .game-card {
             background: var(--panel); border-radius: 16px; padding: 15px;
             display: flex; flex-direction: column; align-items: center; gap: 10px;
             border: 1px solid var(--border); transition: 0.2s; position: relative;
         }
-        .game-card:active { transform: scale(0.98); background: rgba(255,255,255,0.05); }
         .g-icon { font-size: 32px; color: var(--text-mute); }
         .g-title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; }
-        .g-play-btn { 
-            background: var(--blue); color: white; padding: 8px 24px; border-radius: 20px; 
-            font-size: 11px; font-weight: 800; border: none; margin-top: 5px;
-        }
         .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); border-radius: 16px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
 
-        /* --- 2. JETX GAME VIEW (OPTIMIZED) --- */
+        /* --- 2. JETX GAME VIEW --- */
         #gameView { 
             background: radial-gradient(circle at 50% 100%, #1e2638 0%, #0b0f19 80%); 
-            width: 100%; height: 100%; /* Full screen */
-            position: fixed; top:0; left:0; z-index: 60; /* Overlay everything */
+            width: 100%; height: 100%; position: fixed; top:0; left:0; z-index: 60; 
             display: none;
         }
         #gameView.active { display: block; }
@@ -174,15 +188,25 @@
 
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
         
-        .hud-center { position: absolute; top: 35%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; z-index: 5; }
+        .hud-center { position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; z-index: 5; }
         .hud-multi { font-size: 72px; font-weight: 900; font-family: 'Rajdhani'; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
         .hud-stat { font-size: 12px; letter-spacing: 2px; color: var(--text-mute); margin-top: 5px; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; }
+
+        /* CHAT OVERLAY */
+        .live-chat {
+            position: absolute; bottom: 160px; left: 15px; width: 200px; height: 120px;
+            overflow: hidden; pointer-events: none; opacity: 0.8; z-index: 5;
+            mask-image: linear-gradient(to top, black 80%, transparent 100%);
+        }
+        .chat-msg { font-size: 11px; margin-bottom: 6px; text-shadow: 0 1px 2px black; animation: slideUp 0.3s; }
+        .chat-msg b { color: var(--primary); }
+        @keyframes slideUp { from {transform:translateY(10px); opacity:0;} to {transform:translateY(0); opacity:1;} }
 
         .game-ctrl {
             position: absolute; bottom: 0; width: 100%; background: var(--panel);
             padding: 20px 15px; border-top-left-radius: 24px; border-top-right-radius: 24px;
             box-shadow: 0 -10px 40px rgba(0,0,0,0.5); border-top: 1px solid var(--border);
-            z-index: 10; padding-bottom: 30px; /* Safe area */
+            z-index: 10; padding-bottom: 30px;
         }
         .bet-row { display: flex; gap: 10px; margin-bottom: 12px; }
         .b-input { flex: 1; background: #0b0f19; border: 1px solid var(--border); border-radius: 12px; color: white; text-align: center; font-family: 'Rajdhani'; font-size: 22px; padding: 12px; }
@@ -204,10 +228,6 @@
         .spin-btn { background: var(--primary-g); color: white; font-weight: 800; border: none; padding: 15px 50px; border-radius: 30px; font-size: 20px; box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); margin-bottom: 20px; }
         .spin-btn:disabled { background: #333; color: #777; box-shadow: none; }
 
-        .winners-list { background: #111; border-radius: 12px; padding: 15px; text-align: left; max-height: 150px; overflow: hidden; border: 1px solid #333; }
-        .win-item { font-size: 12px; margin-bottom: 8px; color: #aaa; border-bottom: 1px solid #222; padding-bottom: 5px; animation: fadeIn 0.5s; }
-        .win-item span { color: var(--green); font-weight: bold; }
-
         /* --- BOTTOM NAV --- */
         .bottom-nav {
             height: 75px; background: rgba(11, 15, 25, 0.98); backdrop-filter: blur(10px);
@@ -221,7 +241,6 @@
         .nav-item.mid i { margin: 0; font-size: 26px; }
 
         /* ANIMATIONS */
-        @keyframes fadeIn { from {opacity:0; transform:translateY(5px);} to {opacity:1; transform:translateY(0);} }
         .crashed { color: var(--red) !important; text-shadow: 0 0 30px var(--red); animation: shake 0.4s; }
         .won { color: var(--green) !important; text-shadow: 0 0 30px var(--green); transform: scale(1.1); }
         @keyframes shake { 0%, 100% {transform: translate(-50%,-50%);} 25% {transform: translate(-52%, -48%);} 75% {transform: translate(-48%, -52%);} }
@@ -232,6 +251,12 @@
     </style>
 </head>
 <body>
+
+    <div id="splashScreen">
+        <div class="splash-logo">JETWIN</div>
+    </div>
+
+    <div id="notify"></div>
 
     <script>
         // --- KONFIQURASIYA ---
@@ -246,7 +271,7 @@
     <div id="authScreen">
         <div class="auth-container">
             <div class="brand-big">JETWIN</div>
-            <div class="brand-sub">VIP GİRİŞ</div>
+            <div style="color:white; font-size:12px; letter-spacing:4px; margin-bottom:40px; opacity:0.7;">WORLD CLASS CASINO</div>
 
             <input type="text" id="regName" class="auth-inp" placeholder="Adınız" autocomplete="off">
             <input type="email" id="regEmail" class="auth-inp" placeholder="Email" autocomplete="off">
@@ -273,6 +298,15 @@
         </div>
 
         <div id="lobbyView" class="content-view active">
+            
+            <div class="big-play-btn" onclick="nav('game')">
+                <div class="bp-text">
+                    <h2>İNDİ OYNA</h2>
+                    <p>JETX - Canlı Rejim</p>
+                </div>
+                <div class="bp-icon"><i class="fa-solid fa-play" style="color:white;"></i></div>
+            </div>
+
             <div class="vip-card">
                 <div class="vip-icon"><i class="fa-solid fa-crown"></i></div>
                 <div class="vip-info">
@@ -282,25 +316,9 @@
                 </div>
             </div>
 
-            <div class="banners">
-                <div class="banner-card" onclick="openWA('Salam! Balans artırmaq istəyirəm. Hesab: ' + user.email)">
-                    <h2>DEPOZİT ET</h2>
-                    <p>Bonuslar səni gözləyir!</p>
-                </div>
-                <div class="banner-card" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);">
-                    <h2>DOSTUNU GƏTİR</h2>
-                    <p>Hər dostuna görə $10 qazan</p>
-                </div>
-            </div>
-
             <div style="padding:0 15px; font-weight:700; font-size:16px; margin-bottom:10px; color:#ddd;">OYUNLAR</div>
             <div class="games-grid">
-                <div class="game-card" onclick="nav('game')">
-                    <i class="fa-solid fa-rocket g-icon" style="color:var(--primary);"></i>
-                    <div class="g-title">JETX PRO</div>
-                    <button class="g-play-btn">OYNA</button>
-                </div>
-                <div class="game-card" onclick="alert('Tezliklə!')">
+                <div class="game-card" onclick="alert('Aviator tezliklə aktiv olacaq!')">
                     <i class="fa-solid fa-plane-up g-icon"></i>
                     <div class="g-title">AVIATOR</div>
                     <div class="lock-overlay"><i class="fa-solid fa-lock"></i></div>
@@ -308,11 +326,6 @@
                 <div class="game-card">
                     <i class="fa-solid fa-gem g-icon"></i>
                     <div class="g-title">BONANZA</div>
-                    <div class="lock-overlay"><i class="fa-solid fa-lock"></i></div>
-                </div>
-                <div class="game-card">
-                    <i class="fa-solid fa-dice g-icon"></i>
-                    <div class="g-title">DICE</div>
                     <div class="lock-overlay"><i class="fa-solid fa-lock"></i></div>
                 </div>
             </div>
@@ -327,6 +340,8 @@
             <canvas id="stars"></canvas>
             <canvas id="game"></canvas>
             
+            <div class="live-chat" id="chatBox"></div>
+
             <div class="hud-center">
                 <div class="hud-multi" id="multi">1.00x</div>
                 <div class="hud-stat" id="status">GÖZLƏNİLİR...</div>
@@ -358,12 +373,6 @@
                 
                 <button class="spin-btn" id="spinBtn" onclick="spinWheel()">FIRLAT</button>
                 <p id="spinRes" style="margin-top:20px; font-weight:bold; color:white; min-height:20px;"></p>
-
-                <div style="text-align:left; margin-top:30px;">
-                    <p style="font-size:12px; font-weight:bold; color:#555; margin-bottom:5px;">SON QALİBLƏR:</p>
-                    <div class="winners-list" id="winList">
-                        </div>
-                </div>
             </div>
         </div>
 
@@ -387,6 +396,44 @@
     </div>
 
     <script>
+        // --- SOUND SYSTEM (AudioContext) ---
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let soundOn = true;
+        let actx;
+
+        function initSound() {
+            if(!actx) actx = new AudioCtx();
+            if(actx.state === 'suspended') actx.resume();
+        }
+
+        function playSfx(type) {
+            if(!actx) initSound();
+            const osc = actx.createOscillator();
+            const gain = actx.createGain();
+            osc.connect(gain); gain.connect(actx.destination);
+            
+            const t = actx.currentTime;
+            if(type === 'click') {
+                osc.frequency.setValueAtTime(600, t);
+                gain.gain.setValueAtTime(0.1, t);
+                osc.start(t); osc.stop(t+0.05);
+            } else if(type === 'win') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, t);
+                osc.frequency.linearRampToValueAtTime(800, t+0.1);
+                gain.gain.setValueAtTime(0.2, t);
+                gain.gain.exponentialRampToValueAtTime(0.01, t+0.5);
+                osc.start(t); osc.stop(t+0.5);
+            } else if(type === 'crash') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, t);
+                osc.frequency.exponentialRampToValueAtTime(10, t+0.3);
+                gain.gain.setValueAtTime(0.3, t);
+                gain.gain.linearRampToValueAtTime(0, t+0.3);
+                osc.start(t); osc.stop(t+0.3);
+            }
+        }
+
         // --- DATA & STATE ---
         let user = { name: "", email: "", balance: 0.00, deposit: 0, spinUsed: false };
         let isPlaying = false;
@@ -394,14 +441,25 @@
         let crashPoint = 0;
         let animId, startTime;
 
-        // Load User
-        if(localStorage.getItem('jetwin_u_turbo')) {
-            user = JSON.parse(localStorage.getItem('jetwin_u_turbo'));
-            enterApp();
-        }
+        // --- SPLASH & INIT ---
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('splashScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('splashScreen').style.display = 'none';
+                    if(localStorage.getItem('jetwin_u_pro')) {
+                        user = JSON.parse(localStorage.getItem('jetwin_u_pro'));
+                        enterApp();
+                    } else {
+                        document.getElementById('authScreen').style.display = 'flex';
+                    }
+                }, 500);
+            }, 2000); // 2 Sec Intro
+        };
 
         // --- AUTH ---
         async function doLogin() {
+            initSound(); playSfx('click');
             let n = document.getElementById('regName').value.trim();
             let e = document.getElementById('regEmail').value.trim();
             let c = document.getElementById('regCode').value.trim();
@@ -421,7 +479,7 @@
                 if(data.result === 'success') {
                     let bal = parseFloat(data.balance);
                     user = { name: n, email: e, balance: bal, deposit: bal, spinUsed: false };
-                    localStorage.setItem('jetwin_u_turbo', JSON.stringify(user));
+                    localStorage.setItem('jetwin_u_pro', JSON.stringify(user));
                     enterApp();
                 } else {
                     err.innerText = data.msg || "Kod yanlışdır!"; err.style.display="block";
@@ -437,22 +495,24 @@
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appScreen').style.display = 'flex';
             updateUI();
-            startFakeWinners();
+            startNotifications();
             if(user.spinUsed) document.getElementById('spinBtn').disabled = true;
         }
 
         // --- WITHDRAW LOGIC ---
         function tryWithdraw() {
+            playSfx('click');
             if(user.balance > user.deposit) {
                 openWA(`Salam! ID: ${user.email}. Balansım: $${user.balance}. Çıxarış etmək istəyirəm.`);
             } else {
-                alert(`Çıxarış üçün balansınız ilkin depozitdən ($${user.deposit}) çox olmalıdır. Hazırda: $${user.balance}`);
+                alert(`Çıxarış üçün balansınız ilkin depozitdən ($${user.deposit}) çox olmalıdır.`);
             }
         }
 
         // --- BONUS WHEEL (RIGGED) ---
         function spinWheel() {
             if(user.spinUsed) return;
+            playSfx('click');
             let btn = document.getElementById('spinBtn');
             btn.disabled = true;
             let wheel = document.getElementById('wheel');
@@ -462,6 +522,7 @@
             setTimeout(() => {
                 user.spinUsed = true;
                 if(isWin) {
+                    playSfx('win');
                     user.balance += 1;
                     document.getElementById('spinRes').innerText = "TƏBRİKLƏR! $1 Qazandınız!";
                 } else {
@@ -473,6 +534,7 @@
 
         // --- NAVIGATION ---
         function nav(tab) {
+            playSfx('click');
             document.querySelectorAll('.content-view').forEach(e => e.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
             
@@ -481,7 +543,8 @@
                 document.getElementById('nav-lobby').classList.add('active');
             } else if(tab === 'game') {
                 document.getElementById('gameView').classList.add('active');
-                initGame(); // Re-init canvas
+                initGame();
+                startChatBot();
             } else if(tab === 'bonus') {
                 document.getElementById('bonusView').classList.add('active');
                 document.getElementById('nav-bonus').classList.add('active');
@@ -490,6 +553,7 @@
 
         // --- JETX GAME (OPTIMIZED) ---
         function play() {
+            playSfx('click');
             let bet = parseInt(document.getElementById('betVal').value);
             if(user.balance < bet) { openWA('Balans artırmaq istəyirəm'); return; }
 
@@ -521,6 +585,7 @@
         function cashOut() {
             if(!isPlaying) return;
             isPlaying = false; cancelAnimationFrame(animId);
+            playSfx('win');
             let bet = parseInt(document.getElementById('betVal').value);
             let win = bet * multi;
             user.balance += win; updateUI();
@@ -532,6 +597,7 @@
 
         function crash() {
             isPlaying = false; cancelAnimationFrame(animId);
+            playSfx('crash');
             document.getElementById('multi').innerText = multi.toFixed(2) + "x";
             document.getElementById('multi').classList.add('crashed');
             document.getElementById('status').innerText = "PARTLADI!";
@@ -552,26 +618,40 @@
             }, 3000);
         }
 
-        // --- UTILS ---
+        // --- UTILS & RETENTION ---
         function updateUI() { 
             document.getElementById('uBal').innerText = user.balance.toFixed(2); 
             document.getElementById('gBal').innerText = user.balance.toFixed(2);
-            localStorage.setItem('jetwin_u_turbo', JSON.stringify(user)); 
+            localStorage.setItem('jetwin_u_pro', JSON.stringify(user)); 
         }
-        function adjBet(v) { let el = document.getElementById('betVal'); let val = parseInt(el.value)+v; if(val<1)val=1; el.value=val; }
+        function adjBet(v) { playSfx('click'); let el = document.getElementById('betVal'); let val = parseInt(el.value)+v; if(val<1)val=1; el.value=val; }
 
-        function startFakeWinners() {
-            const names = ["Cavid", "Elvin", "Leyla", "Murad", "Aysel", "Samir"];
-            const list = document.getElementById('winList');
+        function startNotifications() {
+            const msgs = ["Ali $200 çıxarış etdi", "Murad $50 qazandı", "Tural VIP oldu", "Aysel $1000 qazandı"];
             setInterval(() => {
+                let msg = msgs[Math.floor(Math.random()*msgs.length)];
+                let not = document.getElementById('notify');
+                not.innerText = msg;
+                not.style.top = "10px";
+                setTimeout(() => { not.style.top = "-60px"; }, 3000);
+            }, 10000);
+        }
+
+        function startChatBot() {
+            const names = ["User123", "ProPlayer", "Winner99", "RiskLover"];
+            const txts = ["10x gəlir!", "Uddum", "Gecikdim :(", "Ela oyundur", "Salam"];
+            const box = document.getElementById('chatBox');
+            
+            setInterval(() => {
+                if(document.getElementById('gameView').style.display === 'none') return;
                 let n = names[Math.floor(Math.random()*names.length)];
-                let amt = Math.floor(Math.random() * 500) + 50;
-                let item = document.createElement('div');
-                item.className = "win-item";
-                item.innerHTML = `${n} indicə <span>$${amt}</span> qazandı!`;
-                list.prepend(item);
-                if(list.children.length > 5) list.lastChild.remove();
-            }, 4000);
+                let t = txts[Math.floor(Math.random()*txts.length)];
+                let d = document.createElement('div');
+                d.className = "chat-msg";
+                d.innerHTML = `<b>${n}:</b> ${t}`;
+                box.appendChild(d);
+                if(box.children.length > 5) box.firstChild.remove();
+            }, 2500);
         }
 
         // --- OPTIMIZED CANVAS ---
@@ -580,11 +660,9 @@
         let w, h;
         function initGame() {
             if(!cvs.parentElement) return;
-            // Resize logic to match container EXACTLY
             const rect = cvs.parentElement.getBoundingClientRect();
             w = cvs.width = rect.width;
             h = cvs.height = rect.height;
-            
             const sCtx = document.getElementById('stars').getContext('2d');
             document.getElementById('stars').width = w; document.getElementById('stars').height = h;
             sCtx.fillStyle = "rgba(255,255,255,0.2)"; sCtx.clearRect(0,0,w,h);
@@ -595,16 +673,12 @@
             ctx.clearRect(0,0,w,h);
             let x = Math.min(w - 50, t * 100);
             let y = h - Math.min(h - 50, (multi - 1) * 150);
-            
-            // Simplified drawing for speed
             ctx.beginPath(); ctx.lineWidth = 4; ctx.strokeStyle = "#f59e0b";
             ctx.moveTo(0, h); ctx.quadraticCurveTo(x/2, h, x, y); ctx.stroke();
-            
             ctx.save(); ctx.translate(x, y); ctx.rotate(-45 * Math.PI / 180);
             ctx.font = "24px Arial"; ctx.fillText("🚀", -15, 0); ctx.restore();
         }
         
-        // Handle Resize
         window.addEventListener('resize', () => { if(document.getElementById('gameView').classList.contains('active')) initGame(); });
     </script>
 </body>
