@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b0f19">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>JETWIN | ELITE CASINO</title>
+    <title>JETWIN | TURBO APP</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Rajdhani:wght@600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,7 +27,7 @@
             --glass: rgba(20, 25, 38, 0.95);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; user-select: none; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; user-select: none; touch-action: manipulation; }
         
         body {
             margin: 0; padding: 0;
@@ -110,9 +110,12 @@
         /* CONTENT AREA */
         .content-view {
             flex: 1; margin-top: 65px; margin-bottom: 75px; 
-            overflow-y: auto; position: relative; display: none;
+            overflow-y: hidden; position: relative; display: none;
+            -webkit-overflow-scrolling: touch;
         }
-        .content-view.active { display: block; }
+        .content-view.active { display: block; overflow-y: auto; }
+        /* JetX View must not scroll */
+        #gameView.active { overflow: hidden; }
 
         /* --- 1. LOBBY VIEW --- */
         .vip-card {
@@ -153,18 +156,33 @@
         }
         .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); border-radius: 16px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
 
-        /* --- 2. JETX GAME VIEW --- */
-        #gameView { background: radial-gradient(circle at 50% 100%, #1e2638 0%, #0b0f19 80%); height: calc(100% - 140px); overflow: hidden; }
-        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        /* --- 2. JETX GAME VIEW (OPTIMIZED) --- */
+        #gameView { 
+            background: radial-gradient(circle at 50% 100%, #1e2638 0%, #0b0f19 80%); 
+            width: 100%; height: 100%; /* Full screen */
+            position: fixed; top:0; left:0; z-index: 60; /* Overlay everything */
+            display: none;
+        }
+        #gameView.active { display: block; }
         
-        .hud-center { position: absolute; top: 35%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; }
-        .hud-multi { font-size: 72px; font-weight: 900; font-family: 'Rajdhani'; color: white; text-shadow: 0 0 40px rgba(245,158,11,0.4); }
+        .game-header {
+            position: absolute; top: 0; left: 0; width: 100%; height: 60px;
+            padding: 0 20px; display: flex; justify-content: space-between; align-items: center;
+            z-index: 10;
+        }
+        .back-btn { background: rgba(255,255,255,0.1); border:none; color:white; width: 36px; height: 36px; border-radius: 10px; font-size: 16px; cursor: pointer; }
+
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
+        
+        .hud-center { position: absolute; top: 35%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; z-index: 5; }
+        .hud-multi { font-size: 72px; font-weight: 900; font-family: 'Rajdhani'; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
         .hud-stat { font-size: 12px; letter-spacing: 2px; color: var(--text-mute); margin-top: 5px; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; }
 
         .game-ctrl {
             position: absolute; bottom: 0; width: 100%; background: var(--panel);
             padding: 20px 15px; border-top-left-radius: 24px; border-top-right-radius: 24px;
             box-shadow: 0 -10px 40px rgba(0,0,0,0.5); border-top: 1px solid var(--border);
+            z-index: 10; padding-bottom: 30px; /* Safe area */
         }
         .bet-row { display: flex; gap: 10px; margin-bottom: 12px; }
         .b-input { flex: 1; background: #0b0f19; border: 1px solid var(--border); border-radius: 12px; color: white; text-align: center; font-family: 'Rajdhani'; font-size: 22px; padding: 12px; }
@@ -180,7 +198,6 @@
         .wheel { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #222; position: relative; overflow: hidden; transition: 5s cubic-bezier(0.1, 0.9, 0.2, 1); background: conic-gradient(#ef4444 0deg 45deg, #222 45deg 90deg, #3b82f6 90deg 135deg, #222 135deg 180deg, #f59e0b 180deg 225deg, #222 225deg 270deg, #10b981 270deg 315deg, #222 315deg 360deg); box-shadow: 0 0 30px rgba(245,158,11,0.2); }
         .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: white; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 10; }
         
-        /* Wheel Text Decorations (Pseudo Visuals) */
         .w-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 100%; height: 100%; pointer-events: none; }
         .w-label { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); color: white; font-weight: bold; font-size: 14px; text-shadow: 0 0 5px black; }
 
@@ -302,6 +319,11 @@
         </div>
 
         <div id="gameView" class="content-view">
+            <div class="game-header">
+                <button class="back-btn" onclick="nav('lobby')"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="bal-box" style="background:rgba(0,0,0,0.5);">$<span id="gBal">0.00</span></div>
+            </div>
+
             <canvas id="stars"></canvas>
             <canvas id="game"></canvas>
             
@@ -373,8 +395,8 @@
         let animId, startTime;
 
         // Load User
-        if(localStorage.getItem('jetwin_u_v2')) {
-            user = JSON.parse(localStorage.getItem('jetwin_u_v2'));
+        if(localStorage.getItem('jetwin_u_turbo')) {
+            user = JSON.parse(localStorage.getItem('jetwin_u_turbo'));
             enterApp();
         }
 
@@ -397,10 +419,9 @@
                 let data = await res.json();
 
                 if(data.result === 'success') {
-                    // NEW: Save deposit amount for withdrawal logic
                     let bal = parseFloat(data.balance);
                     user = { name: n, email: e, balance: bal, deposit: bal, spinUsed: false };
-                    localStorage.setItem('jetwin_u_v2', JSON.stringify(user));
+                    localStorage.setItem('jetwin_u_turbo', JSON.stringify(user));
                     enterApp();
                 } else {
                     err.innerText = data.msg || "Kod yanlışdır!"; err.style.display="block";
@@ -416,14 +437,12 @@
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appScreen').style.display = 'flex';
             updateUI();
-            initGame();
             startFakeWinners();
             if(user.spinUsed) document.getElementById('spinBtn').disabled = true;
         }
 
         // --- WITHDRAW LOGIC ---
         function tryWithdraw() {
-            // Şərt: Balans > Depozit
             if(user.balance > user.deposit) {
                 openWA(`Salam! ID: ${user.email}. Balansım: $${user.balance}. Çıxarış etmək istəyirəm.`);
             } else {
@@ -434,28 +453,19 @@
         // --- BONUS WHEEL (RIGGED) ---
         function spinWheel() {
             if(user.spinUsed) return;
-            
             let btn = document.getElementById('spinBtn');
             btn.disabled = true;
-            
             let wheel = document.getElementById('wheel');
-            // 1% Chance to win $1
             let isWin = Math.random() < 0.01; 
-            
-            // Rotation math (Land on empty or small win)
-            let rotation = 1800 + (isWin ? 270 : 45); // Adjust deg for slots
-            
+            let rotation = 1800 + (isWin ? 270 : 45); 
             wheel.style.transform = `rotate(${rotation}deg)`;
-            
             setTimeout(() => {
                 user.spinUsed = true;
                 if(isWin) {
                     user.balance += 1;
                     document.getElementById('spinRes').innerText = "TƏBRİKLƏR! $1 Qazandınız!";
-                    document.getElementById('spinRes').style.color = "#10b981";
                 } else {
                     document.getElementById('spinRes').innerText = "BOŞ! Təəssüf ki, bəxtiniz gətirmədi.";
-                    document.getElementById('spinRes').style.color = "#ef4444";
                 }
                 updateUI();
             }, 5000);
@@ -471,14 +481,14 @@
                 document.getElementById('nav-lobby').classList.add('active');
             } else if(tab === 'game') {
                 document.getElementById('gameView').classList.add('active');
-                initGame();
+                initGame(); // Re-init canvas
             } else if(tab === 'bonus') {
                 document.getElementById('bonusView').classList.add('active');
                 document.getElementById('nav-bonus').classList.add('active');
             }
         }
 
-        // --- JETX GAME ---
+        // --- JETX GAME (OPTIMIZED) ---
         function play() {
             let bet = parseInt(document.getElementById('betVal').value);
             if(user.balance < bet) { openWA('Balans artırmaq istəyirəm'); return; }
@@ -542,55 +552,60 @@
             }, 3000);
         }
 
-        // --- UTILS & FAKE DATA ---
+        // --- UTILS ---
         function updateUI() { 
             document.getElementById('uBal').innerText = user.balance.toFixed(2); 
-            localStorage.setItem('jetwin_u_v2', JSON.stringify(user)); 
+            document.getElementById('gBal').innerText = user.balance.toFixed(2);
+            localStorage.setItem('jetwin_u_turbo', JSON.stringify(user)); 
         }
         function adjBet(v) { let el = document.getElementById('betVal'); let val = parseInt(el.value)+v; if(val<1)val=1; el.value=val; }
 
         function startFakeWinners() {
             const names = ["Cavid", "Elvin", "Leyla", "Murad", "Aysel", "Samir"];
             const list = document.getElementById('winList');
-            
             setInterval(() => {
                 let n = names[Math.floor(Math.random()*names.length)];
                 let amt = Math.floor(Math.random() * 500) + 50;
-                
                 let item = document.createElement('div');
                 item.className = "win-item";
                 item.innerHTML = `${n} indicə <span>$${amt}</span> qazandı!`;
-                
                 list.prepend(item);
                 if(list.children.length > 5) list.lastChild.remove();
             }, 4000);
         }
 
-        // --- CANVAS ---
+        // --- OPTIMIZED CANVAS ---
         const cvs = document.getElementById('game');
         const ctx = cvs.getContext('2d');
         let w, h;
         function initGame() {
             if(!cvs.parentElement) return;
-            w = cvs.width = cvs.parentElement.offsetWidth;
-            h = cvs.height = cvs.parentElement.offsetHeight;
-            ctx.clearRect(0,0,w,h);
+            // Resize logic to match container EXACTLY
+            const rect = cvs.parentElement.getBoundingClientRect();
+            w = cvs.width = rect.width;
+            h = cvs.height = rect.height;
+            
             const sCtx = document.getElementById('stars').getContext('2d');
             document.getElementById('stars').width = w; document.getElementById('stars').height = h;
             sCtx.fillStyle = "rgba(255,255,255,0.2)"; sCtx.clearRect(0,0,w,h);
             for(let i=0; i<30; i++) { sCtx.beginPath(); sCtx.arc(Math.random()*w, Math.random()*h, Math.random()*2, 0, 6.28); sCtx.fill(); }
         }
+        
         function draw(t) {
             ctx.clearRect(0,0,w,h);
-            let x = Math.min(w - 50, t * 80);
-            let y = h - Math.min(h - 50, (multi - 1) * 120);
-            ctx.beginPath(); ctx.lineWidth = 5; ctx.strokeStyle = "#f59e0b";
-            ctx.shadowBlur = 15; ctx.shadowColor = "#f59e0b";
+            let x = Math.min(w - 50, t * 100);
+            let y = h - Math.min(h - 50, (multi - 1) * 150);
+            
+            // Simplified drawing for speed
+            ctx.beginPath(); ctx.lineWidth = 4; ctx.strokeStyle = "#f59e0b";
             ctx.moveTo(0, h); ctx.quadraticCurveTo(x/2, h, x, y); ctx.stroke();
-            ctx.shadowBlur = 0;
+            
             ctx.save(); ctx.translate(x, y); ctx.rotate(-45 * Math.PI / 180);
             ctx.font = "24px Arial"; ctx.fillText("🚀", -15, 0); ctx.restore();
         }
+        
+        // Handle Resize
+        window.addEventListener('resize', () => { if(document.getElementById('gameView').classList.contains('active')) initGame(); });
     </script>
 </body>
 </html>
