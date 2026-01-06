@@ -69,20 +69,23 @@
         }
         .h-logo { font-family: 'Rajdhani'; font-weight: 900; font-size: 24px; color: var(--primary); }
         
+        .header-right { display: flex; align-items: center; gap: 6px; }
+
         .bal-wrap {
             display: flex; align-items: center; gap: 8px;
             background: #0b0f19; padding: 5px 5px 5px 15px; border-radius: 30px; border: 1px solid var(--border);
         }
         .bal-val { font-family: 'Rajdhani'; font-weight: 700; color: var(--green); font-size: 16px; }
         
-        .btn-dep {
-            width: 32px; height: 32px; background: var(--green); border-radius: 50%;
+        /* Buttons in Header */
+        .btn-icon {
+            width: 34px; height: 34px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; color: white; cursor: pointer;
+            font-size: 14px;
         }
-        .btn-with {
-            width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; margin-left: 5px;
-        }
+        .btn-dep { background: var(--green); } /* WhatsApp */
+        .btn-code { background: #3b82f6; } /* Promo Code */
+        .btn-with { background: rgba(255,255,255,0.1); border-radius: 10px; margin-left: 2px; } /* Withdraw */
 
         /* Marquee (Winners) */
         .marquee {
@@ -176,13 +179,16 @@
         
         <div class="header">
             <div class="h-logo">JETWIN</div>
-            <div style="display:flex; align-items:center;">
+            <div class="header-right">
                 <div class="bal-wrap">
                     <span style="font-size:12px; color:#aaa;">$</span>
                     <span id="balVal" class="bal-val">0.00</span>
-                    <div class="btn-dep" onclick="wa('Salam, Balans artırmaq istəyirəm')"><i class="fa-solid fa-plus"></i></div>
+                    
+                    <div class="btn-icon btn-code" onclick="enterNewCode()"><i class="fa-solid fa-ticket"></i></div>
+                    
+                    <div class="btn-icon btn-dep" onclick="wa('Salam, Balans artırmaq istəyirəm')"><i class="fa-solid fa-plus"></i></div>
                 </div>
-                <div class="btn-with" onclick="withdraw()"><i class="fa-solid fa-wallet"></i></div>
+                <div class="btn-icon btn-with" onclick="withdraw()"><i class="fa-solid fa-wallet"></i></div>
             </div>
         </div>
 
@@ -259,14 +265,14 @@
         let user = { name:"", email:"", balance:0, deposit:0 };
         
         window.onload = () => {
-            if(localStorage.getItem('jw_v10')) {
-                user = JSON.parse(localStorage.getItem('jw_v10'));
+            if(localStorage.getItem('jw_v11')) {
+                user = JSON.parse(localStorage.getItem('jw_v11'));
                 showApp();
             }
         };
 
         function save() { 
-            localStorage.setItem('jw_v10', JSON.stringify(user)); 
+            localStorage.setItem('jw_v11', JSON.stringify(user)); 
             document.getElementById('balVal').innerText = user.balance.toFixed(2);
         }
 
@@ -297,6 +303,34 @@
             initMines(); 
         }
 
+        // --- NEW: IN-GAME PROMO ENTRY ---
+        async function enterNewCode() {
+            let c = prompt("Yeni Promo Kodu daxil edin:");
+            if(!c) return;
+            
+            // Show simple feedback
+            document.getElementById('balVal').innerText = "...";
+            
+            try {
+                let r = await fetch(`${API}?action=login&name=${encodeURIComponent(user.name)}&email=${encodeURIComponent(user.email)}&code=${encodeURIComponent(c)}`);
+                let d = await r.json();
+                if(d.result === 'success') {
+                    let added = parseFloat(d.balance);
+                    user.balance += added;
+                    // Note: We don't update user.deposit here if it's considered a 'bonus' or 'topup', 
+                    // but you can add: user.deposit += added; if you want it to count towards withdraw threshold.
+                    save();
+                    alert(`✅ Uğurlu! Balansınıza $${added} əlavə olundu.`);
+                } else {
+                    alert("❌ " + (d.msg || "Kod yanlışdır"));
+                    save(); // Restore balance text
+                }
+            } catch(e) {
+                alert("❌ İnternet xətası");
+                save();
+            }
+        }
+
         // --- GLOBAL WITHDRAW ---
         function withdraw() {
             if(user.balance > user.deposit) wa(`ID: ${user.email}. Balans: $${user.balance}. Çıxarış etmək istəyirəm.`);
@@ -306,8 +340,8 @@
         // --- CHECK BALANCE & REDIRECT ---
         function checkBal(amount) {
             if(user.balance < amount) {
-                if(confirm("Balansınız kifayət etmir. Artırmaq istəyirsiniz?")) {
-                    wa(`Salam, Hesabıma (${user.email}) depozit etmək istəyirəm.`);
+                if(confirm("Balansınız kifayət etmir. Promo kodunuz var?")) {
+                    enterNewCode();
                 }
                 return false;
             }
