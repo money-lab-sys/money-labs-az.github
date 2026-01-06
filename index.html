@@ -2,34 +2,31 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0b0f19">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>JETWIN | ELITE</title>
+    <title>JETWIN | PLATFORM</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Rajdhani:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- RESET & CORE --- */
+        /* --- 1. RESET & CORE --- */
         :root {
             --bg: #0b0f19;
-            --panel: #161b2c;
-            --primary: #f59e0b; 
-            --primary-g: linear-gradient(135deg, #f59e0b, #d97706);
+            --panel: #151a27;
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
             --green: #10b981;
             --red: #ef4444;
             --text: #ffffff;
-            --text-mute: #94a3b8;
-            --glass: rgba(22, 27, 44, 0.95);
+            --border: rgba(255,255,255,0.1);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; outline: none; }
+        * { box-sizing: border-box; outline: none; user-select: none; -webkit-tap-highlight-color: transparent; }
         
         body {
             margin: 0; padding: 0;
-            background-color: var(--bg);
+            background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
             height: 100vh; height: 100dvh; /* Mobile Fix */
@@ -37,669 +34,459 @@
             overflow: hidden;
         }
 
-        /* --- UI COMPONENTS --- */
-        button { cursor: pointer; font-family: 'Inter', sans-serif; }
-        button:active { transform: scale(0.96); transition: 0.1s; }
-
-        /* HEADER */
-        .app-header {
-            height: 60px; padding: 0 15px; display: flex; justify-content: space-between; align-items: center;
-            background: var(--glass); border-bottom: 1px solid rgba(255,255,255,0.05);
-            position: absolute; top: 0; width: 100%; z-index: 100;
-        }
-        .logo { font-family: 'Rajdhani'; font-weight: 900; font-size: 26px; color: var(--primary); letter-spacing: -1px; }
-        .bal-display {
-            background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1); font-weight: 700; font-size: 14px;
-            display: flex; align-items: center; gap: 5px;
-        }
-        .bal-val { color: var(--green); font-family: 'Rajdhani'; font-size: 16px; }
-
-        .btn-withdraw {
-            width: 34px; height: 34px; border-radius: 8px; border: none;
-            background: var(--green); color: white; margin-left: 8px;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        /* --- AUTH SCREEN --- */
+        /* --- 2. AUTH SCREEN --- */
         #authScreen {
             position: fixed; inset: 0; z-index: 9999;
-            background: url('https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg') center/cover;
-            display: flex; flex-direction: column; justify-content: flex-end;
-            padding-bottom: 40px;
+            background: radial-gradient(circle at top, #1e293b, #0b0f19);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 20px;
         }
-        .auth-box {
-            background: linear-gradient(to top, #0b0f19 20%, transparent);
-            padding: 30px; text-align: center;
-        }
-        .auth-inp {
-            width: 100%; padding: 16px; margin-bottom: 10px; border-radius: 12px;
-            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
-            color: white; font-size: 16px; backdrop-filter: blur(5px);
-        }
-        .auth-inp:focus { border-color: var(--primary); }
-        .btn-login {
-            width: 100%; padding: 18px; border-radius: 12px; border: none;
-            background: var(--primary-g); color: white; font-weight: 800; font-size: 18px;
-            text-transform: uppercase; box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
-        }
-        .wa-link { color: var(--green); margin-top: 15px; display: block; font-size: 14px; font-weight: 600; text-decoration: none; }
-
-        /* --- MAIN CONTENT AREA --- */
-        #mainContainer {
-            flex: 1; margin-top: 60px; margin-bottom: 70px;
-            overflow-y: auto; overflow-x: hidden; position: relative;
-        }
+        .auth-logo { font-family: 'Rajdhani'; font-size: 48px; color: var(--primary); font-weight: 900; margin-bottom: 10px; }
+        .auth-box { width: 100%; max-width: 320px; background: var(--panel); padding: 20px; border-radius: 20px; border: 1px solid var(--border); }
         
-        /* VIEWS */
-        .view-section { display: none; height: 100%; }
-        .view-section.active { display: block; }
+        .inp {
+            width: 100%; padding: 15px; margin-bottom: 10px;
+            background: #0b0f19; border: 1px solid var(--border); border-radius: 12px;
+            color: white; font-size: 16px; font-weight: bold;
+        }
+        .inp:focus { border-color: var(--primary); }
+        
+        .btn-auth {
+            width: 100%; padding: 15px; background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            border: none; border-radius: 12px; color: white; font-weight: 900; font-size: 18px; cursor: pointer;
+        }
+        .wa-help { text-align: center; margin-top: 15px; color: var(--green); font-size: 14px; font-weight: 600; cursor: pointer; display: block; }
+
+        /* --- 3. APP LAYOUT --- */
+        #appScreen { display: none; flex-direction: column; height: 100%; width: 100%; }
+
+        /* Header */
+        .header {
+            height: 60px; min-height: 60px; background: var(--panel); border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; padding: 0 15px; z-index: 50;
+        }
+        .h-logo { font-family: 'Rajdhani'; font-weight: 900; font-size: 24px; color: var(--primary); }
+        .h-bal { background: #0b0f19; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); font-weight: 700; color: var(--green); font-family: 'Rajdhani'; font-size: 16px; }
+
+        /* Main View Container */
+        #mainView { flex: 1; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+
+        /* Views */
+        .view { display: none; flex: 1; flex-direction: column; overflow-y: auto; height: 100%; }
+        .view.active { display: flex; }
 
         /* --- LOBBY --- */
-        .lobby-hero {
-            margin: 15px; padding: 25px; border-radius: 20px;
-            background: linear-gradient(135deg, #ea580c, #d97706);
-            color: white; position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(234, 88, 12, 0.3);
+        .lobby-pad { padding: 15px; padding-bottom: 80px; }
+        .hero-banner {
+            background: linear-gradient(135deg, #f59e0b, #b45309);
+            border-radius: 16px; padding: 25px; margin-bottom: 20px;
+            color: white; position: relative; overflow: hidden; cursor: pointer;
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.2);
         }
-        .lobby-hero h2 { margin: 0; font-family: 'Rajdhani'; font-size: 32px; font-weight: 900; }
-        .lobby-hero i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 50px; opacity: 0.3; }
+        .hero-banner h2 { margin: 0; font-family: 'Rajdhani'; font-size: 32px; font-weight: 900; }
+        .hero-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 50px; opacity: 0.3; }
+
+        .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .g-card { background: var(--panel); border-radius: 16px; padding: 20px; text-align: center; border: 1px solid var(--border); cursor: pointer; }
+        .g-card:active { transform: scale(0.98); background: #1f2937; }
+        .g-icon { font-size: 30px; margin-bottom: 10px; }
+        .g-name { font-weight: 800; font-size: 14px; }
+
+        /* --- JETX GAME (FIXED LAYOUT) --- */
+        /* Flex column ensures controls are ALWAYS visible at bottom */
+        #gameView { background: #0b0f19; }
         
-        .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 15px 20px; }
-        .game-item {
-            background: var(--panel); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px; padding: 20px; text-align: center;
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        .game-stage {
+            flex: 1; position: relative; overflow: hidden; width: 100%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0b0f19 100%);
         }
-        .g-img { font-size: 36px; margin-bottom: 5px; }
-
-        /* --- JETX GAME (Fixed Z-Index) --- */
-        #gameView { position: relative; width: 100%; height: 100%; background: #0b0f19; overflow: hidden; }
-        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
-        .jet-hud {
-            position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; z-index: 2; pointer-events: none;
+        .hud { position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; }
+        .hud-m { font-family: 'Rajdhani'; font-size: 64px; font-weight: 900; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .hud-s { font-size: 12px; background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 20px; color: #aaa; }
+
+        .controls {
+            height: auto; min-height: 140px; background: var(--panel); border-top: 1px solid var(--border);
+            padding: 15px; display: flex; flex-direction: column; gap: 10px; z-index: 20;
         }
-        .jet-multi { font-family: 'Rajdhani'; font-size: 70px; font-weight: 900; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.8); }
-        .jet-status { font-size: 14px; color: var(--text-mute); background: rgba(0,0,0,0.6); padding: 4px 12px; border-radius: 20px; }
+        .bet-line { display: flex; gap: 10px; }
+        .b-btn { width: 50px; height: 50px; border-radius: 10px; border: none; background: #2d3748; color: white; font-size: 20px; cursor: pointer; }
+        .b-inp { flex: 1; background: #0b0f19; border: 1px solid var(--border); border-radius: 10px; color: white; text-align: center; font-size: 22px; font-family: 'Rajdhani'; font-weight: bold; }
+        
+        .act-btn { width: 100%; height: 55px; border-radius: 12px; border: none; font-size: 20px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        .btn-play { background: var(--primary); color: #000; box-shadow: 0 5px 0 #b45309; }
+        .btn-play:active { transform: translateY(5px); box-shadow: none; }
+        .btn-cash { background: var(--green); color: white; box-shadow: 0 5px 0 #047857; display: none; }
+        .btn-cash:active { transform: translateY(5px); box-shadow: none; }
 
-        .game-controls {
-            position: absolute; bottom: 0; width: 100%; padding: 20px;
-            background: var(--panel); border-top-left-radius: 24px; border-top-right-radius: 24px;
-            z-index: 10; /* Important: Above Canvas */
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        .bet-input-row { display: flex; gap: 10px; margin-bottom: 15px; }
-        .bet-inp { flex: 1; background: #0b0f19; border: 1px solid #333; color: white; text-align: center; font-size: 20px; font-weight: bold; border-radius: 10px; padding: 12px; }
-        .bet-mod { width: 45px; background: rgba(255,255,255,0.1); border: none; color: white; border-radius: 10px; font-size: 18px; }
+        /* --- MINES & SLOTS (Common) --- */
+        .center-stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        
+        .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; max-width: 340px; margin-bottom: 20px; }
+        .tile { aspect-ratio: 1; background: #2d3748; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 3px 0 #1a202c; }
+        .tile:active { transform: translateY(3px); box-shadow: none; }
+        .tile.open { background: #1a202c; box-shadow: none; transform: translateY(3px); }
+        .tile.gem { background: #065f46; border: 1px solid var(--green); }
+        .tile.bomb { background: #7f1d1d; border: 1px solid var(--red); }
 
-        .action-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 18px; font-weight: 900; text-transform: uppercase; }
-        .btn-play { background: var(--primary-g); color: white; box-shadow: 0 5px 15px rgba(245, 158, 11, 0.2); }
-        .btn-cash { background: var(--green); color: white; display: none; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2); }
-
-        /* --- MINES GAME --- */
-        .mines-wrap { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        .mines-grid-box { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; max-width: 350px; margin-bottom: 20px; }
-        .mine-cell { aspect-ratio: 1; background: #2d3748; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 22px; transition: 0.2s; box-shadow: inset 0 -3px 0 rgba(0,0,0,0.3); }
-        .mine-cell.safe { background: #065f46; box-shadow: none; }
-        .mine-cell.boom { background: #7f1d1d; box-shadow: none; }
-
-        /* --- SLOTS GAME --- */
-        .slots-wrap { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #1a0b2e; }
-        .slot-machine { background: #4c1d95; padding: 20px; border-radius: 20px; border: 4px solid #f59e0b; width: 90%; max-width: 350px; }
-        .reels { display: flex; gap: 5px; background: #000; padding: 10px; border-radius: 10px; height: 140px; overflow: hidden; position: relative; }
-        .reel-col { flex: 1; display: flex; flex-direction: column; align-items: center; }
-        .sym { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 50px; }
-
-        /* --- BONUS WHEEL --- */
-        .bonus-wrap { text-align: center; padding: 30px; }
-        .wheel-container { position: relative; width: 260px; height: 260px; margin: 0 auto 30px; }
-        .wheel-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid #333; background: conic-gradient(#ef4444 0deg 60deg, #3b82f6 60deg 120deg, #10b981 120deg 180deg, #f59e0b 180deg 240deg, #8b5cf6 240deg 300deg, #ec4899 300deg 360deg); transition: 4s ease-out; }
-        .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: white; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 5; }
+        .slot-machine { background: #4c1d95; padding: 15px; border-radius: 15px; border: 4px solid var(--primary); width: 100%; max-width: 320px; }
+        .reels { display: flex; gap: 5px; background: #000; padding: 10px; border-radius: 10px; height: 120px; }
+        .reel { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 40px; background: #fff; border-radius: 5px; }
 
         /* --- BOTTOM NAV --- */
-        .btm-nav {
-            height: 70px; background: var(--glass); border-top: 1px solid rgba(255,255,255,0.05);
-            position: fixed; bottom: 0; width: 100%; z-index: 100;
-            display: flex; justify-content: space-around; align-items: center;
-        }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-mute); font-size: 10px; font-weight: 600; opacity: 0.6; }
-        .nav-btn.active { color: var(--primary); opacity: 1; }
-        .nav-btn i { font-size: 20px; margin-bottom: 4px; }
-        .nav-mid {
-            width: 50px; height: 50px; background: var(--primary-g); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: white;
-            transform: translateY(-20px); border: 4px solid var(--bg); box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
-        }
+        .nav { height: 65px; min-height: 65px; background: var(--panel); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 50; }
+        .n-item { display: flex; flex-direction: column; align-items: center; color: #64748b; font-size: 10px; font-weight: 700; width: 60px; cursor: pointer; }
+        .n-item.active { color: var(--primary); }
+        .n-item i { font-size: 22px; margin-bottom: 4px; }
+        .n-mid { width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: translateY(-20px); border: 5px solid var(--bg); color: black; font-size: 24px; box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4); }
 
-        /* --- UTILS --- */
-        .hidden { display: none !important; }
-        .err-msg { color: var(--red); margin-top: 10px; font-size: 13px; font-weight: bold; }
-        .win-anim { animation: pulse 0.5s infinite; color: var(--green) !important; }
-        @keyframes pulse { 0%{transform:scale(1);} 50%{transform:scale(1.1);} 100%{transform:scale(1);} }
-
+        /* UTILS */
+        .err { color: var(--red); font-size: 12px; margin-top: 10px; font-weight: bold; text-align: center; }
     </style>
 </head>
 <body>
 
-    <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbw5TG1rIhVZ_jqZjLy08KiTAC0YqrMc0QXD5Us22E4rpcb3hARRhW6LauxhZhwTpqmSCQ/exec";
-        const WA_NUM = "994507516137";
-        function openWA(msg) { window.location.href = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`; }
-    </script>
-
     <div id="authScreen">
+        <div class="auth-logo">JETWIN</div>
         <div class="auth-box">
-            <h1 class="logo" style="font-size: 40px; margin-bottom: 5px;">JETWIN</h1>
-            <p style="color:#aaa; font-size:12px; letter-spacing:3px; margin-bottom:30px;">ULTIMATE CASINO</p>
-            
-            <input type="text" id="rName" class="auth-inp" placeholder="Adınız">
-            <input type="email" id="rEmail" class="auth-inp" placeholder="Email">
-            <input type="text" id="rCode" class="auth-inp" placeholder="Promo Kod" style="text-align:center; font-weight:bold; border-color:var(--primary);">
-            
-            <button class="btn-login" id="bLogin" onclick="handleLogin()">GİRİŞ ET</button>
-            <div id="loginErr" class="err-msg"></div>
-            
-            <a href="#" onclick="openWA('Promo Kod lazımdır')" class="wa-link"><i class="fa-brands fa-whatsapp"></i> Promo Kod Al</a>
+            <input type="text" id="rName" class="inp" placeholder="Adınız">
+            <input type="email" id="rEmail" class="inp" placeholder="Email">
+            <input type="text" id="rCode" class="inp" placeholder="Promo Kod" style="text-align:center;">
+            <button class="btn-auth" id="btnLogin" onclick="login()">GİRİŞ ET</button>
+            <div id="authErr" class="err"></div>
+            <span class="wa-help" onclick="goWa('Salam, Promo Kod lazımdır')"><i class="fa-brands fa-whatsapp"></i> Promo Kod Al</span>
         </div>
     </div>
 
-    <div id="appScreen" class="hidden">
-        
-        <div class="app-header">
-            <div class="logo">JETWIN</div>
-            <div style="display:flex; align-items:center;">
-                <div class="bal-display">$ <span id="uBal" class="bal-val">0.00</span></div>
-                <button class="btn-withdraw" onclick="handleWithdraw()"><i class="fa-solid fa-wallet"></i></button>
+    <div id="appScreen">
+        <div class="header">
+            <div class="h-logo">JETWIN</div>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div class="h-bal">$<span id="balVal">0.00</span></div>
+                <i class="fa-solid fa-wallet" style="color:white; font-size:20px;" onclick="withdraw()"></i>
             </div>
         </div>
 
-        <div id="mainContainer">
+        <div id="mainView">
             
-            <div id="viewLobby" class="view-section active">
-                <div class="lobby-hero" onclick="switchView('game')">
-                    <h2>JETX PRO</h2>
-                    <p>Canlı Oyun • Yüksək Əmsallar</p>
-                    <i class="fa-solid fa-rocket"></i>
-                </div>
-
-                <div style="padding:0 15px; margin-bottom:10px; font-weight:bold; color:#ccc;">OYUNLAR</div>
-                <div class="game-grid">
-                    <div class="game-item" onclick="switchView('mines')">
-                        <div class="g-img">💣</div>
-                        <div>MINES</div>
+            <div id="v-lobby" class="view active">
+                <div class="lobby-pad">
+                    <div class="hero-banner" onclick="nav('game')">
+                        <h2>JETX PRO</h2>
+                        <p>Canlı Oyna • Qazan</p>
+                        <i class="fa-solid fa-rocket hero-icon"></i>
                     </div>
-                    <div class="game-item" onclick="switchView('slots')">
-                        <div class="g-img">🍒</div>
-                        <div>SLOTS</div>
-                    </div>
-                    <div class="game-item" style="opacity:0.5;">
-                        <div class="g-img">⚽</div>
-                        <div>PENALTY <i class="fa-solid fa-lock" style="font-size:12px;"></i></div>
-                    </div>
-                    <div class="game-item" style="opacity:0.5;">
-                        <div class="g-img">🎲</div>
-                        <div>DICE <i class="fa-solid fa-lock" style="font-size:12px;"></i></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="viewGame" class="view-section">
-                <div id="gameView">
-                    <canvas id="jetCanvas"></canvas>
-                    
-                    <div class="jet-hud">
-                        <div class="jet-multi" id="jMulti">1.00x</div>
-                        <div class="jet-status" id="jStatus">GÖZLƏNİLİR...</div>
-                    </div>
-
-                    <div class="game-controls">
-                        <div class="bet-input-row">
-                            <button class="bet-mod" onclick="modBet(-5)">-</button>
-                            <input type="number" id="betInput" class="bet-inp" value="10" readonly>
-                            <button class="bet-mod" onclick="modBet(5)">+</button>
-                            <button class="bet-mod" style="width:auto; padding:0 10px; font-size:14px;" onclick="modBet(50)">+50</button>
+                    <div style="color:#888; font-weight:bold; margin-bottom:10px;">OYUNLAR</div>
+                    <div class="game-grid">
+                        <div class="g-card" onclick="nav('mines')">
+                            <div class="g-icon">💣</div><div class="g-name">MINES</div>
                         </div>
-                        <button id="btnJetPlay" class="action-btn btn-play" onclick="playJet()">MƏRC ET</button>
-                        <button id="btnJetCash" class="action-btn btn-cash" onclick="cashJet()">PULU GÖTÜR</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="viewMines" class="view-section">
-                <div class="mines-wrap">
-                    <div style="margin-bottom:15px; font-size:20px; font-weight:bold; color:var(--green);" id="minesMsg">MƏRC EDİN</div>
-                    <div class="mines-grid-box" id="minesGrid"></div>
-                    
-                    <div style="width:100%; max-width:350px;">
-                        <div class="bet-input-row">
-                            <button class="bet-mod" onclick="modBetM(-5)">-</button>
-                            <input type="number" id="mBetInput" class="bet-inp" value="10" readonly>
-                            <button class="bet-mod" onclick="modBetM(5)">+</button>
+                        <div class="g-card" onclick="nav('slots')">
+                            <div class="g-icon">🍒</div><div class="g-name">SLOTS</div>
                         </div>
-                        <button id="btnMinePlay" class="action-btn btn-play" onclick="startMines()">OYNA</button>
-                        <button id="btnMineCash" class="action-btn btn-cash" style="background:var(--green);" onclick="cashMines()">GÖTÜR</button>
                     </div>
                 </div>
             </div>
 
-            <div id="viewSlots" class="view-section">
-                <div class="slots-wrap">
+            <div id="v-game" class="view">
+                <div class="game-stage">
+                    <canvas id="cvs"></canvas>
+                    <div class="hud">
+                        <div class="hud-m" id="jm">1.00x</div>
+                        <div class="hud-s" id="js">GÖZLƏNİLİR...</div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <div class="bet-line">
+                        <button class="b-btn" onclick="betAdj(-5)">-</button>
+                        <input type="number" id="jetBet" class="b-inp" value="10" readonly>
+                        <button class="b-btn" onclick="betAdj(5)">+</button>
+                    </div>
+                    <button class="act-btn btn-play" id="jpBtn" onclick="jetPlay()">MƏRC ET</button>
+                    <button class="act-btn btn-cash" id="jcBtn" onclick="jetCash()">PULU GÖTÜR</button>
+                </div>
+            </div>
+
+            <div id="v-mines" class="view">
+                <div class="center-stage">
+                    <h2 style="color:white; margin-bottom:10px;" id="mMsg">DAŞLARI SEÇ</h2>
+                    <div class="mines-grid" id="mGrid"></div>
+                </div>
+                <div class="controls">
+                    <div class="bet-line">
+                        <button class="b-btn" onclick="betAdjM(-5)">-</button>
+                        <input type="number" id="mBet" class="b-inp" value="10" readonly>
+                        <button class="b-btn" onclick="betAdjM(5)">+</button>
+                    </div>
+                    <button class="act-btn btn-play" id="mpBtn" onclick="minePlay()">OYNA</button>
+                    <button class="act-btn btn-cash" id="mcBtn" onclick="mineCash()" style="background:var(--green);">GÖTÜR</button>
+                </div>
+            </div>
+
+            <div id="v-slots" class="view">
+                <div class="center-stage">
                     <div class="slot-machine">
                         <div class="reels">
-                            <div class="reel-col" id="reel1"><div class="sym">🍒</div></div>
-                            <div class="reel-col" id="reel2"><div class="sym">🍋</div></div>
-                            <div class="reel-col" id="reel3"><div class="sym">🍇</div></div>
+                            <div class="reel" id="r1">🍒</div>
+                            <div class="reel" id="r2">🍋</div>
+                            <div class="reel" id="r3">🍇</div>
                         </div>
                     </div>
-                    <div id="slotRes" style="height:30px; margin:20px 0; font-weight:bold; font-size:20px; color:var(--primary);"></div>
-                    
-                    <div style="width:90%; max-width:350px;">
-                        <div class="bet-input-row">
-                            <button class="bet-mod" onclick="modBetS(-5)">-</button>
-                            <input type="number" id="sBetInput" class="bet-inp" value="10" readonly>
-                            <button class="bet-mod" onclick="modBetS(5)">+</button>
-                        </div>
-                        <button id="btnSlotSpin" class="action-btn btn-play" onclick="spinSlots()">FIRLAT</button>
-                    </div>
+                    <h2 style="color:var(--primary); margin-top:20px;" id="sMsg">SPIN!</h2>
                 </div>
-            </div>
-
-            <div id="viewBonus" class="view-section">
-                <div class="bonus-wrap">
-                    <h2 style="color:var(--primary); font-family:'Rajdhani';">LUCKY WHEEL</h2>
-                    <div class="wheel-container">
-                        <div class="wheel-pointer"></div>
-                        <div class="wheel-circle" id="wheelObj"></div>
+                <div class="controls">
+                    <div class="bet-line">
+                        <button class="b-btn" onclick="betAdjS(-5)">-</button>
+                        <input type="number" id="sBet" class="b-inp" value="10" readonly>
+                        <button class="b-btn" onclick="betAdjS(5)">+</button>
                     </div>
-                    <button id="btnWheel" class="action-btn btn-play" style="border-radius:30px;" onclick="doSpin()">FIRLAT</button>
-                    <p id="wheelMsg" style="margin-top:20px; font-weight:bold;"></p>
+                    <button class="act-btn btn-play" id="spBtn" onclick="slotSpin()">FIRLAT</button>
                 </div>
             </div>
 
         </div>
 
-        <div class="btm-nav">
-            <div class="nav-btn active" onclick="switchView('lobby')">
-                <i class="fa-solid fa-house"></i> Lobby
-            </div>
-            <div class="nav-btn" onclick="switchView('mines')">
-                <i class="fa-solid fa-bomb"></i> Mines
-            </div>
-            <div class="nav-mid" onclick="switchView('game')">
-                <i class="fa-solid fa-rocket" style="font-size:24px;"></i>
-            </div>
-            <div class="nav-btn" onclick="switchView('slots')">
-                <i class="fa-solid fa-lemon"></i> Slots
-            </div>
-            <div class="nav-btn" onclick="switchView('bonus')">
-                <i class="fa-solid fa-gift"></i> Bonus
-            </div>
+        <div class="nav">
+            <div class="n-item active" id="nk-lobby" onclick="nav('lobby')"><i class="fa-solid fa-house"></i><span>Lobby</span></div>
+            <div class="n-item" id="nk-mines" onclick="nav('mines')"><i class="fa-solid fa-bomb"></i><span>Mines</span></div>
+            <div class="n-mid" onclick="nav('game')"><i class="fa-solid fa-rocket"></i></div>
+            <div class="n-item" id="nk-slots" onclick="nav('slots')"><i class="fa-solid fa-lemon"></i><span>Slots</span></div>
+            <div class="n-item" onclick="goWa('Dəstək lazımdır')"><i class="fa-brands fa-whatsapp"></i><span>Dəstək</span></div>
         </div>
-
     </div>
 
     <script>
-        // --- GLOBAL STATE ---
-        let user = { name: "", email: "", balance: 0.00, deposit: 0, spinUsed: false };
-        let audioCtx = null;
-
-        // --- INIT ---
-        window.onload = function() {
-            if(localStorage.getItem('jw_v8')) {
-                user = JSON.parse(localStorage.getItem('jw_v8'));
+        // CONFIG
+        const API = "https://script.google.com/macros/s/AKfycbw5TG1rIhVZ_jqZjLy08KiTAC0YqrMc0QXD5Us22E4rpcb3hARRhW6LauxhZhwTpqmSCQ/exec";
+        const WA = "994507516137";
+        let user = { name:"", email:"", balance:0, deposit:0 };
+        
+        // INIT
+        window.onload = () => {
+            if(localStorage.getItem('jw_fix')) {
+                user = JSON.parse(localStorage.getItem('jw_fix'));
                 showApp();
-            } else {
-                document.getElementById('authScreen').style.display = 'flex';
             }
         };
 
-        function playSound(type) {
-            if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            
-            const t = audioCtx.currentTime;
-            if(type === 'click') {
-                osc.frequency.setValueAtTime(600, t);
-                gain.gain.setValueAtTime(0.1, t);
-                osc.start(t); osc.stop(t+0.05);
-            } else if(type === 'win') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(400, t);
-                osc.frequency.linearRampToValueAtTime(800, t+0.2);
-                gain.gain.setValueAtTime(0.2, t);
-                osc.start(t); osc.stop(t+0.4);
-            } else if(type === 'lose') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(150, t);
-                gain.gain.linearRampToValueAtTime(0, t+0.3);
-                osc.start(t); osc.stop(t+0.3);
-            }
-        }
+        function goWa(txt) { window.location.href = `https://wa.me/${WA}?text=${encodeURIComponent(txt)}`; }
+        function save() { localStorage.setItem('jw_fix', JSON.stringify(user)); document.getElementById('balVal').innerText = user.balance.toFixed(2); }
 
-        function saveState() {
-            localStorage.setItem('jw_v8', JSON.stringify(user));
-            document.getElementById('uBal').innerText = user.balance.toFixed(2);
-        }
-
-        // --- AUTH ---
-        async function handleLogin() {
-            playSound('click');
-            const n = document.getElementById('rName').value.trim();
-            const e = document.getElementById('rEmail').value.trim();
-            const c = document.getElementById('rCode').value.trim();
-            const btn = document.getElementById('bLogin');
-            const err = document.getElementById('loginErr');
-
-            if(n.length < 3 || c.length < 2) { err.innerText = "Məlumatları tam doldurun"; return; }
+        // LOGIN
+        async function login() {
+            let n=document.getElementById('rName').value, e=document.getElementById('rEmail').value, c=document.getElementById('rCode').value;
+            let btn=document.getElementById('btnLogin'), err=document.getElementById('authErr');
             
-            btn.innerText = "Yoxlanılır...";
+            if(n.length<3 || c.length<2) { err.innerText="Məlumatları tam doldurun"; return; }
+            
+            btn.innerText = "YOXLANILIR...";
             try {
-                let req = await fetch(`${API_URL}?action=login&name=${encodeURIComponent(n)}&email=${encodeURIComponent(e)}&code=${encodeURIComponent(c)}`);
-                let res = await req.json();
-                
-                if(res.result === 'success') {
-                    user = { name: n, email: e, balance: parseFloat(res.balance), deposit: parseFloat(res.balance), spinUsed: false };
-                    saveState();
-                    showApp();
+                let r = await fetch(`${API}?action=login&name=${encodeURIComponent(n)}&email=${encodeURIComponent(e)}&code=${encodeURIComponent(c)}`);
+                let d = await r.json();
+                if(d.result === 'success') {
+                    user = { name:n, email:e, balance:parseFloat(d.balance), deposit:parseFloat(d.balance) };
+                    save(); showApp();
                 } else {
-                    err.innerText = res.msg || "Kod yanlışdır";
-                    btn.innerText = "GİRİŞ ET";
+                    err.innerText = d.msg || "Kod yanlışdır"; btn.innerText = "GİRİŞ ET";
                 }
-            } catch(x) {
-                err.innerText = "İnternet xətası";
-                btn.innerText = "GİRİŞ ET";
+            } catch(e) {
+                err.innerText = "İnternet xətası! Yenidən yoxlayın."; btn.innerText = "GİRİŞ ET";
             }
         }
 
         function showApp() {
-            document.getElementById('authScreen').style.display = 'none';
-            document.getElementById('appScreen').classList.remove('hidden');
-            document.getElementById('uBal').innerText = user.balance.toFixed(2);
-            if(user.spinUsed) document.getElementById('btnWheel').disabled = true;
-            initMinesGrid(); // Draw empty grid
+            document.getElementById('authScreen').style.display='none';
+            document.getElementById('appScreen').style.display='flex';
+            document.getElementById('balVal').innerText = user.balance.toFixed(2);
+            initMines(); // Pre-load
         }
 
-        function handleWithdraw() {
-            if(user.balance > user.deposit) {
-                openWA(`ID: ${user.email}. Balans: $${user.balance}. Çıxarış etmək istəyirəm.`);
-            } else {
-                alert(`Çıxarış üçün balansınız ilkin depozitdən ($${user.deposit}) çox olmalıdır.`);
-            }
+        function withdraw() {
+            if(user.balance > user.deposit) goWa(`ID: ${user.email}. Balans: $${user.balance}. Çıxarış!`);
+            else alert(`Balans ilkin depozitdən ($${user.deposit}) çox olmalıdır.`);
         }
 
-        function switchView(viewName) {
-            playSound('click');
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+        function nav(page) {
+            document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
+            document.querySelectorAll('.n-item').forEach(e=>e.classList.remove('active'));
             
-            if(viewName === 'lobby') document.getElementById('viewLobby').classList.add('active');
-            if(viewName === 'game') { document.getElementById('viewGame').classList.add('active'); initJetCanvas(); }
-            if(viewName === 'mines') document.getElementById('viewMines').classList.add('active');
-            if(viewName === 'slots') document.getElementById('viewSlots').classList.add('active');
-            if(viewName === 'bonus') document.getElementById('viewBonus').classList.add('active');
+            if(page==='lobby'){ document.getElementById('v-lobby').classList.add('active'); document.getElementById('nk-lobby').classList.add('active'); }
+            if(page==='game'){ document.getElementById('v-game').classList.add('active'); initJetCanvas(); }
+            if(page==='mines'){ document.getElementById('v-mines').classList.add('active'); document.getElementById('nk-mines').classList.add('active'); }
+            if(page==='slots'){ document.getElementById('v-slots').classList.add('active'); document.getElementById('nk-slots').classList.add('active'); }
         }
 
-        // --- GAME 1: JETX (Fixed Logic) ---
-        let jPlaying = false, jMulti = 1.0, jAnim, jStart;
+        // --- JETX ---
+        let jPlay=false, jMult=1.0, jAnim, jStart;
+        function betAdj(v){ let el=document.getElementById('jetBet'); let val=parseInt(el.value)+v; if(val<1)val=1; el.value=val; }
         
         function initJetCanvas() {
-            const cvs = document.getElementById('jetCanvas');
-            const ctx = cvs.getContext('2d');
-            const p = cvs.parentElement;
-            cvs.width = p.offsetWidth;
-            cvs.height = p.offsetHeight;
-            
-            // Static stars
-            ctx.fillStyle = "#0b0f19"; ctx.fillRect(0,0,cvs.width,cvs.height);
-            ctx.fillStyle = "rgba(255,255,255,0.3)";
-            for(let i=0; i<40; i++) ctx.fillRect(Math.random()*cvs.width, Math.random()*cvs.height, 2, 2);
+            const c = document.getElementById('cvs');
+            c.width = c.parentElement.offsetWidth;
+            c.height = c.parentElement.offsetHeight;
+            const ctx = c.getContext('2d');
+            ctx.fillStyle="#0b0f19"; ctx.fillRect(0,0,c.width,c.height);
         }
 
-        function modBet(v) { 
-            let el = document.getElementById('betInput');
-            let val = parseInt(el.value) + v;
-            if(val < 1) val = 1;
-            el.value = val;
-        }
-
-        function playJet() {
-            let bet = parseInt(document.getElementById('betInput').value);
-            if(user.balance < bet) { openWA('Depozit lazımdır'); return; }
+        function jetPlay() {
+            let bet = parseInt(document.getElementById('jetBet').value);
+            if(user.balance<bet){ goWa('Depozit'); return; }
+            user.balance-=bet; save();
             
-            user.balance -= bet; saveState();
-            jPlaying = true; jMulti = 1.0;
+            jPlay=true; jMult=1.0; jStart=Date.now();
+            document.getElementById('jpBtn').style.display='none';
+            document.getElementById('jcBtn').style.display='block';
+            document.getElementById('jm').style.color="white";
+            document.getElementById('js').innerText="UÇUR...";
             
-            document.getElementById('btnJetPlay').style.display = 'none';
-            document.getElementById('btnJetCash').style.display = 'block';
-            document.getElementById('jStatus').innerText = "UÇUŞ BAŞLADI...";
-            document.getElementById('jStatus').style.color = "#fff";
-            document.getElementById('jMulti').classList.remove('crashed', 'win-anim');
-            document.getElementById('jMulti').style.color = "white";
-
-            // Rigged: 60% chance to crash low (1.0 - 1.5)
-            let crash = Math.random() < 0.6 ? 1.0 + Math.random()*0.5 : 1.5 + Math.random()*5;
+            // Rigged: 60% low crash
+            let crash = Math.random()<0.6 ? 1.0+Math.random()*0.5 : 1.5+Math.random()*5;
             
-            jStart = Date.now();
-            drawJet(crash);
-        }
-
-        function drawJet(crashVal) {
-            if(!jPlaying) return;
-            
-            let t = (Date.now() - jStart) / 1000;
-            jMulti = 1.00 + (t * t * 0.1);
-            
-            document.getElementById('jMulti').innerText = jMulti.toFixed(2) + "x";
-
-            if(jMulti >= crashVal) {
-                jPlaying = false;
-                cancelAnimationFrame(jAnim);
-                playSound('lose');
-                document.getElementById('jMulti').classList.add('crashed');
-                document.getElementById('jStatus').innerText = "PARTLADI!";
-                document.getElementById('jStatus').style.color = "red";
-                setTimeout(resetJet, 2000);
-            } else {
-                const cvs = document.getElementById('jetCanvas');
-                const ctx = cvs.getContext('2d');
-                ctx.clearRect(0,0,cvs.width,cvs.height);
+            function loop() {
+                if(!jPlay) return;
+                let t = (Date.now()-jStart)/1000;
+                jMult = 1.0 + (t*t*0.1);
+                document.getElementById('jm').innerText = jMult.toFixed(2)+"x";
                 
+                // Draw
+                const c = document.getElementById('cvs');
+                const ctx = c.getContext('2d');
+                ctx.clearRect(0,0,c.width,c.height);
                 // Stars
-                ctx.fillStyle = "rgba(255,255,255,0.3)";
-                for(let i=0; i<10; i++) ctx.fillRect(Math.random()*cvs.width, Math.random()*cvs.height, 2, 2);
-
-                // Rocket
-                let x = Math.min(cvs.width - 50, t * 100);
-                let y = cvs.height - Math.min(cvs.height - 50, (jMulti - 1) * 100);
+                ctx.fillStyle="rgba(255,255,255,0.2)";
+                for(let i=0;i<20;i++) ctx.fillRect(Math.random()*c.width,Math.random()*c.height,2,2);
                 
-                ctx.beginPath(); ctx.lineWidth = 4; ctx.strokeStyle = "#f59e0b";
-                ctx.moveTo(0, cvs.height); ctx.quadraticCurveTo(x/2, cvs.height, x, y); ctx.stroke();
+                let x = Math.min(c.width-50, t*100);
+                let y = c.height - Math.min(c.height-50, (jMult-1)*150);
                 
-                ctx.save(); ctx.translate(x, y); ctx.rotate(-45 * Math.PI / 180);
-                ctx.font = "30px Arial"; ctx.fillText("🚀", -15, 0); ctx.restore();
+                ctx.beginPath(); ctx.lineWidth=4; ctx.strokeStyle="#f59e0b";
+                ctx.moveTo(0,c.height); ctx.quadraticCurveTo(x/2,c.height,x,y); ctx.stroke();
+                
+                ctx.font="30px Arial"; ctx.fillText("🚀", x-20, y);
 
-                jAnim = requestAnimationFrame(() => drawJet(crashVal));
+                if(jMult>=crash) {
+                    jPlay=false;
+                    document.getElementById('jm').classList.add('crashed');
+                    document.getElementById('jm').style.color="red";
+                    document.getElementById('js').innerText="PARTLADI!";
+                    setTimeout(jetReset,2000);
+                } else {
+                    jAnim = requestAnimationFrame(loop);
+                }
             }
+            loop();
         }
 
-        function cashJet() {
-            if(!jPlaying) return;
-            jPlaying = false;
-            cancelAnimationFrame(jAnim);
-            playSound('win');
-            
-            let bet = parseInt(document.getElementById('betInput').value);
-            let win = bet * jMulti;
-            user.balance += win; saveState();
-            
-            document.getElementById('jMulti').classList.add('win-anim');
-            document.getElementById('jStatus').innerText = `QAZANDINIZ: $${win.toFixed(2)}`;
-            document.getElementById('jStatus').style.color = "#10b981";
-            
-            // Sync
-            fetch(`${API_URL}?action=win&name=${user.name}&email=${user.email}&amount=${win.toFixed(2)}`, {mode:'no-cors'});
-            
-            setTimeout(resetJet, 2000);
+        function jetCash() {
+            if(!jPlay)return;
+            jPlay=false; cancelAnimationFrame(jAnim);
+            let win = parseInt(document.getElementById('jetBet').value)*jMult;
+            user.balance+=win; save();
+            document.getElementById('js').innerText=`WIN: $${win.toFixed(2)}`;
+            document.getElementById('jm').style.color="#10b981";
+            fetch(`${API}?action=win&name=${user.name}&email=${user.email}&amount=${win.toFixed(2)}`, {mode:'no-cors'});
+            setTimeout(jetReset,2000);
         }
 
-        function resetJet() {
-            document.getElementById('btnJetPlay').style.display = 'block';
-            document.getElementById('btnJetCash').style.display = 'none';
-            document.getElementById('jMulti').innerText = "1.00x";
-            document.getElementById('jMulti').classList.remove('crashed', 'win-anim');
-            document.getElementById('jStatus').innerText = "GÖZLƏNİLİR...";
+        function jetReset() {
+            document.getElementById('jpBtn').style.display='block';
+            document.getElementById('jcBtn').style.display='none';
+            document.getElementById('jm').innerText="1.00x";
+            document.getElementById('js').innerText="GÖZLƏNİLİR...";
             initJetCanvas();
         }
 
-        // --- GAME 2: MINES (Fixed Grid) ---
-        let mActive = false, mMulti = 1.0, mBet = 10, mClicks = 0;
+        // --- MINES ---
+        let mPlay=false, mMult=1.0, mBet=10, mStep=0;
+        function betAdjM(v){ let el=document.getElementById('mBet'); let val=parseInt(el.value)+v; if(val<1)val=1; el.value=val; }
         
-        function modBetM(v) { let el = document.getElementById('mBetInput'); let val = parseInt(el.value)+v; if(val<1)val=1; el.value=val; }
-
-        function initMinesGrid() {
-            const grid = document.getElementById('minesGrid');
-            grid.innerHTML = "";
+        function initMines() {
+            const g = document.getElementById('mGrid'); g.innerHTML="";
             for(let i=0; i<25; i++) {
-                let div = document.createElement('div');
-                div.className = 'mine-cell';
-                div.id = `mc-${i}`;
-                div.onclick = () => hitMine(i);
-                grid.appendChild(div);
+                let d = document.createElement('div');
+                d.className='tile'; d.id='mt'+i; d.onclick=()=>mineHit(i);
+                g.appendChild(d);
             }
         }
 
-        function startMines() {
-            mBet = parseInt(document.getElementById('mBetInput').value);
-            if(user.balance < mBet) { openWA('Depozit lazımdır'); return; }
-            
-            user.balance -= mBet; saveState();
-            mActive = true; mMulti = 1.0; mClicks = 0;
-            
-            document.getElementById('btnMinePlay').style.display = 'none';
-            document.getElementById('btnMineCash').style.display = 'block';
-            document.getElementById('btnMineCash').innerText = "GÖTÜR";
-            document.getElementById('minesMsg').innerText = "DAŞLARI SEÇ...";
-            document.getElementById('minesMsg').style.color = "var(--green)";
-            
-            initMinesGrid(); // Reset grid visual
+        function minePlay() {
+            mBet = parseInt(document.getElementById('mBet').value);
+            if(user.balance<mBet){ goWa('Depozit'); return; }
+            user.balance-=mBet; save();
+            mPlay=true; mMult=1.0; mStep=0;
+            document.getElementById('mpBtn').style.display='none';
+            document.getElementById('mcBtn').style.display='block';
+            document.getElementById('mcBtn').innerText="GÖTÜR";
+            document.getElementById('mMsg').innerText="DAŞLARI SEÇ...";
+            initMines();
         }
 
-        function hitMine(idx) {
-            if(!mActive) return;
-            let cell = document.getElementById(`mc-${idx}`);
-            if(cell.classList.contains('safe') || cell.classList.contains('boom')) return;
-
-            // Rigged: 1st click 95% safe, 2nd 80%, 3rd+ 20% safe
-            let boom = false;
-            if(mClicks === 0) boom = Math.random() < 0.05;
-            else if(mClicks === 1) boom = Math.random() < 0.2;
-            else boom = Math.random() < 0.8;
-
-            if(boom) {
-                cell.classList.add('boom'); cell.innerHTML = "💣";
-                playSound('lose'); mActive = false;
-                document.getElementById('minesMsg').innerText = "PARTLADI!";
-                document.getElementById('minesMsg').style.color = "red";
-                setTimeout(resetMines, 2000);
+        function mineHit(i) {
+            if(!mPlay) return;
+            let t = document.getElementById('mt'+i);
+            if(t.classList.contains('open')) return;
+            
+            // Rigged: 1st safe, then risk
+            let bomb = (mStep<1) ? (Math.random()<0.05) : (Math.random()<0.5);
+            
+            t.classList.add('open');
+            if(bomb) {
+                t.classList.add('bomb'); t.innerHTML="💣";
+                mPlay=false; document.getElementById('mMsg').innerText="PARTLADI!";
+                setTimeout(mineReset,2000);
             } else {
-                cell.classList.add('safe'); cell.innerHTML = "💎";
-                playSound('click');
-                mClicks++;
-                mMulti *= 1.25;
-                document.getElementById('btnMineCash').innerText = `GÖTÜR ($${(mBet*mMulti).toFixed(2)})`;
+                t.classList.add('gem'); t.innerHTML="💎";
+                mStep++; mMult*=1.2;
+                document.getElementById('mcBtn').innerText=`GÖTÜR ($${(mBet*mMult).toFixed(2)})`;
             }
         }
 
-        function cashMines() {
-            if(!mActive) return;
-            let win = mBet * mMulti;
-            user.balance += win; saveState();
-            playSound('win');
-            mActive = false;
-            document.getElementById('minesMsg').innerText = `QAZANDIN: $${win.toFixed(2)}`;
-            fetch(`${API_URL}?action=win&name=${user.name}&email=${user.email}&amount=${win.toFixed(2)}`, {mode:'no-cors'});
-            resetMines();
+        function mineCash() {
+            if(!mPlay)return;
+            let win=mBet*mMult; user.balance+=win; save();
+            mPlay=false; document.getElementById('mMsg').innerText=`QAZANDIN: $${win.toFixed(2)}`;
+            fetch(`${API}?action=win&name=${user.name}&email=${user.email}&amount=${win.toFixed(2)}`, {mode:'no-cors'});
+            mineReset();
+        }
+        function mineReset(){ 
+            document.getElementById('mpBtn').style.display='block';
+            document.getElementById('mcBtn').style.display='none';
         }
 
-        function resetMines() {
-            document.getElementById('btnMinePlay').style.display = 'block';
-            document.getElementById('btnMineCash').style.display = 'none';
-            initMinesGrid();
-        }
-
-        // --- GAME 3: SLOTS (Simple Logic) ---
-        const syms = ["🍒","🍋","🍇","💎","7️⃣"];
-        function modBetS(v) { let el = document.getElementById('sBetInput'); let val = parseInt(el.value)+v; if(val<1)val=1; el.value=val; }
-
-        function spinSlots() {
-            let bet = parseInt(document.getElementById('sBetInput').value);
-            if(user.balance < bet) { openWA('Depozit lazımdır'); return; }
+        // --- SLOTS ---
+        function betAdjS(v){ let el=document.getElementById('sBet'); let val=parseInt(el.value)+v; if(val<1)val=1; el.value=val; }
+        const syms=["🍒","🍋","🍇","7️⃣"];
+        
+        function slotSpin() {
+            let bet = parseInt(document.getElementById('sBet').value);
+            if(user.balance<bet){ goWa('Depozit'); return; }
+            user.balance-=bet; save();
             
-            user.balance -= bet; saveState();
-            playSound('click');
+            let btn = document.getElementById('spBtn'); btn.disabled=true;
+            document.getElementById('sMsg').innerText=".......";
             
-            let btn = document.getElementById('btnSlotSpin');
-            btn.disabled = true;
-            document.getElementById('slotRes').innerText = ".......";
-
             // Anim
-            [1,2,3].forEach(i => {
-                document.getElementById(`reel${i}`).innerHTML = `<div class='sym'>❓</div>`;
-            });
-
-            setTimeout(() => {
-                // Rigged: mostly lose
-                let r = Math.random();
-                let res = [0, 1, 2]; // Lose
-                if(r < 0.2) res = [0, 0, 0]; // Small win
+            [1,2,3].forEach(i=>document.getElementById('r'+i).innerText="❓");
+            
+            setTimeout(()=>{
+                // Rigged: Mostly lose
+                let res = (Math.random()<0.2) ? [0,0,0] : [0,1,2]; 
                 
-                [1,2,3].forEach((id, i) => {
-                    document.getElementById(`reel${id}`).innerHTML = `<div class='sym'>${syms[res[i-1]]}</div>`;
-                });
-
-                btn.disabled = false;
-                if(res[0] === res[1] && res[1] === res[2]) {
-                    let win = bet * 3;
-                    user.balance += win; saveState();
-                    document.getElementById('slotRes').innerText = `WIN: $${win}`;
-                    playSound('win');
+                [1,2,3].forEach((i,x)=>document.getElementById('r'+i).innerText=syms[res[x]]);
+                
+                btn.disabled=false;
+                if(res[0]==res[1] && res[1]==res[2]) {
+                    let win=bet*3; user.balance+=win; save();
+                    document.getElementById('sMsg').innerText=`WIN: $${win}`;
                 } else {
-                    document.getElementById('slotRes').innerText = "UDUZDUNUZ";
+                    document.getElementById('sMsg').innerText="UDUZDUNUZ";
                 }
-            }, 1000);
+            },1000);
         }
 
-        // --- GAME 4: BONUS ---
-        function doSpin() {
-            if(user.spinUsed) return;
-            let btn = document.getElementById('btnWheel');
-            btn.disabled = true;
-            playSound('click');
-            
-            let wheel = document.getElementById('wheelObj');
-            let isWin = Math.random() < 0.05; // 5% chance
-            let deg = 1800 + (isWin ? 270 : 45); // 270 is Green ($1), 45 is Red (Empty)
-            
-            wheel.style.transform = `rotate(${deg}deg)`;
-            
-            setTimeout(() => {
-                user.spinUsed = true;
-                if(isWin) {
-                    user.balance += 1;
-                    document.getElementById('wheelMsg').innerText = "TƏBRİKLƏR! $1 QAZANDINIZ!";
-                    playSound('win');
-                } else {
-                    document.getElementById('wheelMsg').innerText = "BOŞ! Bəxtiniz gətirmədi.";
-                }
-                saveState();
-            }, 4500);
-        }
-
+        // Handle Resize
+        window.onresize = ()=>{ if(document.getElementById('v-game').classList.contains('active')) initJetCanvas(); };
     </script>
 </body>
 </html>
