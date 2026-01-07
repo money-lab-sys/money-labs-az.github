@@ -62,16 +62,22 @@
         }
 
         /* --- APP STRUCTURE --- */
-        #appScreen { display: none; flex-direction: column; height: 100%; width: 100%; }
+        /* Make appScreen a flex column so headers stay at top and views fill remaining space */
+        #appScreen { 
+            display: none; 
+            flex-direction: column; 
+            height: 100%; 
+            width: 100%; 
+            overflow: hidden; 
+        }
         
         .top-nav {
             padding: 10px 20px 5px 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
-            background: var(--bg-dark); z-index: 101;
+            background: var(--bg-dark); z-index: 100;
         }
         .app-logo { font-family: 'Rajdhani'; font-weight: 900; font-size: 26px; color: #fff; }
         .app-logo span { color: var(--primary); }
         
-        /* MOTIVATOR TEXT */
         .motivator-text { font-size: 10px; color: #10b981; font-weight: 700; text-transform: uppercase; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
 
@@ -88,7 +94,7 @@
             display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 14px;
         }
 
-        /* MARQUEE */
+        /* STATIC HEADERS (Always Visible) */
         .marquee-container {
             background: #111; border-bottom: 1px solid rgba(255,255,255,0.1);
             overflow: hidden; white-space: nowrap; padding: 5px 0; flex-shrink: 0;
@@ -99,17 +105,15 @@
         }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* JACKPOT */
         .jackpot-container {
-            margin: 10px 20px 0 20px; background: linear-gradient(90deg, #450a0a, #1a0505);
-            border: 1px solid #ef4444; border-radius: 12px; padding: 10px; text-align: center;
+            margin: 5px 20px 0 20px; background: linear-gradient(90deg, #450a0a, #1a0505);
+            border: 1px solid #ef4444; border-radius: 12px; padding: 5px 10px; text-align: center;
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); flex-shrink: 0;
         }
-        .jp-label { font-size: 10px; font-weight: 800; color: #fca5a5; letter-spacing: 2px; }
-        .jp-value { font-family: 'Rajdhani'; font-size: 24px; font-weight: 900; color: #fff; text-shadow: 0 0 10px #ef4444; }
+        .jp-label { font-size: 9px; font-weight: 800; color: #fca5a5; letter-spacing: 2px; }
+        .jp-value { font-family: 'Rajdhani'; font-size: 20px; font-weight: 900; color: #fff; text-shadow: 0 0 10px #ef4444; }
 
-        /* BALANCE & VIP BAR */
-        .balance-area { padding: 10px 20px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+        .balance-area { padding: 5px 20px 10px 20px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
         .balance-row { display: flex; justify-content: space-between; align-items: center; }
         .bal-text { font-size: 12px; color: #9ca3af; font-weight: 600; text-transform: uppercase; }
         .bal-amount { font-family: 'Rajdhani'; font-size: 22px; font-weight: 700; color: var(--primary); margin-left: 5px; }
@@ -120,14 +124,29 @@
 
         .action-buttons { display: flex; gap: 8px; margin-top: 5px; }
         .btn-xs { 
-            padding: 12px 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; text-transform: uppercase; border: none; flex: 1;
+            padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; text-transform: uppercase; border: none; flex: 1;
             white-space: nowrap;
         }
         .btn-withdraw { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--primary); color: var(--primary); }
         .btn-deposit { background: var(--primary); color: #000; }
         .btn-promo { background: #3b82f6; color: white; display:flex; align-items:center; justify-content:center; gap:5px;}
 
-        /* DAILY BONUS */
+        /* --- VIEWS --- */
+        /* Common view styles: They fill the remaining space below headers and above footer */
+        .view {
+            display: none; 
+            flex: 1; /* Takes all available space */
+            flex-direction: column;
+            width: 100%;
+            overflow: hidden; /* Hide overflow by default */
+            padding-bottom: var(--nav-height); /* Space for bottom nav */
+        }
+        
+        /* Home View is scrollable */
+        #homeView { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        
+        .view.active { display: flex; }
+
         .daily-bonus-container { margin: 15px 20px; }
         .db-title { color: white; font-size: 12px; font-weight: bold; margin-bottom: 8px; display: flex; justify-content: space-between; }
         .db-grid { display: flex; gap: 5px; justify-content: space-between; }
@@ -140,7 +159,6 @@
         .db-day span { font-size: 9px; color: #9ca3af; }
         .db-day i { color: var(--primary); font-size: 14px; margin-top: 2px; }
 
-        /* NEW: TOURNAMENT BANNER */
         .tourney-banner {
             margin: 0 20px 15px 20px; background: linear-gradient(90deg, #3730a3, #4338ca);
             border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; justify-content: space-between;
@@ -150,7 +168,6 @@
         .tb-left p { margin: 0; color: #a5b4fc; font-size: 9px; }
         .tb-timer { font-family: 'Rajdhani'; font-weight: 800; font-size: 16px; color: #facc15; }
 
-        /* HERO & GRID */
         .hero-card {
             margin: 10px 20px; height: 180px; border-radius: 20px; overflow: hidden; position: relative; flex-shrink: 0;
             background: url('https://img.freepik.com/premium-photo/cyberpunk-woman-with-neon-lights_146508-62.jpg') center top/cover;
@@ -170,7 +187,6 @@
         .hero-sub { font-size: 14px; font-weight: 600; color: #fff; }
         .hero-sub span { color: var(--primary); font-weight: 800; }
 
-        /* MOBILE OPTIMIZED GRID */
         .games-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 20px 20px 20px;
         }
@@ -199,13 +215,11 @@
         .gc-name { font-family: 'Rajdhani'; font-weight: 800; font-size: 13px; text-transform: uppercase; color: #fff; margin-top: 5px; }
         .gc-btn { width: 90%; padding: 6px 0; background: var(--primary); color: #000; border: none; border-radius: 6px; font-size: 10px; font-weight: 800; margin-top: 5px; text-transform: uppercase; pointer-events: none; }
 
-        /* RTP BAR */
         .rtp-bar-container { width: 85%; margin-top: 5px; }
         .rtp-label { font-size: 9px; color: #aaa; display: flex; justify-content: space-between; margin-bottom: 2px; }
         .rtp-line { height: 3px; background: #333; border-radius: 2px; overflow: hidden; }
         .rtp-fill { height: 100%; background: #10b981; width: 95%; box-shadow: 0 0 5px #10b981; }
 
-        /* LIVE BETS TABLE */
         .live-bets {
             background: #1c1f26; margin: 0 20px 0 20px; border-radius: 12px; padding: 10px;
             border: 1px solid rgba(255,255,255,0.05);
@@ -215,7 +229,6 @@
         .lb-win { color: #10b981; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* NEW: DOWNLOAD APP BANNER */
         .app-dl-banner {
             margin: 20px; padding: 12px; background: #111827; border-radius: 12px; display: flex; align-items: center; gap: 12px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -225,16 +238,13 @@
         .adb-text p { margin: 0; color: #9ca3af; font-size: 10px; }
         .adb-btn { margin-left: auto; padding: 6px 12px; background: white; color: black; border-radius: 20px; font-weight: bold; font-size: 10px; text-decoration: none; white-space: nowrap; }
 
-        /* FOOTER TRUST */
         .trust-footer { margin: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
         .tf-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; font-size: 24px; color: #6b7280; }
         .tf-text { font-size: 10px; color: #4b5563; line-height: 1.4; }
 
-        /* CONFETTI */
         .confetti { position: fixed; width: 10px; height: 10px; background-color: #facc15; animation: fall linear forwards; z-index: 99999; }
         @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
 
-        /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; flex-direction: column; }
         
         .spin-btn {
@@ -255,7 +265,6 @@
         .promo-box { background: #1c1f26; padding: 25px; border-radius: 20px; width: 85%; max-width: 350px; text-align: center; border: 1px solid var(--primary); }
         .promo-inp { width: 100%; padding: 15px; margin: 15px 0; background: #0b0f19; border: 1px solid #333; color: white; border-radius: 10px; text-align: center; font-size: 18px; text-transform: uppercase; }
 
-        /* NOTIFICATION TOAST */
         #notify-toast {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
             background: rgba(28, 31, 38, 0.95); border: 1px solid var(--primary);
@@ -267,56 +276,54 @@
         .nt-icon { color: var(--primary); font-size: 16px; }
         .nt-text { font-size: 12px; font-weight: 600; color: white; white-space: nowrap; }
 
-        /* --- FAKE SUPPORT WIDGET (MOVED TO TOP) --- */
         #fake-support {
             position: fixed; 
-            top: 75px; /* Moved to top to avoid blocking play buttons */
+            top: 75px; 
             right: 10px;
             background: #fff; color: #000; padding: 8px 12px; border-radius: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.5); font-size: 11px; font-weight: bold;
-            display: flex; align-items: center; gap: 8px; z-index: 900;
+            display: flex; align-items: center; gap: 8px; z-index: 2000;
             opacity: 0; transform: translateY(-20px); transition: 0.5s; cursor: pointer;
             border: 1px solid var(--primary);
         }
         #fake-support.show { opacity: 1; transform: translateY(0); }
         .supp-avatar { width: 22px; height: 22px; background: url('https://img.freepik.com/free-photo/call-center-worker-with-headset_23-2147986047.jpg') center/cover; border-radius: 50%; }
 
-        /* VIEW & NAV */
+        /* --- FIXED BOTTOM NAV --- */
         .bottom-nav {
             position: fixed; bottom: 0; width: 100%; height: var(--nav-height); 
             background: #0f1218; border-top: 1px solid rgba(255,255,255,0.05);
             display: flex; justify-content: space-around; align-items: center; z-index: 100;
+            flex-shrink: 0;
         }
         .nav-item { color: #6b7280; font-size: 24px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .nav-item.active { color: var(--primary); }
 
-        .view { display: none; height: 100%; flex-direction: column; background: var(--bg-dark); padding-bottom: var(--nav-height); }
-        .view.active { display: flex; }
         
         .back-bar { 
-            padding: 15px 20px; background: #1c1f26; display: flex; align-items: center; gap: 10px; 
-            font-weight: 700; color: #fff; cursor: pointer; flex-shrink: 0; z-index: 55;
+            padding: 10px 20px; background: #1c1f26; display: flex; align-items: center; gap: 10px; 
+            font-weight: 700; color: #fff; cursor: pointer; flex-shrink: 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         
         .scroll-content { 
             flex: 1; overflow-y: auto; display: flex; flex-direction: column; 
             -webkit-overflow-scrolling: touch; 
+            min-height: 0; 
         }
         
-        /* Game Stage: Flex grow to fill space, but prevent pushing controls off screen */
         .game-stage { 
             flex: 1; position: relative; overflow: hidden; 
             background: radial-gradient(circle at center, #1e293b, #0b0f19);
-            min-height: 200px; /* Minimum height for game */
+            min-height: 0; 
         }
         canvas { width: 100%; height: 100%; display: block; }
         
-        /* CONTROLS (Fixed at bottom of view, above nav) */
+        /* CONTROLS (Always visible at bottom of view) */
         .controls { 
             background: #1c1f26; padding: 15px 20px; 
             border-radius: 20px 20px 0 0; z-index: 50; position: relative;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0; 
             border-top: 1px solid rgba(255,255,255,0.1);
         }
         .bet-row { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -327,7 +334,7 @@
         .btn-play:active { transform: translateY(4px); box-shadow: none; }
         .btn-cash { background: #10b981; color: white; display: none; box-shadow: 0 4px 0 #064e3b; }
 
-        .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; max-width: 90vw; margin: auto; aspect-ratio: 1; }
+        .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; max-width: 90vw; margin: auto; aspect-ratio: 1; max-height: 40vh; }
         .tile { width:100%; height:100%; background: #2d3748; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; box-shadow: inset 0 -3px 0 rgba(0,0,0,0.3); transition: 0.1s; }
         .tile:active { transform: scale(0.95); }
         .tile.open { background: #1a202c; box-shadow: none; transform: translateY(2px); cursor: default; }
@@ -440,104 +447,102 @@
         </div>
 
         <div id="homeView" class="view active">
-            <div class="scroll-content" style="padding-bottom: 20px;">
-                
-                <div class="daily-bonus-container">
-                    <div class="db-title"><span>📅 DAILY BONUS</span> <span>7/1</span></div>
-                    <div class="db-grid">
-                        <div class="db-day active" onclick="alert('Come back tomorrow!')"><span>DAY 1</span><i class="fa-solid fa-coins"></i></div>
-                        <div class="db-day"><span>DAY 2</span><i class="fa-solid fa-lock"></i></div>
-                        <div class="db-day"><span>DAY 3</span><i class="fa-solid fa-lock"></i></div>
-                        <div class="db-day"><span>DAY 4</span><i class="fa-solid fa-lock"></i></div>
-                        <div class="db-day"><span>DAY 5</span><i class="fa-solid fa-lock"></i></div>
-                    </div>
+            
+            <div class="daily-bonus-container">
+                <div class="db-title"><span>📅 DAILY BONUS</span> <span>7/1</span></div>
+                <div class="db-grid">
+                    <div class="db-day active" onclick="alert('Come back tomorrow!')"><span>DAY 1</span><i class="fa-solid fa-coins"></i></div>
+                    <div class="db-day"><span>DAY 2</span><i class="fa-solid fa-lock"></i></div>
+                    <div class="db-day"><span>DAY 3</span><i class="fa-solid fa-lock"></i></div>
+                    <div class="db-day"><span>DAY 4</span><i class="fa-solid fa-lock"></i></div>
+                    <div class="db-day"><span>DAY 5</span><i class="fa-solid fa-lock"></i></div>
                 </div>
-
-                <div class="hero-card">
-                    <div class="hero-overlay"></div>
-                    <div class="hero-content">
-                        <div class="hero-title">BIG WINS<br>AWAIT YOU</div>
-                        <div class="hero-sub">Welcome Bonus <span>250 FS!</span></div>
-                    </div>
-                </div>
-
-                <div class="tourney-banner">
-                    <div class="tb-left">
-                        <h4>🔥 HOT TOURNAMENT</h4>
-                        <p>Prize Pool: 50,000₼</p>
-                    </div>
-                    <div class="tb-timer" id="tTimer">02:14:55</div>
-                </div>
-                
-                <div class="games-grid">
-                    <div class="g-card gc-aviator" onclick="openGame('jet')">
-                        <div class="card-badge badge-hot">HOT</div>
-                        <div class="gc-icon" style="color:#ef4444;"><i class="fa-solid fa-plane-up"></i></div>
-                        <div class="gc-name">AVIATOR</div>
-                        <div class="rtp-bar-container">
-                            <div class="rtp-label"><span>Payout</span><span>97%</span></div>
-                            <div class="rtp-line"><div class="rtp-fill" style="width:97%; background:#ef4444;"></div></div>
-                        </div>
-                        <button class="gc-btn">PLAY</button>
-                    </div>
-
-                    <div class="g-card gc-mines" onclick="openGame('mines')">
-                        <div class="card-badge badge-top">TOP</div>
-                        <div class="gc-icon" style="color:#3b82f6;"><i class="fa-solid fa-gem"></i></div>
-                        <div class="gc-name">MINES</div>
-                        <div class="rtp-bar-container">
-                            <div class="rtp-label"><span>Payout</span><span>99%</span></div>
-                            <div class="rtp-line"><div class="rtp-fill" style="width:99%; background:#3b82f6;"></div></div>
-                        </div>
-                        <button class="gc-btn">PLAY</button>
-                    </div>
-
-                    <div class="g-card gc-slots" onclick="openGame('slots')">
-                        <div class="card-badge badge-new">NEW</div>
-                        <div class="gc-icon" style="color:#a855f7;"><i class="fa-solid fa-7"></i></div>
-                        <div class="gc-name">SLOTS</div>
-                        <div class="rtp-bar-container">
-                            <div class="rtp-label"><span>Payout</span><span>95%</span></div>
-                            <div class="rtp-line"><div class="rtp-fill" style="width:95%; background:#a855f7;"></div></div>
-                        </div>
-                        <button class="gc-btn">PLAY</button>
-                    </div>
-                </div>
-
-                <div style="margin: 0 20px 5px 20px; color:white; font-size:14px; font-weight:bold;">🟢 LIVE BETS</div>
-                <div class="live-bets">
-                    <div class="lb-head">
-                        <span>USER</span>
-                        <span>GAME</span>
-                        <span>WIN</span>
-                    </div>
-                    <div id="bets-body"></div>
-                </div>
-
-                <div class="app-dl-banner" onclick="alert('Coming soon to App Store and Play Market!')">
-                    <div class="adb-icon"><i class="fa-brands fa-android"></i></div>
-                    <div class="adb-text">
-                        <h5>Download App</h5>
-                        <p>Faster login and bonuses!</p>
-                    </div>
-                    <a href="#" class="adb-btn">DOWNLOAD</a>
-                </div>
-
-                <div class="trust-footer">
-                    <div class="tf-icons">
-                        <i class="fa-brands fa-cc-visa"></i>
-                        <i class="fa-brands fa-cc-mastercard"></i>
-                        <i class="fa-brands fa-bitcoin"></i>
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <div class="tf-text">
-                        © 2024 JETWIN CASINO. All rights reserved.<br>
-                        Licensed and regulated by Curacao Gaming Authority.<br>
-                        18+ Play Responsibly.
-                    </div>
-                </div>
-
             </div>
+
+            <div class="hero-card">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-title">BIG WINS<br>AWAIT YOU</div>
+                    <div class="hero-sub">Welcome Bonus <span>250 FS!</span></div>
+                </div>
+            </div>
+
+            <div class="tourney-banner">
+                <div class="tb-left">
+                    <h4>🔥 HOT TOURNAMENT</h4>
+                    <p>Prize Pool: 50,000₼</p>
+                </div>
+                <div class="tb-timer" id="tTimer">02:14:55</div>
+            </div>
+            
+            <div class="games-grid">
+                <div class="g-card gc-aviator" onclick="openGame('jet')">
+                    <div class="card-badge badge-hot">HOT</div>
+                    <div class="gc-icon" style="color:#ef4444;"><i class="fa-solid fa-plane-up"></i></div>
+                    <div class="gc-name">AVIATOR</div>
+                    <div class="rtp-bar-container">
+                        <div class="rtp-label"><span>Payout</span><span>97%</span></div>
+                        <div class="rtp-line"><div class="rtp-fill" style="width:97%; background:#ef4444;"></div></div>
+                    </div>
+                    <button class="gc-btn">PLAY</button>
+                </div>
+
+                <div class="g-card gc-mines" onclick="openGame('mines')">
+                    <div class="card-badge badge-top">TOP</div>
+                    <div class="gc-icon" style="color:#3b82f6;"><i class="fa-solid fa-gem"></i></div>
+                    <div class="gc-name">MINES</div>
+                    <div class="rtp-bar-container">
+                        <div class="rtp-label"><span>Payout</span><span>99%</span></div>
+                        <div class="rtp-line"><div class="rtp-fill" style="width:99%; background:#3b82f6;"></div></div>
+                    </div>
+                    <button class="gc-btn">PLAY</button>
+                </div>
+
+                <div class="g-card gc-slots" onclick="openGame('slots')">
+                    <div class="card-badge badge-new">NEW</div>
+                    <div class="gc-icon" style="color:#a855f7;"><i class="fa-solid fa-7"></i></div>
+                    <div class="gc-name">SLOTS</div>
+                    <div class="rtp-bar-container">
+                        <div class="rtp-label"><span>Payout</span><span>95%</span></div>
+                        <div class="rtp-line"><div class="rtp-fill" style="width:95%; background:#a855f7;"></div></div>
+                    </div>
+                    <button class="gc-btn">PLAY</button>
+                </div>
+            </div>
+
+            <div style="margin: 0 20px 5px 20px; color:white; font-size:14px; font-weight:bold;">🟢 LIVE BETS</div>
+            <div class="live-bets">
+                <div class="lb-head">
+                    <span>USER</span>
+                    <span>GAME</span>
+                    <span>WIN</span>
+                </div>
+                <div id="bets-body"></div>
+            </div>
+
+            <div class="app-dl-banner" onclick="alert('Coming soon to App Store and Play Market!')">
+                <div class="adb-icon"><i class="fa-brands fa-android"></i></div>
+                <div class="adb-text">
+                    <h5>Download App</h5>
+                    <p>Faster login and bonuses!</p>
+                </div>
+                <a href="#" class="adb-btn">DOWNLOAD</a>
+            </div>
+
+            <div class="trust-footer">
+                <div class="tf-icons">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-bitcoin"></i>
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="tf-text">
+                    © 2024 JETWIN CASINO. All rights reserved.<br>
+                    Licensed and regulated by Curacao Gaming Authority.<br>
+                    18+ Play Responsibly.
+                </div>
+            </div>
+
         </div>
 
         <div id="viewJet" class="view">
