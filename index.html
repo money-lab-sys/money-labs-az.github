@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -304,41 +304,43 @@
     <script>
         const API = "https://script.google.com/macros/s/AKfycbw5TG1rIhVZ_jqZjLy08KiTAC0YqrMc0QXD5Us22E4rpcb3hARRhW6LauxhZhwTpqmSCQ/exec";
         const WA = "994507516137"; 
+        const MIN_WITHDRAWAL = 20; // Set minimum withdrawal amount
+
         function wa(msg) { window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank'); }
     </script>
 
     <div id="notify-toast">
         <i class="fa-solid fa-trophy nt-icon"></i>
-        <div class="nt-text" id="nt-msg">Elvin 50₼ qazandı!</div>
+        <div class="nt-text" id="nt-msg">Elvin won 50₼!</div>
     </div>
 
-    <div id="fake-support" onclick="wa('Salam, mənə xüsusi bonus təklifiniz var?')">
+    <div id="fake-support" onclick="wa('Hello, do you have a special bonus offer for me?')">
         <div class="supp-avatar"></div>
         <div>
-            <div style="font-size:9px; color:#666;">Menecer Adel</div>
-            <div>🎁 Sizə 1 Mesaj var!</div>
+            <div style="font-size:9px; color:#666;">Support Agent</div>
+            <div>🎁 You have 1 Message!</div>
         </div>
     </div>
 
     <div class="spin-btn" onclick="openSpin()"><i class="fa-solid fa-gift"></i></div>
 
     <div id="spinModal" class="modal">
-        <h2 style="color:white; font-family:'Rajdhani'; margin-bottom:20px;">BONUS ÇARXI</h2>
+        <h2 style="color:white; font-family:'Rajdhani'; margin-bottom:20px;">LUCKY WHEEL</h2>
         <div class="wheel-container" id="wheelCont">
             <div class="marker"></div>
             <div class="wheel"></div>
         </div>
-        <button class="spin-go-btn" onclick="doSpin()">FIRLAT</button>
-        <div style="color:#aaa; font-size:12px; margin-top:20px; cursor:pointer;" onclick="document.getElementById('spinModal').style.display='none'">Bağla</div>
+        <button class="spin-go-btn" onclick="doSpin()">SPIN</button>
+        <div style="color:#aaa; font-size:12px; margin-top:20px; cursor:pointer;" onclick="document.getElementById('spinModal').style.display='none'">Close</div>
     </div>
 
     <div id="promoModal" class="modal">
         <div class="promo-box">
-            <h2 style="color:var(--primary); font-family:'Rajdhani'; margin:0;">PROMO KOD</h2>
-            <p style="color:#aaa; font-size:12px;">Bonus əldə etmək üçün kodu daxil edin</p>
-            <input type="text" id="inAppPromo" class="promo-inp" placeholder="KODU YAZIN">
-            <button class="btn-main" id="btnPromo" onclick="submitPromo()">TƏSDİQLƏ</button>
-            <div style="color:#aaa; font-size:12px; margin-top:15px; cursor:pointer;" onclick="document.getElementById('promoModal').style.display='none'">Bağla</div>
+            <h2 style="color:var(--primary); font-family:'Rajdhani'; margin:0;">PROMO CODE</h2>
+            <p style="color:#aaa; font-size:12px;">Enter code to get bonus</p>
+            <input type="text" id="inAppPromo" class="promo-inp" placeholder="ENTER CODE">
+            <button class="btn-main" id="btnPromo" onclick="submitPromo()">CLAIM</button>
+            <div style="color:#aaa; font-size:12px; margin-top:15px; cursor:pointer;" onclick="document.getElementById('promoModal').style.display='none'">Close</div>
         </div>
     </div>
 
@@ -346,8 +348,8 @@
         <div class="auth-box">
             <div class="logo-big">JET<span>WIN</span></div>
             <p style="color:#9ca3af; font-size:12px; margin-bottom:30px; letter-spacing: 2px;">ROYAL CASINO</p>
-            <input type="text" id="rName" class="inp" placeholder="İstifadəçi Adı">
-            <button class="btn-main" id="btnLogin" onclick="login()">GİRİŞ ET</button>
+            <input type="text" id="rName" class="inp" placeholder="Username">
+            <button class="btn-main" id="btnLogin" onclick="login()">LOGIN</button>
             <div id="loginErr" style="margin-top:10px; color:#ef4444; font-size:13px;"></div>
         </div>
     </div>
@@ -357,11 +359,11 @@
         <div class="top-nav">
             <div>
                 <div class="app-logo">JET<span>WIN</span></div>
-                <div class="motivator-text" id="motivator">Şans səninlədir!</div>
+                <div class="motivator-text" id="motivator">Luck is with you!</div>
             </div>
             <div class="nav-right">
                 <div class="online-badge">
-                    <div class="dot-blink"></div> <span id="onlineVal">1,420</span> Onlayn
+                    <div class="dot-blink"></div> <span id="onlineVal">1,420</span> Online
                 </div>
                 <div class="icon-box" style="background:#064e3b; color:#10b981;"><i class="fa-solid fa-bars"></i></div>
             </div>
@@ -369,7 +371,7 @@
 
         <div class="marquee-container">
             <div class="marquee-content">
-                🏆 QALİBLƏR: Cavid +120₼ ... Ali +50₼ ... Leyla +300₼ ... Tural +15₼ ... Murad +1000₼ ... Elvin +5000₼ ... Samir +250₼ ...Raul 250₼
+                🏆 WINNERS: Cavid +120₼ ... Ali +50₼ ... Leyla +300₼ ... Tural +15₼ ... Murad +1000₼ ... Elvin +5000₼ ... Samir +250₼ ...
             </div>
         </div>
 
@@ -380,7 +382,7 @@
 
         <div class="balance-area">
             <div class="balance-row">
-                <span class="bal-text">BALANS:</span>
+                <span class="bal-text">BALANCE:</span>
                 <span class="bal-amount" id="balVal">0.00 ₼</span>
             </div>
             
@@ -388,14 +390,14 @@
                 <div class="vip-fill"></div>
             </div>
             <div class="vip-labels">
-                <span>Bürünc</span>
-                <span style="color:var(--primary)">Gümüş</span>
-                <span>Qızıl</span>
+                <span>Bronze</span>
+                <span style="color:var(--primary)">Silver</span>
+                <span>Gold</span>
             </div>
 
             <div class="action-buttons">
-                <button class="btn-xs btn-withdraw" onclick="withdraw()">ÇIXARIŞ</button>
-                <button class="btn-xs btn-deposit" onclick="wa('Salam, Balans artırmaq istəyirəm')">ARTIR</button>
+                <button class="btn-xs btn-withdraw" onclick="withdraw()">WITHDRAW</button>
+                <button class="btn-xs btn-deposit" onclick="wa('Hello, I want to deposit funds')">DEPOSIT</button>
                 <button class="btn-xs btn-promo" onclick="document.getElementById('promoModal').style.display='flex'">🎁 PROMO</button>
             </div>
         </div>
@@ -404,28 +406,28 @@
             <div class="scroll-content" style="padding-bottom: 20px;">
                 
                 <div class="daily-bonus-container">
-                    <div class="db-title"><span>📅 GÜNDƏLİK BONUS</span> <span>7/1</span></div>
+                    <div class="db-title"><span>📅 DAILY BONUS</span> <span>7/1</span></div>
                     <div class="db-grid">
-                        <div class="db-day active" onclick="alert('Sabah gəlin!')"><span>GÜN 1</span><i class="fa-solid fa-coins"></i></div>
-                        <div class="db-day"><span>GÜN 2</span><i class="fa-solid fa-lock"></i></div>
-                        <div class="db-day"><span>GÜN 3</span><i class="fa-solid fa-lock"></i></div>
-                        <div class="db-day"><span>GÜN 4</span><i class="fa-solid fa-lock"></i></div>
-                        <div class="db-day"><span>GÜN 5</span><i class="fa-solid fa-lock"></i></div>
+                        <div class="db-day active" onclick="alert('Come back tomorrow!')"><span>DAY 1</span><i class="fa-solid fa-coins"></i></div>
+                        <div class="db-day"><span>DAY 2</span><i class="fa-solid fa-lock"></i></div>
+                        <div class="db-day"><span>DAY 3</span><i class="fa-solid fa-lock"></i></div>
+                        <div class="db-day"><span>DAY 4</span><i class="fa-solid fa-lock"></i></div>
+                        <div class="db-day"><span>DAY 5</span><i class="fa-solid fa-lock"></i></div>
                     </div>
                 </div>
 
                 <div class="hero-card">
                     <div class="hero-overlay"></div>
                     <div class="hero-content">
-                        <div class="hero-title">BÖYÜK QAZANC<br>SƏNİ GÖZLƏYİR</div>
-                        <div class="hero-sub">Xoş Gəldin Bonusu <span>250 FS!</span></div>
+                        <div class="hero-title">BIG WINS<br>AWAIT YOU</div>
+                        <div class="hero-sub">Welcome Bonus <span>250 FS!</span></div>
                     </div>
                 </div>
 
                 <div class="tourney-banner">
                     <div class="tb-left">
-                        <h4>🔥 QAYNAR TURNİR</h4>
-                        <p>Mükafat Fondu: 50,000₼</p>
+                        <h4>🔥 HOT TOURNAMENT</h4>
+                        <p>Prize Pool: 50,000₼</p>
                     </div>
                     <div class="tb-timer" id="tTimer">02:14:55</div>
                 </div>
@@ -437,10 +439,10 @@
                         <div class="gc-icon" style="color:#ef4444;"><i class="fa-solid fa-plane-up"></i></div>
                         <div class="gc-name">AVIATOR</div>
                         <div class="rtp-bar-container">
-                            <div class="rtp-label"><span>Qazandırma</span><span>97%</span></div>
+                            <div class="rtp-label"><span>Payout</span><span>97%</span></div>
                             <div class="rtp-line"><div class="rtp-fill" style="width:97%; background:#ef4444;"></div></div>
                         </div>
-                        <button class="gc-btn">OYNA</button>
+                        <button class="gc-btn">PLAY</button>
                     </div>
 
                     <div class="g-card gc-mines" onclick="openGame('mines')">
@@ -448,10 +450,10 @@
                         <div class="gc-icon" style="color:#3b82f6;"><i class="fa-solid fa-gem"></i></div>
                         <div class="gc-name">MINES</div>
                         <div class="rtp-bar-container">
-                            <div class="rtp-label"><span>Qazandırma</span><span>99%</span></div>
+                            <div class="rtp-label"><span>Payout</span><span>99%</span></div>
                             <div class="rtp-line"><div class="rtp-fill" style="width:99%; background:#3b82f6;"></div></div>
                         </div>
-                        <button class="gc-btn">OYNA</button>
+                        <button class="gc-btn">PLAY</button>
                     </div>
 
                     <div class="g-card gc-slots" onclick="openGame('slots')">
@@ -459,30 +461,30 @@
                         <div class="gc-icon" style="color:#a855f7;"><i class="fa-solid fa-7"></i></div>
                         <div class="gc-name">SLOTS</div>
                         <div class="rtp-bar-container">
-                            <div class="rtp-label"><span>Qazandırma</span><span>95%</span></div>
+                            <div class="rtp-label"><span>Payout</span><span>95%</span></div>
                             <div class="rtp-line"><div class="rtp-fill" style="width:95%; background:#a855f7;"></div></div>
                         </div>
-                        <button class="gc-btn">OYNA</button>
+                        <button class="gc-btn">PLAY</button>
                     </div>
                 </div>
 
-                <div style="margin: 0 20px 5px 20px; color:white; font-size:14px; font-weight:bold;">🟢 CANLI MƏRCLƏR</div>
+                <div style="margin: 0 20px 5px 20px; color:white; font-size:14px; font-weight:bold;">🟢 LIVE BETS</div>
                 <div class="live-bets">
                     <div class="lb-head">
-                        <span>İSTİFADƏÇİ</span>
-                        <span>OYUN</span>
-                        <span>QAZANC</span>
+                        <span>USER</span>
+                        <span>GAME</span>
+                        <span>WIN</span>
                     </div>
                     <div id="bets-body"></div>
                 </div>
 
-                <div class="app-dl-banner" onclick="alert('Tezliklə App Store və Play Marketdə!')">
+                <div class="app-dl-banner" onclick="alert('Coming soon to App Store and Play Market!')">
                     <div class="adb-icon"><i class="fa-brands fa-android"></i></div>
                     <div class="adb-text">
-                        <h5>Tətbiqi Yüklə</h5>
-                        <p>Daha sürətli giriş və bonuslar!</p>
+                        <h5>Download App</h5>
+                        <p>Faster login and bonuses!</p>
                     </div>
-                    <a href="#" class="adb-btn">YÜKLƏ</a>
+                    <a href="#" class="adb-btn">DOWNLOAD</a>
                 </div>
 
                 <div class="trust-footer">
@@ -503,7 +505,7 @@
         </div>
 
         <div id="viewJet" class="view">
-            <div class="back-bar" onclick="closeGame()"><i class="fa-solid fa-chevron-left"></i> Geri</div>
+            <div class="back-bar" onclick="closeGame()"><i class="fa-solid fa-chevron-left"></i> Back</div>
             <div class="game-stage">
                 <canvas id="cvs"></canvas>
                 <div class="hud-m" id="jm" style="position:absolute; top:30%; left:50%; transform:translate(-50%,-50%); font-family:'Rajdhani'; font-size:70px; color:white; font-weight:900;">1.00x</div>
@@ -514,30 +516,30 @@
                     <input type="number" id="jetBet" class="b-inp" value="10" readonly>
                     <button class="b-btn" onclick="adjBet(5)">+</button>
                 </div>
-                <button class="act-btn btn-play" id="jpBtn" onclick="jetPlay()">MƏRC ET</button>
-                <button class="act-btn btn-cash" id="jcBtn" onclick="jetCash()">GÖTÜR</button>
+                <button class="act-btn btn-play" id="jpBtn" onclick="jetPlay()">BET</button>
+                <button class="act-btn btn-cash" id="jcBtn" onclick="jetCash()">CASH OUT</button>
             </div>
         </div>
 
         <div id="viewMines" class="view">
-            <div class="back-bar" onclick="closeGame()"><i class="fa-solid fa-chevron-left"></i> Geri</div>
+            <div class="back-bar" onclick="closeGame()"><i class="fa-solid fa-chevron-left"></i> Back</div>
             <div class="scroll-content" style="justify-content:center; align-items:center;">
                 <div class="mines-grid" id="mGrid"></div>
             </div>
             <div class="controls">
-                <div id="mMsg" style="text-align:center; color:#10b981; font-weight:bold; margin-bottom:10px;">DAŞLARI SEÇ</div>
+                <div id="mMsg" style="text-align:center; color:#10b981; font-weight:bold; margin-bottom:10px;">PICK TILES</div>
                 <div class="bet-row">
                     <button class="b-btn" onclick="adjBetM(-5)">-</button>
                     <input type="number" id="mBet" class="b-inp" value="10" readonly>
                     <button class="b-btn" onclick="adjBetM(5)">+</button>
                 </div>
-                <button class="act-btn btn-play" id="mpBtn" onclick="minePlay()">OYNA</button>
-                <button class="act-btn btn-cash" id="mcBtn" onclick="mineCash()">PULU GÖTÜR</button>
+                <button class="act-btn btn-play" id="mpBtn" onclick="minePlay()">PLAY</button>
+                <button class="act-btn btn-cash" id="mcBtn" onclick="mineCash()">TAKE CASH</button>
             </div>
         </div>
 
         <div id="viewSlots" class="view">
-            <div class="back-bar" onclick="closeGame()"><i class="fa-solid fa-chevron-left"></i> Geri</div>
+            <div class="back-bar" onclick="closeGame()"><i class="fa-solid fa-chevron-left"></i> Back</div>
             <div class="scroll-content" style="justify-content:center; align-items:center;">
                 <div style="background:#3b0764; padding:15px; border-radius:15px; border:4px solid var(--primary); width:90%; display:flex; gap:5px;">
                     <div style="flex:1; background:#fff; height:100px; display:flex; align-items:center; justify-content:center; font-size:40px; border-radius:8px;" id="r1">🍒</div>
@@ -552,13 +554,13 @@
                     <input type="number" id="sBet" class="b-inp" value="10" readonly>
                     <button class="b-btn" onclick="adjBetS(5)">+</button>
                 </div>
-                <button class="act-btn btn-play" id="spBtn" onclick="slotSpin()">FIRLAT</button>
+                <button class="act-btn btn-play" id="spBtn" onclick="slotSpin()">SPIN</button>
             </div>
         </div>
 
         <div class="bottom-nav">
             <div class="nav-item active" onclick="closeGame()"><i class="fa-solid fa-house"></i></div>
-            <div class="nav-item" onclick="wa('Dəstək')"><i class="fa-solid fa-headset"></i></div>
+            <div class="nav-item" onclick="wa('Support')"><i class="fa-solid fa-headset"></i></div>
             <div class="nav-item" onclick="withdraw()"><i class="fa-regular fa-user"></i></div>
         </div>
 
@@ -607,7 +609,7 @@
             }, 1000);
         }
 
-        const msgs = ["Bu gün şanslı günündür!", "Cekpot səni gözləyir!", "İndi tam vaxtıdır!", "Qaliblər sırasına qoşul!", "Böyük qazanc yaxındır..."];
+        const msgs = ["Today is your lucky day!", "Jackpot is waiting for you!", "Now is the right time!", "Join the winners!", "Big win is near..."];
         function startMotivator() {
             setInterval(() => {
                 document.getElementById('motivator').innerText = msgs[Math.floor(Math.random() * msgs.length)];
@@ -637,13 +639,13 @@
         }
 
         const fakeNames = ["Cavid", "Ali", "Leyla", "Murad", "Aysel", "Samir", "Tural", "Nigar", "Elnur", "Vusal"];
-        const fakeActions = ["qazandı", "çıxarış etdi", "bonus aldı"];
+        const fakeActions = ["won", "withdrew", "got bonus"];
         function startFakeNotifications() {
             setInterval(() => {
                 let name = fakeNames[Math.floor(Math.random() * fakeNames.length)];
                 let amt = Math.floor(Math.random() * 200) + 20;
                 let action = fakeActions[Math.floor(Math.random() * fakeActions.length)];
-                let msg = `${name} ${amt}₼ ${action}!`;
+                let msg = `${name} ${action} ${amt}₼!`;
                 let t = document.getElementById('notify-toast');
                 document.getElementById('nt-msg').innerText = msg;
                 t.classList.add('show');
@@ -672,8 +674,8 @@
             wheel.style.transform = `rotate(${deg}deg)`;
             setTimeout(() => {
                 launchConfetti(); // CONFETTI
-                alert("🎉 TƏBRİKLƏR! Siz 500₼ Bonus qazandınız! Aktivləşdirmək üçün dəstəyə yazın.");
-                wa("Salam, Bonus Çarxında 500 AZN qazandım. Necə götürə bilərəm?");
+                alert("🎉 CONGRATULATIONS! You won 500₼ Bonus! Write to support to activate.");
+                wa("Hello, I won 500 AZN on the Lucky Wheel. How can I claim it?");
                 document.getElementById('spinModal').style.display = 'none';
                 wheel.style.transform = `rotate(0deg)`;
             }, 4100);
@@ -689,9 +691,9 @@
             let btn = document.getElementById('btnLogin');
             let err = document.getElementById('loginErr');
             
-            if(n.length < 3) { err.innerText = "Adınızı daxil edin"; return; }
+            if(n.length < 3) { err.innerText = "Please enter a valid username"; return; }
             
-            btn.innerText = "GİRİŞ EDİLİR...";
+            btn.innerText = "LOGGING IN...";
             btn.disabled = true;
 
             setTimeout(() => {
@@ -713,12 +715,12 @@
                     user.balance += parseFloat(d.balance);
                     save();
                     launchConfetti(); // CONFETTI
-                    alert(`✅ Təbriklər! Balansınıza ${d.balance}₼ əlavə olundu.`);
+                    alert(`✅ Congratulations! ${d.balance}₼ added to your balance.`);
                     document.getElementById('promoModal').style.display = 'none';
                     document.getElementById('inAppPromo').value = "";
-                } else { alert("❌ " + (d.msg || "Kod yanlışdır")); }
-            } catch(e) { alert("Xəta"); }
-            btn.innerText = "TƏSDİQLƏ";
+                } else { alert("❌ " + (d.msg || "Invalid code")); }
+            } catch(e) { alert("Error"); }
+            btn.innerText = "CLAIM";
         }
 
         function sendWin(amt) { fetch(`${API}?action=win&name=${encodeURIComponent(user.name)}&amount=${amt}`, {mode:'no-cors'}); }
@@ -737,12 +739,18 @@
         }
 
         function withdraw() {
-            if(user.balance <= 0) alert("Balans boşdur");
-            else wa(`ID: ${user.name}. Balans: ${user.balance} AZN. Çıxarış etmək istəyirəm.`);
+            if(user.balance < MIN_WITHDRAWAL) {
+                alert(`⚠️ Insufficient funds! You need at least ${MIN_WITHDRAWAL} AZN to withdraw. Please keep playing or deposit.`);
+            } else {
+                wa(`ID: ${user.name}. Balance: ${user.balance} AZN. I request a withdrawal.`);
+            }
         }
+        
         function checkBal(a) { 
             if(user.balance < a){ 
-                if(confirm("Balans kifayət etmir. Artırmaq üçün WhatsApp-a keçid edilsin?")) wa('Balans artırmaq'); 
+                if(confirm("⚠️ Insufficient balance for this bet. Would you like to deposit funds now?")) {
+                    wa('Hello, I want to deposit funds to my account.'); 
+                }
                 return false; 
             } 
             return true; 
@@ -753,30 +761,32 @@
         function adjBetM(v){ let e=document.getElementById('mBet'); let val=parseInt(e.value)+v; if(val<1)val=1; e.value=val; }
         function initMines(){ const g=document.getElementById('mGrid'); g.innerHTML=""; for(let i=0;i<25;i++){ let d=document.createElement('div'); d.className='tile'; d.id='mt'+i; d.onclick=()=>mHit(i); g.appendChild(d); }}
         function minePlay(){
-            mBet=parseInt(document.getElementById('mBet').value); if(!checkBal(mBet)) return; 
+            mBet=parseInt(document.getElementById('mBet').value); 
+            if(!checkBal(mBet)) return; 
             user.balance-=mBet; save(); mPlay=true; mMult=1.0; mStep=0;
             document.getElementById('mpBtn').style.display='none'; document.getElementById('mcBtn').style.display='none'; 
-            document.getElementById('mMsg').innerText="MİNİMUM 3 DAŞ SEÇ!"; document.getElementById('mMsg').style.color="white"; initMines(); 
+            document.getElementById('mMsg').innerText="PICK MINIMUM 3 TILES!"; document.getElementById('mMsg').style.color="white"; initMines(); 
         }
         function mHit(i){
             if(!mPlay) return; let t=document.getElementById('mt'+i); if(t.classList.contains('open')) return;
             let isBomb = (mStep < 2) ? (Math.random()<0.1) : (Math.random()<0.9);
             t.classList.add('open');
             if(isBomb){
-                t.classList.add('bomb'); t.innerHTML="💣"; mPlay=false; document.getElementById('mMsg').innerText="PARTLADI!"; document.getElementById('mMsg').style.color="#ef4444"; setTimeout(mReset,2000);
+                t.classList.add('bomb'); t.innerHTML="💣"; mPlay=false; document.getElementById('mMsg').innerText="BOOM!"; document.getElementById('mMsg').style.color="#ef4444"; setTimeout(mReset,2000);
             } else {
                 t.classList.add('gem'); t.innerHTML="💎"; mStep++; mMult*=1.25;
-                if(mStep>=3){ document.getElementById('mcBtn').style.display='block'; document.getElementById('mcBtn').innerText=`GÖTÜR (${(mBet*mMult).toFixed(2)})`; document.getElementById('mMsg').innerText="DAVAM ET YA GÖTÜR?"; document.getElementById('mMsg').style.color="#10b981"; } else { document.getElementById('mMsg').innerText=`DAHA ${3-mStep} DAŞ...`; }
+                if(mStep>=3){ document.getElementById('mcBtn').style.display='block'; document.getElementById('mcBtn').innerText=`TAKE CASH (${(mBet*mMult).toFixed(2)})`; document.getElementById('mMsg').innerText="CONTINUE OR TAKE?"; document.getElementById('mMsg').style.color="#10b981"; } else { document.getElementById('mMsg').innerText=`${3-mStep} MORE TILES...`; }
             }
         }
-        function mineCash(){ if(!mPlay || mStep<3) return; let w=mBet*mMult; user.balance+=w; save(); sendWin(w.toFixed(2)); mPlay=false; launchConfetti(); document.getElementById('mMsg').innerText=`QAZANDIN: ${w.toFixed(2)}`; mReset(); }
+        function mineCash(){ if(!mPlay || mStep<3) return; let w=mBet*mMult; user.balance+=w; save(); sendWin(w.toFixed(2)); mPlay=false; launchConfetti(); document.getElementById('mMsg').innerText=`YOU WON: ${w.toFixed(2)}`; mReset(); }
         function mReset(){ document.getElementById('mpBtn').style.display='block'; document.getElementById('mcBtn').style.display='none'; }
 
         let jPlay=false, jMult=1.0, jAnim;
         function adjBet(v){ let e=document.getElementById('jetBet'); let val=parseInt(e.value)+v; if(val<1)val=1; e.value=val; }
         function initCanvas(){ const c=document.getElementById('cvs'); c.width=c.parentElement.offsetWidth; c.height=c.parentElement.offsetHeight; c.getContext('2d').clearRect(0,0,c.width,c.height); }
         function jetPlay(){
-            let b=parseInt(document.getElementById('jetBet').value); if(!checkBal(b))return;
+            let b=parseInt(document.getElementById('jetBet').value); 
+            if(!checkBal(b)) return;
             user.balance-=b; save(); jPlay=true; jMult=1.0; let st=Date.now();
             document.getElementById('jpBtn').style.display='none'; document.getElementById('jcBtn').style.display='block';
             let cr = Math.random()<0.7 ? 1.0+Math.random()*0.3 : 1.5+Math.random()*2;
@@ -787,7 +797,7 @@
                 let px=Math.min(c.width-50, t*100), py=c.height-Math.min(c.height-50, (jMult-1)*150);
                 x.beginPath(); x.lineWidth=4; x.strokeStyle="#facc15"; x.moveTo(0,c.height); x.quadraticCurveTo(px/2,c.height,px,py); x.stroke();
                 x.font="30px Arial"; x.fillText("🚀",px-20,py);
-                if(jMult>=cr){ jPlay=false; document.getElementById('jm').style.color="red"; document.getElementById('jm').innerText="PARTLADI"; setTimeout(jetReset,2000); } else jAnim=requestAnimationFrame(loop);
+                if(jMult>=cr){ jPlay=false; document.getElementById('jm').style.color="red"; document.getElementById('jm').innerText="CRASHED"; setTimeout(jetReset,2000); } else jAnim=requestAnimationFrame(loop);
             } loop();
         }
         function jetCash(){ if(!jPlay)return; jPlay=false; cancelAnimationFrame(jAnim); let w=parseInt(document.getElementById('jetBet').value)*jMult; user.balance+=w; save(); sendWin(w.toFixed(2)); launchConfetti(); document.getElementById('jm').style.color="#10b981"; document.getElementById('jm').innerText=`WIN ${w.toFixed(2)}`; setTimeout(jetReset,2000); }
@@ -795,9 +805,10 @@
 
         function adjBetS(v){ let e=document.getElementById('sBet'); let val=parseInt(e.value)+v; if(val<1)val=1; e.value=val; }
         function slotSpin(){
-            let b=parseInt(document.getElementById('sBet').value); if(!checkBal(b))return;
+            let b=parseInt(document.getElementById('sBet').value); 
+            if(!checkBal(b)) return;
             user.balance-=b; save();
-            setTimeout(()=>{ document.getElementById('r1').innerText="🍒"; document.getElementById('r2').innerText="🍋"; document.getElementById('r3').innerText="🍇"; document.getElementById('sMsg').innerText="UDUZDUNUZ"; },1000);
+            setTimeout(()=>{ document.getElementById('r1').innerText="🍒"; document.getElementById('r2').innerText="🍋"; document.getElementById('r3').innerText="🍇"; document.getElementById('sMsg').innerText="YOU LOST"; },1000);
         }
 
         window.onresize=()=>{ if(document.getElementById('viewJet').classList.contains('active')) initCanvas(); }
