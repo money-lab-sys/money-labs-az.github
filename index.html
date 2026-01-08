@@ -62,7 +62,6 @@
         }
 
         /* --- APP STRUCTURE --- */
-        /* Make appScreen a flex column so headers stay at top and views fill remaining space */
         #appScreen { 
             display: none; 
             flex-direction: column; 
@@ -94,7 +93,7 @@
             display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 14px;
         }
 
-        /* STATIC HEADERS (Always Visible) */
+        /* HEADERS */
         .marquee-container {
             background: #111; border-bottom: 1px solid rgba(255,255,255,0.1);
             overflow: hidden; white-space: nowrap; padding: 5px 0; flex-shrink: 0;
@@ -131,83 +130,75 @@
         .btn-deposit { background: var(--primary); color: #000; }
         .btn-promo { background: #3b82f6; color: white; display:flex; align-items:center; justify-content:center; gap:5px;}
 
+        /* --- PAYMENT MODAL STYLES --- */
+        .pay-tabs { display: flex; background: #111; border-radius: 10px; padding: 4px; margin-bottom: 15px; }
+        .pay-tab { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; color: #666; transition: 0.3s; }
+        .pay-tab.active { background: var(--primary); color: #000; }
+        
+        .pay-method { display: flex; gap: 10px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; }
+        .pm-item { min-width: 80px; height: 50px; background: #1c1f26; border: 1px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: #666; transition: 0.3s; }
+        .pm-item.active { border-color: var(--primary); color: var(--primary); background: rgba(250, 204, 21, 0.1); }
+
+        .pay-info-box { background: #111; padding: 15px; border-radius: 10px; border: 1px dashed #333; text-align: center; margin-bottom: 15px; }
+        .pay-label { font-size: 10px; color: #666; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        
+        /* NEW: Added clickable style */
+        .pay-val { 
+            font-size: 14px; color: white; font-weight: bold; word-break: break-all; font-family: monospace; 
+            cursor: pointer; transition: 0.2s; padding: 5px; border-radius: 4px;
+        }
+        .pay-val:active {
+            color: #10b981;
+            transform: scale(0.98);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .copy-btn { font-size: 10px; color: var(--primary); margin-top: 5px; cursor: pointer; text-decoration: underline; }
+        .warning-text { color: #ef4444; font-size: 10px; margin-top: 8px; font-weight: bold; line-height: 1.4; display: none; }
+
         /* --- VIEWS --- */
-        /* Common view styles: They fill the remaining space below headers and above footer */
         .view {
             display: none; 
-            flex: 1; /* Takes all available space */
+            flex: 1; 
             flex-direction: column;
             width: 100%;
-            overflow: hidden; /* Hide overflow by default */
-            padding-bottom: var(--nav-height); /* Space for bottom nav */
+            overflow: hidden; 
+            padding-bottom: var(--nav-height); 
         }
         
-        /* Home View is scrollable */
         #homeView { overflow-y: auto; -webkit-overflow-scrolling: touch; }
-        
         .view.active { display: flex; }
 
+        /* ... Existing Styles ... */
         .daily-bonus-container { margin: 15px 20px; }
         .db-title { color: white; font-size: 12px; font-weight: bold; margin-bottom: 8px; display: flex; justify-content: space-between; }
         .db-grid { display: flex; gap: 5px; justify-content: space-between; }
-        .db-day { 
-            background: #1f2937; border-radius: 6px; flex: 1; height: 50px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border: 1px solid rgba(255,255,255,0.05); cursor: pointer;
-        }
+        .db-day { background: #1f2937; border-radius: 6px; flex: 1; height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
         .db-day.active { background: rgba(16, 185, 129, 0.2); border-color: #10b981; }
         .db-day span { font-size: 9px; color: #9ca3af; }
         .db-day i { color: var(--primary); font-size: 14px; margin-top: 2px; }
 
-        .tourney-banner {
-            margin: 0 20px 15px 20px; background: linear-gradient(90deg, #3730a3, #4338ca);
-            border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; justify-content: space-between;
-            border: 1px solid #6366f1; box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
-        }
+        .tourney-banner { margin: 0 20px 15px 20px; background: linear-gradient(90deg, #3730a3, #4338ca); border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #6366f1; box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3); }
         .tb-left h4 { margin: 0; color: white; font-family: 'Rajdhani'; font-size: 15px; text-transform: uppercase; }
         .tb-left p { margin: 0; color: #a5b4fc; font-size: 9px; }
         .tb-timer { font-family: 'Rajdhani'; font-weight: 800; font-size: 16px; color: #facc15; }
 
-        .hero-card {
-            margin: 10px 20px; height: 180px; border-radius: 20px; overflow: hidden; position: relative; flex-shrink: 0;
-            background: url('https://img.freepik.com/premium-photo/cyberpunk-woman-with-neon-lights_146508-62.jpg') center top/cover;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 20px; text-align: center;
-        }
-        .hero-overlay {
-            position: absolute; inset: 0; 
-            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,18,24,0.4) 50%, rgba(15,18,24,0.9) 100%);
-        }
+        .hero-card { margin: 10px 20px; height: 180px; border-radius: 20px; overflow: hidden; position: relative; flex-shrink: 0; background: url('https://img.freepik.com/premium-photo/cyberpunk-woman-with-neon-lights_146508-62.jpg') center top/cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 20px; text-align: center; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,18,24,0.4) 50%, rgba(15,18,24,0.9) 100%); }
         .hero-content { position: relative; z-index: 2; width: 100%; margin-bottom: 20px; }
-        .hero-title { 
-            font-family: 'Rajdhani'; font-weight: 900; font-size: 26px; line-height: 1.1; 
-            background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-transform: uppercase; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
+        .hero-title { font-family: 'Rajdhani'; font-weight: 900; font-size: 26px; line-height: 1.1; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .hero-sub { font-size: 14px; font-weight: 600; color: #fff; }
         .hero-sub span { color: var(--primary); font-weight: 800; }
 
-        .games-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 20px 20px 20px;
-        }
-        @media (max-width: 450px) {
-            .games-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero-title { font-size: 24px; }
-        }
+        .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 20px 20px 20px; }
+        @media (max-width: 450px) { .games-grid { grid-template-columns: repeat(2, 1fr); } .hero-title { font-size: 24px; } }
 
-        .g-card {
-            border-radius: 16px; overflow: hidden; position: relative; height: 140px;
-            display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 12px 5px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
-        }
+        .g-card { border-radius: 16px; overflow: hidden; position: relative; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 12px 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); }
         .gc-aviator { background: linear-gradient(180deg, #1a0505 0%, #450a0a 100%); border-bottom: 2px solid #ef4444; }
         .gc-mines { background: linear-gradient(180deg, #050a1a 0%, #172554 100%); border-bottom: 2px solid #3b82f6; }
         .gc-slots { background: linear-gradient(180deg, #1a052e 0%, #4c1d95 100%); border-bottom: 2px solid #a855f7; }
         
-        .card-badge {
-            position: absolute; top: 0; right: 0; background: #ef4444; color: white;
-            font-size: 9px; font-weight: 800; padding: 2px 6px; border-bottom-left-radius: 8px;
-        }
+        .card-badge { position: absolute; top: 0; right: 0; background: #ef4444; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-bottom-left-radius: 8px; }
         .badge-hot { background: #ef4444; }
         .badge-new { background: #10b981; }
         .badge-top { background: #facc15; color: black; }
@@ -220,19 +211,13 @@
         .rtp-line { height: 3px; background: #333; border-radius: 2px; overflow: hidden; }
         .rtp-fill { height: 100%; background: #10b981; width: 95%; box-shadow: 0 0 5px #10b981; }
 
-        .live-bets {
-            background: #1c1f26; margin: 0 20px 0 20px; border-radius: 12px; padding: 10px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
+        .live-bets { background: #1c1f26; margin: 0 20px 0 20px; border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.05); }
         .lb-head { display: flex; justify-content: space-between; color: #9ca3af; font-size: 10px; font-weight: 700; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
         .lb-row { display: flex; justify-content: space-between; font-size: 11px; color: white; margin-bottom: 6px; animation: fadeIn 0.5s; }
         .lb-win { color: #10b981; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .app-dl-banner {
-            margin: 20px; padding: 12px; background: #111827; border-radius: 12px; display: flex; align-items: center; gap: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .app-dl-banner { margin: 20px; padding: 12px; background: #111827; border-radius: 12px; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.1); }
         .adb-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: black; flex-shrink: 0; }
         .adb-text h5 { margin: 0; color: white; font-size: 12px; }
         .adb-text p { margin: 0; color: #9ca3af; font-size: 10px; }
@@ -247,12 +232,7 @@
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; flex-direction: column; }
         
-        .spin-btn {
-            position: fixed; top: 50%; right: 0; transform: translateY(-50%);
-            background: linear-gradient(135deg, #ec4899, #8b5cf6);
-            color: white; padding: 10px; border-top-left-radius: 20px; border-bottom-left-radius: 20px;
-            cursor: pointer; z-index: 900; box-shadow: -5px 5px 20px rgba(0,0,0,0.5); font-weight: bold; font-size: 20px;
-        }
+        .spin-btn { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 10px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; cursor: pointer; z-index: 900; box-shadow: -5px 5px 20px rgba(0,0,0,0.5); font-weight: bold; font-size: 20px; }
         .spin-btn i { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         
@@ -265,67 +245,27 @@
         .promo-box { background: #1c1f26; padding: 25px; border-radius: 20px; width: 85%; max-width: 350px; text-align: center; border: 1px solid var(--primary); }
         .promo-inp { width: 100%; padding: 15px; margin: 15px 0; background: #0b0f19; border: 1px solid #333; color: white; border-radius: 10px; text-align: center; font-size: 18px; text-transform: uppercase; }
 
-        #notify-toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(28, 31, 38, 0.95); border: 1px solid var(--primary);
-            padding: 10px 20px; border-radius: 30px; z-index: 9999;
-            display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; transition: 0.5s; pointer-events: none; width: max-content;
-        }
+        #notify-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(28, 31, 38, 0.95); border: 1px solid var(--primary); padding: 10px 20px; border-radius: 30px; z-index: 9999; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; transition: 0.5s; pointer-events: none; width: max-content; }
         #notify-toast.show { opacity: 1; top: 40px; }
         .nt-icon { color: var(--primary); font-size: 16px; }
         .nt-text { font-size: 12px; font-weight: 600; color: white; white-space: nowrap; }
 
-        #fake-support {
-            position: fixed; 
-            top: 75px; 
-            right: 10px;
-            background: #fff; color: #000; padding: 8px 12px; border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5); font-size: 11px; font-weight: bold;
-            display: flex; align-items: center; gap: 8px; z-index: 2000;
-            opacity: 0; transform: translateY(-20px); transition: 0.5s; cursor: pointer;
-            border: 1px solid var(--primary);
-        }
+        #fake-support { position: fixed; top: 75px; right: 10px; background: #fff; color: #000; padding: 8px 12px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 8px; z-index: 2000; opacity: 0; transform: translateY(-20px); transition: 0.5s; cursor: pointer; border: 1px solid var(--primary); }
         #fake-support.show { opacity: 1; transform: translateY(0); }
         .supp-avatar { width: 22px; height: 22px; background: url('https://img.freepik.com/free-photo/call-center-worker-with-headset_23-2147986047.jpg') center/cover; border-radius: 50%; }
 
-        /* --- FIXED BOTTOM NAV --- */
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; height: var(--nav-height); 
-            background: #0f1218; border-top: 1px solid rgba(255,255,255,0.05);
-            display: flex; justify-content: space-around; align-items: center; z-index: 100;
-            flex-shrink: 0;
-        }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: var(--nav-height); background: #0f1218; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; align-items: center; z-index: 100; flex-shrink: 0; }
         .nav-item { color: #6b7280; font-size: 24px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .nav-item.active { color: var(--primary); }
 
+        .back-bar { padding: 10px 20px; background: #1c1f26; display: flex; align-items: center; gap: 10px; font-weight: 700; color: #fff; cursor: pointer; flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         
-        .back-bar { 
-            padding: 10px 20px; background: #1c1f26; display: flex; align-items: center; gap: 10px; 
-            font-weight: 700; color: #fff; cursor: pointer; flex-shrink: 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+        .scroll-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; -webkit-overflow-scrolling: touch; min-height: 0; }
         
-        .scroll-content { 
-            flex: 1; overflow-y: auto; display: flex; flex-direction: column; 
-            -webkit-overflow-scrolling: touch; 
-            min-height: 0; 
-        }
-        
-        .game-stage { 
-            flex: 1; position: relative; overflow: hidden; 
-            background: radial-gradient(circle at center, #1e293b, #0b0f19);
-            min-height: 0; 
-        }
+        .game-stage { flex: 1; position: relative; overflow: hidden; background: radial-gradient(circle at center, #1e293b, #0b0f19); min-height: 0; }
         canvas { width: 100%; height: 100%; display: block; }
         
-        /* CONTROLS (Always visible at bottom of view) */
-        .controls { 
-            background: #1c1f26; padding: 15px 20px; 
-            border-radius: 20px 20px 0 0; z-index: 50; position: relative;
-            flex-shrink: 0; 
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+        .controls { background: #1c1f26; padding: 15px 20px; border-radius: 20px 20px 0 0; z-index: 50; position: relative; flex-shrink: 0; border-top: 1px solid rgba(255,255,255,0.1); }
         .bet-row { display: flex; gap: 10px; margin-bottom: 10px; }
         .b-btn { width: 50px; height: 50px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 20px; }
         .b-inp { flex: 1; background: #0b0f19; border: 1px solid rgba(255,255,255,0.1); color: white; text-align: center; font-size: 22px; font-weight: bold; border-radius: 12px; font-family: 'Rajdhani'; }
@@ -351,6 +291,16 @@
         const MIN_WITHDRAWAL = 20;
 
         function wa(msg) { window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank'); }
+        
+        // NEW FUNCTION: Copies text to clipboard when element is clicked
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // You could use a nicer toast here, but for now simple alert/confirmation logic
+                alert("Kopyalandı: " + text);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
     </script>
 
     <div id="notify-toast">
@@ -385,6 +335,48 @@
             <input type="text" id="inAppPromo" class="promo-inp" placeholder="ENTER CODE">
             <button class="btn-main" id="btnPromo" onclick="submitPromo()">CLAIM</button>
             <div style="color:#aaa; font-size:12px; margin-top:15px; cursor:pointer;" onclick="document.getElementById('promoModal').style.display='none'">Close</div>
+        </div>
+    </div>
+
+    <div id="cashierModal" class="modal">
+        <div class="promo-box" style="width: 90%; max-width: 400px; text-align: left;">
+            <h2 style="color:var(--primary); font-family:'Rajdhani'; margin:0 0 15px 0; text-align:center;">CASHIER</h2>
+            
+            <div class="pay-tabs">
+                <div class="pay-tab active" id="tabDep" onclick="switchTab('dep')">DEPOSIT</div>
+                <div class="pay-tab" id="tabWith" onclick="switchTab('with')">WITHDRAW</div>
+            </div>
+
+            <div id="secDep">
+                <div class="pay-method">
+                    <div class="pm-item active" onclick="selPay('m10')"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="pm-item" onclick="selPay('card')"><i class="fa-brands fa-cc-visa"></i></div>
+                    <div class="pm-item" onclick="selPay('crypto')"><i class="fa-brands fa-bitcoin"></i></div>
+                </div>
+
+                <div class="pay-info-box">
+                    <span class="pay-label">SEND PAYMENT TO:</span>
+                    <div class="pay-val" id="payDest" onclick="copyToClipboard(this.innerText)" title="Kopyalamaq üçün toxun">994507516137</div>
+                    <div class="warning-text" id="payWarn"></div>
+                    <div class="copy-btn" onclick="copyToClipboard(document.getElementById('payDest').innerText)">COPY NUMBER</div>
+                </div>
+
+                <p style="font-size:10px; color:#9ca3af; margin-bottom:5px;">ENTER AMOUNT:</p>
+                <input type="number" id="depAmt" class="inp" placeholder="Min: 10 AZN" style="margin-bottom:10px;">
+                <button class="btn-main" id="btnDep" onclick="submitPayment('dep')">CONFIRM PAYMENT</button>
+            </div>
+
+            <div id="secWith" style="display:none;">
+                <p style="font-size:10px; color:#9ca3af; margin-bottom:5px;">WITHDRAW AMOUNT:</p>
+                <input type="number" id="withAmt" class="inp" placeholder="Amount (min 20)" style="margin-bottom:10px;">
+                
+                <p style="font-size:10px; color:#9ca3af; margin-bottom:5px;">CARD / WALLET NUMBER:</p>
+                <input type="text" id="withDest" class="inp" placeholder="4169..." style="margin-bottom:10px;">
+                
+                <button class="btn-main" onclick="submitPayment('with')">REQUEST WITHDRAWAL</button>
+            </div>
+
+            <div style="color:#aaa; font-size:12px; margin-top:15px; cursor:pointer; text-align:center;" onclick="document.getElementById('cashierModal').style.display='none'">Close</div>
         </div>
     </div>
 
@@ -441,7 +433,7 @@
 
             <div class="action-buttons">
                 <button class="btn-xs btn-withdraw" onclick="withdraw()">WITHDRAW</button>
-                <button class="btn-xs btn-deposit" onclick="wa('Hello, I want to deposit funds')">DEPOSIT</button>
+                <button class="btn-xs btn-deposit" onclick="openCashier('dep')">DEPOSIT</button>
                 <button class="btn-xs btn-promo" onclick="document.getElementById('promoModal').style.display='flex'">🎁 PROMO</button>
             </div>
         </div>
@@ -621,10 +613,9 @@
             startOnlineCount();
             startMotivator();
             startSupport();
-            startTourneyTimer(); // NEW
+            startTourneyTimer(); 
         };
 
-        // NEW: CONFETTI
         function launchConfetti() {
             for(let i=0; i<50; i++) {
                 let c = document.createElement('div');
@@ -637,7 +628,6 @@
             }
         }
 
-        // NEW: TOURNAMENT TIMER
         function startTourneyTimer() {
             let t = 8095; // seconds
             setInterval(() => {
@@ -714,7 +704,7 @@
             let deg = 360 * 5 + 30; 
             wheel.style.transform = `rotate(${deg}deg)`;
             setTimeout(() => {
-                launchConfetti(); // CONFETTI
+                launchConfetti(); 
                 alert("🎉 CONGRATULATIONS! You won 500₼ Bonus! Write to support to activate.");
                 wa("Hello, I won 500 AZN on the Lucky Wheel. How can I claim it?");
                 document.getElementById('spinModal').style.display = 'none';
@@ -755,7 +745,7 @@
                 if(d.result === 'success') {
                     user.balance += parseFloat(d.balance);
                     save();
-                    launchConfetti(); // CONFETTI
+                    launchConfetti();
                     alert(`✅ Congratulations! ${d.balance}₼ added to your balance.`);
                     document.getElementById('promoModal').style.display = 'none';
                     document.getElementById('inAppPromo').value = "";
@@ -780,21 +770,110 @@
         }
 
         function withdraw() {
+            // NEW CHECK: User must have minimum withdrawal amount
             if(user.balance < MIN_WITHDRAWAL) {
-                alert(`⚠️ Insufficient funds! You need at least ${MIN_WITHDRAWAL} AZN to withdraw. Please keep playing or deposit.`);
+                alert(`⚠️ Balansınız azdır! Çıxarış etmək üçün minimum ${MIN_WITHDRAWAL} AZN balansınız olmalıdır. Zəhmət olmasa oynamağa davam edin və ya depozit edin.`);
             } else {
-                wa(`ID: ${user.name}. Balance: ${user.balance} AZN. I request a withdrawal.`);
+                openCashier('with');
             }
         }
         
         function checkBal(a) { 
             if(user.balance < a){ 
-                if(confirm("⚠️ Insufficient balance for this bet. Would you like to deposit funds now?")) {
-                    wa('Hello, I want to deposit funds to my account.'); 
+                if(confirm("⚠️ Oynamaq üçün balansınız kifayət deyil. Depozit etmək istəyirsiniz?")) {
+                    openCashier('dep');
                 }
                 return false; 
             } 
             return true; 
+        }
+
+        /* --- CASHIER LOGIC --- */
+        let currentDepMethod = 'm10';
+        function openCashier(tab) {
+            document.getElementById('cashierModal').style.display='flex';
+            switchTab(tab);
+            selPay('m10'); // Reset to default
+        }
+        function switchTab(t) {
+            document.querySelectorAll('.pay-tab').forEach(e=>e.classList.remove('active'));
+            if(t==='dep'){ 
+                document.getElementById('tabDep').classList.add('active'); 
+                document.getElementById('secDep').style.display='block';
+                document.getElementById('secWith').style.display='none';
+            } else {
+                document.getElementById('tabWith').classList.add('active'); 
+                document.getElementById('secDep').style.display='none';
+                document.getElementById('secWith').style.display='block';
+            }
+        }
+        
+        function selPay(m) {
+            currentDepMethod = m;
+            document.querySelectorAll('.pm-item').forEach(e=>e.classList.remove('active'));
+            event.currentTarget ? event.currentTarget.classList.add('active') : document.querySelectorAll('.pm-item')[0].classList.add('active');
+            
+            let d = document.getElementById('payDest');
+            let w = document.getElementById('payWarn');
+            w.style.display = 'none';
+
+            if(m==='m10') {
+                d.innerText="994507516137";
+                d.style.fontSize="20px";
+            }
+            if(m==='card') {
+                d.innerText="5522099362395972";
+                d.style.fontSize="16px";
+            }
+            if(m==='crypto') {
+                d.innerText="TLkfDmnsJNz3oQXKCuXyxFmeNde9AvapHJ";
+                d.style.fontSize="11px";
+                w.style.display = 'block';
+                w.innerHTML = "⚠️ NETWORK: TRC20 ONLY!<br>Digər şəbəkə ilə göndərilən vəsait itəcək.";
+            }
+        }
+
+        async function submitPayment(type) {
+            if(type === 'dep') {
+                let amt = document.getElementById('depAmt').value;
+                let btn = document.getElementById('btnDep');
+                
+                if(!amt) return alert("Məbləği daxil edin!");
+                
+                // DATA SENDING LOGIC TO EXCEL
+                btn.innerText = "GÖNDƏRİLİR...";
+                btn.disabled = true;
+                
+                try {
+                    await fetch(`${API}?action=deposit&name=${encodeURIComponent(user.name)}&amount=${amt}&method=${currentDepMethod}`, {mode: 'no-cors'});
+                    alert(`✅ Depozit sorğusu göndərildi: ${amt} AZN\nÜsul: ${currentDepMethod}\n\nZəhmət olmasa təsdiq üçün gözləyin.`);
+                    wa(`ID: ${user.name}. Mən ${amt} AZN depozit etdim (${currentDepMethod}). Zəhmət olmasa yoxlayın.`);
+                } catch(e) {
+                    alert("Səhv baş verdi. Dəstək ilə əlaqə saxlayın.");
+                }
+                
+                btn.innerText = "ÖDƏNİŞİ TƏSDİQLƏ";
+                btn.disabled = false;
+                
+            } else {
+                // WITHDRAWAL LOGIC
+                let amt = parseFloat(document.getElementById('withAmt').value);
+                let dest = document.getElementById('withDest').value;
+                
+                if(!amt || !dest) return alert("Zəhmət olmasa bütün xanaları doldurun!");
+                if(amt < MIN_WITHDRAWAL) return alert(`Minimum çıxarış məbləği ${MIN_WITHDRAWAL} AZN-dir!`);
+                if(user.balance < amt) return alert("⚠️ Balansınızda kifayət qədər vəsait yoxdur!");
+                
+                // Send withdrawal request to Sheet
+                fetch(`${API}?action=withdraw&name=${encodeURIComponent(user.name)}&amount=${amt}&dest=${dest}`, {mode: 'no-cors'});
+                
+                // WA Integration
+                let msg = `Salam, Pul çıxarmaq istəyirəm.\n👤 ID: ${user.name}\n💰 Məbləğ: ${amt} AZN\n💳 Hesab: ${dest}`;
+                wa(msg);
+                
+                alert("Çıxarış sorğusu qəbul olundu! WhatsApp-a yönləndirilirsiniz...");
+            }
+            document.getElementById('cashierModal').style.display='none';
         }
 
         // GAME LOGIC
