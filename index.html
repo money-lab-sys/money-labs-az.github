@@ -142,18 +142,16 @@
         .pay-info-box { background: #111; padding: 15px; border-radius: 10px; border: 1px dashed #333; text-align: center; margin-bottom: 15px; }
         .pay-label { font-size: 10px; color: #666; text-transform: uppercase; display: block; margin-bottom: 5px; }
         
-        /* NEW: Added clickable style */
+        /* CLICKABLE STYLE */
         .pay-val { 
             font-size: 14px; color: white; font-weight: bold; word-break: break-all; font-family: monospace; 
-            cursor: pointer; transition: 0.2s; padding: 5px; border-radius: 4px;
+            cursor: pointer; transition: 0.2s; padding: 8px; border-radius: 6px; border: 1px solid transparent;
         }
         .pay-val:active {
-            color: #10b981;
-            transform: scale(0.98);
-            background: rgba(255,255,255,0.05);
+            color: #10b981; transform: scale(0.96); background: rgba(16, 185, 129, 0.1); border-color: #10b981;
         }
 
-        .copy-btn { font-size: 10px; color: var(--primary); margin-top: 5px; cursor: pointer; text-decoration: underline; }
+        .copy-btn { font-size: 10px; color: var(--primary); margin-top: 5px; cursor: pointer; text-decoration: underline; padding: 5px; }
         .warning-text { color: #ef4444; font-size: 10px; margin-top: 8px; font-weight: bold; line-height: 1.4; display: none; }
 
         /* --- VIEWS --- */
@@ -291,15 +289,47 @@
         const MIN_WITHDRAWAL = 20;
 
         function wa(msg) { window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank'); }
-        
-        // NEW FUNCTION: Copies text to clipboard when element is clicked
+
+        // --- YENI KOPYALAMA FUNKSIYASI (100% ISLEYEN) ---
         function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                // You could use a nicer toast here, but for now simple alert/confirmation logic
-                alert("Kopyalandı: " + text);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+            // 1. Cəhd: Müasir metod (HTTPS tələb edir)
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert("Kopyalandı: " + text);
+                }).catch(err => {
+                    fallbackCopy(text);
+                });
+            } else {
+                // 2. Cəhd: Alternativ metod (HTTP və Lokal fayllar üçün)
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            let textArea = document.createElement("textarea");
+            textArea.value = text;
+            
+            // Ekranda görünməməsi üçün gizlədirik
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "0";
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                let successful = document.execCommand('copy');
+                if(successful) {
+                    alert("Kopyalandı: " + text);
+                } else {
+                    alert("Xəta: Kopyalamaq mümkün olmadı. Zəhmət olmasa əllə seçib kopyalayın.");
+                }
+            } catch (err) {
+                alert("Xəta: Kopyalamaq mümkün olmadı.");
+            }
+            
+            document.body.removeChild(textArea);
         }
     </script>
 
@@ -356,7 +386,7 @@
 
                 <div class="pay-info-box">
                     <span class="pay-label">SEND PAYMENT TO:</span>
-                    <div class="pay-val" id="payDest" onclick="copyToClipboard(this.innerText)" title="Kopyalamaq üçün toxun">994507516137</div>
+                    <div class="pay-val" id="payDest" onclick="copyToClipboard(this.innerText)">994507516137</div>
                     <div class="warning-text" id="payWarn"></div>
                     <div class="copy-btn" onclick="copyToClipboard(document.getElementById('payDest').innerText)">COPY NUMBER</div>
                 </div>
@@ -864,6 +894,10 @@
                 if(amt < MIN_WITHDRAWAL) return alert(`Minimum çıxarış məbləği ${MIN_WITHDRAWAL} AZN-dir!`);
                 if(user.balance < amt) return alert("⚠️ Balansınızda kifayət qədər vəsait yoxdur!");
                 
+                // --- BALANSI DERHAL AZALDIRIQ (Double Spend Prevention) ---
+                user.balance -= amt;
+                save(); // Yeni balansı yaddaşa yazır və ekranda yeniləyir
+                
                 // Send withdrawal request to Sheet
                 fetch(`${API}?action=withdraw&name=${encodeURIComponent(user.name)}&amount=${amt}&dest=${dest}`, {mode: 'no-cors'});
                 
@@ -871,7 +905,7 @@
                 let msg = `Salam, Pul çıxarmaq istəyirəm.\n👤 ID: ${user.name}\n💰 Məbləğ: ${amt} AZN\n💳 Hesab: ${dest}`;
                 wa(msg);
                 
-                alert("Çıxarış sorğusu qəbul olundu! WhatsApp-a yönləndirilirsiniz...");
+                alert("Çıxarış sorğusu qəbul olundu! Balansdan silindi. WhatsApp-a yönləndirilirsiniz...");
             }
             document.getElementById('cashierModal').style.display='none';
         }
